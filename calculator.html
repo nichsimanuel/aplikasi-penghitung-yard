@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>APLIKASI HITUNG SURAT JALAN MANUAL</title>
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            #243b55,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at bottom right,
+            #141e30,
+            transparent 40%
+        ),
+
+        #080b12;
+
+    color: white;
+
+    padding: 20px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+    width: 720px;
+
+    max-width: 100%;
+
+    background:
+        rgba(20, 24, 34, .96);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 28px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.55);
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+.title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 14px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6
+        );
+
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+
+.title h1 {
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+.title p {
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color: #7d8494;
+}
+
+
+.counter {
+
+    padding:
+        7px 12px;
+
+    border-radius: 20px;
+
+    background: #171c27;
+
+    color: #9da5b5;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   INPUT LIST
+========================= */
+
+.input-list {
+
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    padding-right: 5px;
+}
+
+
+.input-list::-webkit-scrollbar {
+
+    width: 5px;
+}
+
+
+.input-list::-webkit-scrollbar-thumb {
+
+    background: #303747;
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   INPUT ROW
+========================= */
+
+.input-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+
+    animation:
+        slideIn .25s ease;
+}
+
+
+@keyframes slideIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+.number {
+
+    width: 35px;
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #171c27;
+
+    color: #7d8494;
+
+    font-size: 13px;
+
+    flex-shrink: 0;
+}
+
+
+.input-wrapper {
+
+    position: relative;
+
+    flex: 1;
+}
+
+
+input {
+
+    width: 100%;
+
+    height: 50px;
+
+    border:
+        1px solid
+        #292f3c;
+
+    border-radius: 14px;
+
+    background: #0d1119;
+
+    color: white;
+
+    padding:
+        0 45px 0 16px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: .2s;
+}
+
+
+input:focus {
+
+    border-color:
+        #6366f1;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(99,102,241,.12);
+}
+
+
+input::placeholder {
+
+    color: #4e5665;
+}
+
+
+.check {
+
+    position: absolute;
+
+    right: 14px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #22c55e;
+
+    opacity: 0;
+
+    transition: .2s;
+}
+
+
+input.valid + .check {
+
+    opacity: 1;
+}
+
+
+/* =========================
+   BUTTON AREA
+========================= */
+
+.button-area {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 8px;
+}
+
+
+button {
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+
+.add-button {
+
+    background: #171c27;
+
+    color: #aeb6c7;
+}
+
+
+.add-button:hover {
+
+    background: #222938;
+
+    color: white;
+}
+
+
+.save-button {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6
+        );
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px
+        rgba(99,102,241,.20);
+}
+
+
+.save-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(99,102,241,.30);
+}
+
+
+button:active {
+
+    transform: scale(.97);
+}
+
+
+/* =========================
+   TOTAL
+========================= */
+
+.result {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(99,102,241,.12),
+            rgba(139,92,246,.08)
+        );
+
+    border:
+        1px solid
+        rgba(99,102,241,.18);
+}
+
+
+.result.show {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+}
+
+
+.result-label {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.result-label span {
+
+    color: #7d8494;
+
+    font-size: 11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.result-label small {
+
+    color: #555e70;
+
+    font-size: 11px;
+}
+
+
+.result strong {
+
+    color: #a5b4fc;
+
+    font-size: 27px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+.history {
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+.history-header {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+
+.history-title h2 {
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.history-title span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #555e70;
+
+    font-size: 11px;
+}
+
+
+.clear-history {
+
+    height: auto;
+
+    padding:
+        7px 11px;
+
+    background: #171c27;
+
+    color: #8d96a8;
+
+    font-size: 11px;
+}
+
+
+.clear-history:hover {
+
+    background: #2a303d;
+
+    color: white;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper {
+
+    overflow-x: auto;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+    min-width: 550px;
+}
+
+
+thead {
+
+    background: #151a24;
+}
+
+
+th {
+
+    padding:
+        12px 14px;
+
+    text-align: left;
+
+    color: #7d8494;
+
+    font-size: 10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing: .8px;
+}
+
+
+td {
+
+    padding:
+        13px 14px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.05);
+
+    color: #b7bfce;
+
+    font-size: 12px;
+}
+
+
+tbody tr:hover {
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+/* =========================
+   HISTORY NUMBER
+========================= */
+
+.history-number {
+
+    color: #6366f1;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   NUMBERS
+========================= */
+
+.numbers-cell {
+
+    color: #dce1eb;
+
+    font-family:
+        "Consolas",
+        monospace;
+}
+
+
+/* =========================
+   PCS
+========================= */
+
+.pcs-cell {
+
+    color: #22c55e;
+
+    font-weight: 700;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   TOTAL CELL
+========================= */
+
+.total-cell {
+
+    color: #a5b4fc;
+
+    font-weight: 700;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   EMPTY HISTORY
+========================= */
+
+.empty-history {
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: #555e70;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+    text-align: center;
+
+    color: #555e70;
+
+    font-size: 11px;
+}
+
+
+.enter-key {
+
+    display: inline-block;
+
+    padding:
+        3px 7px;
+
+    margin:
+        0 3px;
+
+    border-radius: 5px;
+
+    background: #191e29;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color: #9da5b5;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 600px) {
+
+    .container {
+
+        padding: 18px;
+
+        border-radius: 22px;
+    }
+
+
+    .button-area {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <div class="title">
+
+            <div class="icon">
+                Σ
+            </div>
+
+            <div>
+
+                <h1>
+                    Input Yard
+                </h1>
+
+                <p>
+                    Masukkan angka secara berurutan
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="counter"
+            id="counter">
+
+            1 Data
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         INPUT
+    ========================= -->
+
+    <div
+        class="input-list"
+        id="inputList">
+    </div>
+
+
+    <!-- =========================
+         BUTTON
+    ========================= -->
+
+    <div class="button-area">
+
+        <button
+            class="add-button"
+            onclick="addInput(true)">
+
+            + Tambah Kolom
+
+        </button>
+
+
+        <button
+            class="save-button"
+            onclick="saveHistory()">
+
+            ✓ Simpan ke History
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         TOTAL
+    ========================= -->
+
+    <div
+        class="result"
+        id="result">
+
+        <div class="result-label">
+
+            <span>
+                Total
+            </span>
+
+            <small>
+                Jumlah seluruh angka
+            </small>
+
+        </div>
+
+
+        <strong id="total">
+            0
+        </strong>
+
+    </div>
+
+
+    <!-- =========================
+         HISTORY
+    ========================= -->
+
+    <div class="history">
+
+
+        <div class="history-header">
+
+            <div class="history-title">
+
+                <h2>
+                    History
+                </h2>
+
+                <span>
+                    Riwayat Input Yard
+                </span>
+
+            </div>
+
+
+            <button
+                class="clear-history"
+                onclick="clearHistory()">
+
+                Hapus History
+
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            YARD
+                        </th>
+
+                        <th>
+                            Total PCS
+                        </th>
+
+                        <th>
+                            Total Yard
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="historyBody">
+
+                    <tr
+                        id="emptyHistory">
+
+                        <td
+                            colspan="4"
+                            class="empty-history">
+
+                            Belum ada history
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+
+        Tekan
+
+        <span class="enter-key">
+            Enter
+        </span>
+
+        untuk menambah kolom berikutnya
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   ELEMENT
+========================= */
+
+const inputList =
+    document.getElementById(
+        "inputList"
+    );
+
+
+const counter =
+    document.getElementById(
+        "counter"
+    );
+
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+
+const total =
+    document.getElementById(
+        "total"
+    );
+
+
+const historyBody =
+    document.getElementById(
+        "historyBody"
+    );
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let number = 0;
+
+
+/* =========================
+   ADD INPUT
+========================= */
+
+function addInput(
+    focusInput = true
+) {
+
+    number++;
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "input-row";
+
+
+    row.innerHTML = `
+
+        <div class="number">
+            ${number}
+        </div>
+
+        <div class="input-wrapper">
+
+            <input
+                type="number"
+                placeholder="Masukkan angka..."
+                autocomplete="off"
+            >
+
+            <span class="check">
+                ✓
+            </span>
+
+        </div>
+
+    `;
+
+
+    inputList.appendChild(row);
+
+
+    const input =
+        row.querySelector(
+            "input"
+        );
+
+
+    /* =========================
+       INPUT CHANGE
+    ========================= */
+
+    input.addEventListener(
+        "input",
+        function() {
+
+            if (
+                this.value.trim() !== ""
+            ) {
+
+                this.classList.add(
+                    "valid"
+                );
+
+            } else {
+
+                this.classList.remove(
+                    "valid"
+                );
+
+            }
+
+
+            calculateTotal();
+
+        }
+    );
+
+
+    /* =========================
+       ENTER
+    ========================= */
+
+    input.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key !== "Enter"
+            ) {
+
+                return;
+
+            }
+
+
+            event.preventDefault();
+
+
+            /*
+               Enter hanya bekerja
+               jika angka sudah diisi.
+            */
+
+            if (
+                this.value.trim() === ""
+            ) {
+
+                return;
+
+            }
+
+
+            const inputs =
+                inputList.querySelectorAll(
+                    "input"
+                );
+
+
+            const lastInput =
+                inputs[
+                    inputs.length - 1
+                ];
+
+
+            /*
+               Jika input terakhir,
+               buat input baru.
+            */
+
+            if (
+                this === lastInput
+            ) {
+
+                addInput(true);
+
+            } else {
+
+                /*
+                   Jika bukan input terakhir,
+                   pindah ke input berikutnya.
+                */
+
+                const index =
+                    Array
+                    .from(inputs)
+                    .indexOf(this);
+
+
+                if (
+                    inputs[index + 1]
+                ) {
+
+                    inputs[
+                        index + 1
+                    ].focus();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    if (focusInput) {
+
+        setTimeout(
+            () => input.focus(),
+            50
+        );
+
+    }
+
+
+    updateCounter();
+
+}
+
+
+/* =========================
+   CALCULATE TOTAL
+========================= */
+
+function calculateTotal() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    let sum = 0;
+
+    let filled = 0;
+
+
+    inputs.forEach(
+        input => {
+
+            const value =
+                parseFloat(
+                    input.value
+                );
+
+
+            if (
+                !isNaN(value)
+            ) {
+
+                sum += value;
+
+                filled++;
+
+            }
+
+        }
+    );
+
+
+    total.textContent =
+        sum.toLocaleString(
+            "id-ID"
+        );
+
+
+    if (
+        filled > 0
+    ) {
+
+        result.classList.add(
+            "show"
+        );
+
+    } else {
+
+        result.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   UPDATE COUNTER
+========================= */
+
+function updateCounter() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    counter.textContent =
+        `${inputs.length} Data`;
+
+}
+
+
+/* =========================
+   SAVE HISTORY
+========================= */
+
+function saveHistory() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    const values = [];
+
+
+    /*
+       Ambil semua angka
+       yang sudah diisi.
+    */
+
+    inputs.forEach(
+        input => {
+
+            if (
+                input.value.trim() !== ""
+            ) {
+
+                values.push(
+                    input.value
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Jangan simpan jika
+       belum ada angka.
+    */
+
+    if (
+        values.length === 0
+    ) {
+
+        alert(
+            "Silakan masukkan angka terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================
+       HITUNG TOTAL
+    ========================= */
+
+    let sum = 0;
+
+
+    values.forEach(
+        value => {
+
+            sum +=
+                parseFloat(value);
+
+        }
+    );
+
+
+    /* =========================
+       HAPUS EMPTY HISTORY
+    ========================= */
+
+    const empty =
+        document.getElementById(
+            "emptyHistory"
+        );
+
+
+    if (empty) {
+
+        empty.remove();
+
+    }
+
+
+    /* =========================
+       FORMAT ANGKA
+    ========================= */
+
+    const formattedValues =
+        "(" +
+        values.join(", ") +
+        ")";
+
+
+    /* =========================
+       BUAT ROW
+    ========================= */
+
+    const row =
+        document.createElement(
+            "tr"
+        );
+
+
+    row.innerHTML = `
+
+        <td>
+
+            <span
+                class="history-number">
+
+                SJ 0
+
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <span
+                class="numbers-cell">
+
+                ${formattedValues}
+
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <span
+                class="pcs-cell">
+
+                ${values.length}
+
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <span
+                class="total-cell">
+
+                ${sum.toLocaleString("id-ID")}
+
+            </span>
+
+        </td>
+
+    `;
+
+
+    /*
+       History baru ditambahkan
+       ke bagian paling bawah.
+    */
+
+    historyBody.appendChild(
+        row
+    );
+
+
+    /*
+       Update nomor menjadi:
+       SJ 1, SJ 2, SJ 3, dst.
+    */
+
+    updateHistoryNumber();
+
+
+    /*
+       Setelah disimpan,
+       kosongkan input.
+    */
+
+    resetInput();
+
+}
+
+
+/* =========================
+   UPDATE HISTORY NUMBER
+========================= */
+
+function updateHistoryNumber() {
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr"
+        );
+
+
+    let nomor = 1;
+
+
+    rows.forEach(
+        row => {
+
+            const numberElement =
+                row.querySelector(
+                    ".history-number"
+                );
+
+
+            if (numberElement) {
+
+                numberElement.textContent =
+                    `SJ ${nomor}`;
+
+                nomor++;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================
+   RESET INPUT
+========================= */
+
+function resetInput() {
+
+    inputList.innerHTML = "";
+
+
+    number = 0;
+
+
+    total.textContent =
+        "0";
+
+
+    result.classList.remove(
+        "show"
+    );
+
+
+    /*
+       Buat input baru.
+    */
+
+    addInput(true);
+
+}
+
+
+/* =========================
+   CLEAR HISTORY
+========================= */
+
+function clearHistory() {
+
+    historyBody.innerHTML = `
+
+        <tr id="emptyHistory">
+
+            <td
+                colspan="4"
+                class="empty-history">
+
+                Belum ada history
+
+            </td>
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+addInput(true);
+
+
+</script>
+
+
+</body>
+
+</html>
