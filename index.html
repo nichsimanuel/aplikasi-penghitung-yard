@@ -1,2314 +1,2320 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>APLIKASI HITUNG YARD SURAT JALAN MANUAL</title>
+    <title>APLIKASI HITUNG YARD SURAT JALAN MANUAL</title>
 
+    <style>
 
-<style>
+        /* =========================================================
+           RESET
+        ========================================================= */
 
-/* =========================================================
-   RESET
-========================================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+            font-family:
+                "Segoe UI",
+                Inter,
+                Arial,
+                sans-serif;
+        }
 
-    font-family:
-        "Segoe UI",
-        Inter,
-        Arial,
-        sans-serif;
-}
 
+        /* =========================================================
+           COLOR THEME
+        ========================================================= */
 
-/* =========================================================
-   NATURE FOREST COLOR THEME
-========================================================= */
+        :root {
 
-:root {
+            --darkest: #061710;
+            --dark: #0b2118;
+            --dark-2: #102d21;
+            --dark-3: #163a2b;
 
-    --forest-deep:
-        #10251a;
+            --green: #1f5c45;
+            --green-light: #2e7d5b;
+            --green-bright: #3f9b70;
 
-    --forest-dark:
-        #173522;
+            --cream: #f5eedc;
+            --cream-light: #fffdf5;
+            --cream-dark: #d8cdb5;
 
-    --forest:
-        #1f4d32;
+            --muted: #8fa59a;
 
-    --forest-light:
-        #2f6b45;
+            --border:
+                rgba(245, 238, 220, 0.12);
 
-    --leaf:
-        #4f8f5f;
+            --shadow:
+                rgba(0, 0, 0, 0.55);
+        }
 
-    --sage:
-        #82a878;
 
-    --mint:
-        #a8c69f;
+        /* =========================================================
+           BODY
+        ========================================================= */
 
-    --cream:
-        #f4ecd8;
+        body {
 
-    --cream-light:
-        #fffdf5;
+            min-height: 100vh;
 
-    --sand:
-        #d9c9a8;
+            display: flex;
 
-    --earth:
-        #715b3d;
+            justify-content: center;
+            align-items: center;
 
-    --earth-dark:
-        #4a3b27;
+            padding: 25px;
 
-    --muted:
-        #91a895;
+            color:
+                var(--cream-light);
 
-    --border:
-        rgba(220,235,205,.13);
+            background:
 
-    --shadow:
-        rgba(0,0,0,.55);
-}
+                linear-gradient(
+                    rgba(6, 23, 16, 0.78),
+                    rgba(6, 23, 16, 0.92)
+                ),
 
+                url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=85");
 
-/* =========================================================
-   BODY
-========================================================= */
+            background-size: cover;
 
-body {
+            background-position: center;
 
-    min-height: 100vh;
+            background-attachment: fixed;
 
-    display: flex;
+            overflow-x: hidden;
 
-    justify-content: center;
+            perspective: 1400px;
+        }
 
-    align-items: center;
 
-    padding: 25px;
+        /* =========================================================
+           BACKGROUND OVERLAY
+        ========================================================= */
 
-    color:
-        var(--cream-light);
+        body::before {
 
-    background:
+            content: "";
 
-        radial-gradient(
-            circle at 8% 12%,
-            rgba(79,143,95,.28),
-            transparent 30%
-        ),
+            position: fixed;
 
-        radial-gradient(
-            circle at 90% 15%,
-            rgba(47,107,69,.20),
-            transparent 28%
-        ),
+            inset: 0;
 
-        radial-gradient(
-            circle at 85% 90%,
-            rgba(130,168,120,.14),
-            transparent 30%
-        ),
+            background:
 
-        radial-gradient(
-            circle at 20% 90%,
-            rgba(113,91,61,.12),
-            transparent 28%
-        ),
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(46, 125, 91, 0.28),
+                    transparent 30%
+                ),
 
-        #0b1c13;
+                radial-gradient(
+                    circle at 90% 85%,
+                    rgba(31, 92, 69, 0.28),
+                    transparent 32%
+                );
 
-    overflow-x: hidden;
+            pointer-events: none;
 
-    perspective: 1400px;
-}
+            z-index: -1;
+        }
 
 
-/* =========================================================
-   BACKGROUND NATURE LIGHT
-========================================================= */
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
 
-body::before {
+        .container {
 
-    content: "";
+            width: 760px;
 
-    position: fixed;
+            max-width: 100%;
 
-    width: 340px;
-    height: 340px;
+            position: relative;
 
-    border-radius: 50%;
+            padding: 28px;
 
-    background:
-        rgba(79,143,95,.15);
+            border-radius: 32px;
 
-    filter:
-        blur(95px);
+            background:
 
-    top: -130px;
-    left: -100px;
+                linear-gradient(
+                    145deg,
+                    rgba(22, 58, 43, 0.96),
+                    rgba(10, 29, 21, 0.97) 55%,
+                    rgba(7, 21, 15, 0.98)
+                );
 
-    pointer-events: none;
-}
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.12);
 
+            box-shadow:
 
-body::after {
+                0 45px 100px
+                rgba(0, 0, 0, 0.65),
 
-    content: "";
+                0 18px 35px
+                rgba(0, 0, 0, 0.35),
 
-    position: fixed;
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.09),
 
-    width: 360px;
-    height: 360px;
+                inset 0 -2px 0
+                rgba(0, 0, 0, 0.45);
 
-    border-radius: 50%;
+            transform:
+                rotateX(0.5deg);
 
-    background:
-        rgba(217,201,168,.07);
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
 
-    filter:
-        blur(110px);
+            backdrop-filter:
+                blur(12px);
+        }
 
-    bottom: -170px;
-    right: -140px;
 
-    pointer-events: none;
-}
+        .container:hover {
 
+            transform:
+                rotateX(0deg)
+                translateY(-2px);
 
-/* =========================================================
-   MAIN CONTAINER
-========================================================= */
+            box-shadow:
 
-.container {
+                0 55px 110px
+                rgba(0, 0, 0, 0.68),
 
-    width: 760px;
+                0 20px 40px
+                rgba(0, 0, 0, 0.35),
 
-    max-width: 100%;
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.11),
 
-    position: relative;
+                inset 0 -2px 0
+                rgba(0, 0, 0, 0.5);
+        }
 
-    padding: 28px;
 
-    border-radius: 32px;
+        /* =========================================================
+           TOP LIGHT
+        ========================================================= */
 
-    background:
+        .container::before {
 
-        linear-gradient(
-            145deg,
-            #254d35,
-            #163522 45%,
-            #0e2117 75%,
-            #091810
-        );
+            content: "";
 
-    border:
-        1px solid
-        rgba(190,220,180,.16);
+            position: absolute;
 
-    box-shadow:
+            top: 0;
+            left: 12%;
 
-        0 45px 100px
-        rgba(0,0,0,.68),
+            width: 76%;
+            height: 2px;
 
-        0 18px 35px
-        rgba(0,0,0,.38),
+            border-radius: 50%;
 
-        inset 0 1px 0
-        rgba(255,255,255,.10),
+            background:
 
-        inset 0 -3px 0
-        rgba(0,0,0,.45);
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cream),
+                    var(--green-bright),
+                    transparent
+                );
 
-    transform:
-        rotateX(.5deg);
+            box-shadow:
 
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease;
-}
+                0 0 18px
+                rgba(245, 238, 220, 0.35);
+        }
 
 
-.container:hover {
+        /* =========================================================
+           HEADER
+        ========================================================= */
 
-    transform:
-        rotateX(0deg)
-        translateY(-2px);
+        .header {
 
-    box-shadow:
+            display: flex;
 
-        0 55px 110px
-        rgba(0,0,0,.72),
+            justify-content:
+                space-between;
 
-        0 20px 40px
-        rgba(0,0,0,.40),
+            align-items:
+                center;
 
-        inset 0 1px 0
-        rgba(255,255,255,.12),
+            gap: 15px;
 
-        inset 0 -3px 0
-        rgba(0,0,0,.52);
-}
+            margin-bottom: 25px;
+        }
 
 
-/* =========================================================
-   TOP NATURE LIGHT
-========================================================= */
+        /* =========================================================
+           TITLE
+        ========================================================= */
 
-.container::before {
+        .title {
 
-    content: "";
+            display: flex;
 
-    position: absolute;
+            align-items:
+                center;
 
-    top: 0;
-    left: 12%;
+            gap: 14px;
+        }
 
-    width: 76%;
-    height: 2px;
 
-    border-radius: 50%;
+        /* =========================================================
+           3D ICON
+        ========================================================= */
 
-    background:
+        .icon {
 
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--mint),
-            var(--sage),
-            transparent
-        );
+            width: 52px;
+            height: 52px;
 
-    box-shadow:
+            display: flex;
 
-        0 0 18px
-        rgba(168,198,159,.40);
-}
+            align-items:
+                center;
 
+            justify-content:
+                center;
 
-/* =========================================================
-   HEADER
-========================================================= */
+            flex-shrink: 0;
 
-.header {
+            border-radius: 17px;
 
-    display: flex;
+            color:
+                var(--darkest);
 
-    justify-content:
-        space-between;
+            font-size: 23px;
 
-    align-items: center;
+            font-weight: 900;
 
-    gap: 15px;
+            background:
 
-    margin-bottom: 25px;
-}
+                linear-gradient(
+                    145deg,
+                    #fffdf5,
+                    #e6dbc2 45%,
+                    #c9b996
+                );
 
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.45);
 
-/* =========================================================
-   TITLE
-========================================================= */
+            box-shadow:
 
-.title {
+                0 11px 0
+                #8f8062,
 
-    display: flex;
+                0 18px 28px
+                rgba(0, 0, 0, 0.30),
 
-    align-items: center;
+                inset 0 2px 2px
+                rgba(255, 255, 255, 0.7),
 
-    gap: 14px;
-}
+                inset 0 -5px 8px
+                rgba(0, 0, 0, 0.10);
 
+            text-shadow:
+                0 1px 1px
+                rgba(255, 255, 255, 0.4);
 
-/* =========================================================
-   NATURE ICON
-========================================================= */
+            transform:
+                translateY(-3px);
+        }
 
-.icon {
 
-    width: 52px;
-    height: 52px;
+        .title h1 {
 
-    display: flex;
+            font-size: 20px;
 
-    align-items: center;
-    justify-content: center;
+            font-weight: 800;
 
-    flex-shrink: 0;
+            letter-spacing:
+                -0.4px;
 
-    border-radius: 17px;
+            color:
+                var(--cream-light);
 
-    color:
-        #173522;
+            text-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.35);
+        }
 
-    font-size: 23px;
 
-    font-weight: 900;
+        .title p {
 
-    background:
+            margin-top: 4px;
 
-        linear-gradient(
-            145deg,
-            #f8f1df,
-            #e4d5b4 48%,
-            #c7b58d
-        );
+            color:
+                var(--muted);
 
-    border:
-        1px solid
-        rgba(255,255,255,.50);
+            font-size: 12px;
+        }
 
-    box-shadow:
 
-        0 11px 0
-        #766344,
+        /* =========================================================
+           COUNTER
+        ========================================================= */
 
-        0 18px 28px
-        rgba(0,0,0,.30),
+        .counter {
 
-        inset 0 2px 2px
-        rgba(255,255,255,.75),
+            display: flex;
 
-        inset 0 -5px 8px
-        rgba(0,0,0,.10);
+            align-items:
+                center;
 
-    text-shadow:
-        0 1px 1px
-        rgba(255,255,255,.45);
+            gap: 7px;
 
-    transform:
-        translateY(-3px);
-}
+            padding:
+                9px 14px;
 
+            border-radius: 20px;
 
-.title h1 {
+            background:
 
-    font-size: 20px;
+                linear-gradient(
+                    145deg,
+                    #1d4635,
+                    #0d261b
+                );
 
-    font-weight: 800;
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.12);
 
-    letter-spacing: -.4px;
+            color:
+                var(--cream);
 
-    color:
-        var(--cream-light);
+            font-size: 11px;
 
-    text-shadow:
-        0 2px 10px
-        rgba(0,0,0,.35);
-}
+            font-weight: 700;
 
+            white-space: nowrap;
 
-.title p {
+            box-shadow:
 
-    margin-top: 4px;
+                0 5px 0
+                #06130d,
 
-    color:
-        var(--muted);
+                0 10px 18px
+                rgba(0, 0, 0, 0.30),
 
-    font-size: 12px;
-}
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.07);
+        }
 
 
-/* =========================================================
-   COUNTER
-========================================================= */
+        .counter::before {
 
-.counter {
+            content: "";
 
-    display: flex;
+            width: 7px;
+            height: 7px;
 
-    align-items: center;
+            border-radius: 50%;
 
-    gap: 7px;
+            background:
+                #63c58d;
 
-    padding:
-        9px 14px;
+            box-shadow:
+                0 0 10px
+                rgba(99, 197, 141, 0.9);
+        }
 
-    border-radius: 20px;
 
-    background:
+        /* =========================================================
+           INPUT LIST
+        ========================================================= */
 
-        linear-gradient(
-            145deg,
-            #315e3e,
-            #173523
-        );
+        .input-list {
 
-    border:
-        1px solid
-        rgba(190,220,180,.14);
+            max-height: 325px;
 
-    color:
-        var(--cream);
+            overflow-y: auto;
 
-    font-size: 11px;
+            padding:
+                5px 7px 5px 3px;
 
-    font-weight: 700;
+            scrollbar-width: thin;
 
-    box-shadow:
+            scrollbar-color:
+                #426151
+                transparent;
+        }
 
-        0 5px 0
-        #07150d,
 
-        0 10px 18px
-        rgba(0,0,0,.30),
+        .input-list::-webkit-scrollbar {
 
-        inset 0 1px 0
-        rgba(255,255,255,.08);
-}
+            width: 5px;
+        }
 
 
-.counter::before {
+        .input-list::-webkit-scrollbar-track {
 
-    content: "";
+            background:
+                transparent;
+        }
 
-    width: 7px;
-    height: 7px;
 
-    border-radius: 50%;
+        .input-list::-webkit-scrollbar-thumb {
 
-    background:
-        #91c783;
+            background:
 
-    box-shadow:
-        0 0 10px
-        rgba(145,199,131,.9);
-}
+                linear-gradient(
+                    #557565,
+                    #263f33
+                );
 
+            border-radius: 20px;
+        }
 
-/* =========================================================
-   INPUT LIST
-========================================================= */
 
-.input-list {
+        /* =========================================================
+           INPUT ROW
+        ========================================================= */
 
-    max-height: 325px;
+        .input-row {
 
-    overflow-y: auto;
+            display: flex;
 
-    padding:
-        5px 7px 5px 3px;
+            align-items:
+                center;
 
-    scrollbar-width: thin;
+            gap: 12px;
 
-    scrollbar-color:
-        #58755c transparent;
-}
+            margin-bottom: 13px;
 
+            animation:
+                inputAppear 0.28s ease;
 
-.input-list::-webkit-scrollbar {
+            transform-style:
+                preserve-3d;
+        }
 
-    width: 5px;
-}
 
+        @keyframes inputAppear {
 
-.input-list::-webkit-scrollbar-track {
+            from {
 
-    background: transparent;
-}
+                opacity: 0;
 
+                transform:
+                    translateY(12px)
+                    rotateX(-8deg);
+            }
 
-.input-list::-webkit-scrollbar-thumb {
+            to {
 
-    background:
+                opacity: 1;
 
-        linear-gradient(
-            #6d9270,
-            #304c37
-        );
+                transform:
+                    translateY(0)
+                    rotateX(0);
+            }
+        }
 
-    border-radius: 20px;
-}
 
+        /* =========================================================
+           NUMBER 3D
+        ========================================================= */
 
-/* =========================================================
-   INPUT ROW
-========================================================= */
+        .number {
 
-.input-row {
+            width: 43px;
+            height: 52px;
 
-    display: flex;
+            display: flex;
 
-    align-items: center;
+            align-items:
+                center;
 
-    gap: 12px;
+            justify-content:
+                center;
 
-    margin-bottom: 13px;
+            flex-shrink: 0;
 
-    animation:
-        inputAppear .28s ease;
+            border-radius: 14px;
 
-    transform-style:
-        preserve-3d;
-}
+            background:
 
+                linear-gradient(
+                    145deg,
+                    #244a38,
+                    #10271d
+                );
 
-@keyframes inputAppear {
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.09);
 
-    from {
+            color:
+                #9db5a8;
 
-        opacity: 0;
+            font-size: 12px;
 
-        transform:
-            translateY(12px)
-            rotateX(-8deg);
-    }
+            font-weight: 800;
 
-    to {
+            box-shadow:
 
-        opacity: 1;
+                0 5px 0
+                #06130d,
 
-        transform:
-            translateY(0)
-            rotateX(0);
-    }
+                0 9px 16px
+                rgba(0, 0, 0, 0.30),
 
-}
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
 
+            transform:
+                translateZ(10px);
+        }
 
-/* =========================================================
-   NUMBER
-========================================================= */
 
-.number {
+        /* =========================================================
+           INPUT WRAPPER
+        ========================================================= */
 
-    width: 43px;
-    height: 52px;
+        .input-wrapper {
 
-    display: flex;
+            position: relative;
 
-    align-items: center;
+            flex: 1;
+        }
 
-    justify-content: center;
 
-    flex-shrink: 0;
+        /* =========================================================
+           INPUT
+        ========================================================= */
 
-    border-radius: 14px;
+        input {
 
-    background:
+            width: 100%;
 
-        linear-gradient(
-            145deg,
-            #365f42,
-            #193524
-        );
+            height: 52px;
 
-    border:
-        1px solid
-        rgba(210,230,200,.12);
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.10);
 
-    color:
-        #aec3a9;
+            border-radius: 15px;
 
-    font-size: 12px;
+            background:
 
-    font-weight: 800;
+                linear-gradient(
+                    145deg,
+                    #11251c,
+                    #081610
+                );
 
-    box-shadow:
+            color:
+                var(--cream-light);
 
-        0 5px 0
-        #07150d,
+            padding:
+                0 50px 0 17px;
 
-        0 9px 16px
-        rgba(0,0,0,.30),
+            font-size: 16px;
 
-        inset 0 1px 0
-        rgba(255,255,255,.09);
+            font-weight: 600;
 
-    transform:
-        translateZ(10px);
-}
+            outline: none;
 
+            transition:
+                0.2s;
 
-/* =========================================================
-   INPUT WRAPPER
-========================================================= */
+            box-shadow:
 
-.input-wrapper {
+                0 6px 0
+                #040d08,
 
-    position: relative;
+                0 10px 20px
+                rgba(0, 0, 0, 0.28),
 
-    flex: 1;
-}
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.04),
 
+                inset 0 -3px 8px
+                rgba(0, 0, 0, 0.18);
+        }
 
-/* =========================================================
-   INPUT
-========================================================= */
 
-input {
+        input:hover {
 
-    width: 100%;
+            border-color:
+                rgba(245, 238, 220, 0.22);
+        }
 
-    height: 52px;
 
-    border:
-        1px solid
-        rgba(210,230,200,.12);
+        input:focus {
 
-    border-radius: 15px;
+            border-color:
+                var(--green-bright);
 
-    background:
+            background:
 
-        linear-gradient(
-            145deg,
-            #183124,
-            #0d1f15
-        );
+                linear-gradient(
+                    145deg,
+                    #183629,
+                    #0a1a12
+                );
 
-    color:
-        var(--cream-light);
+            box-shadow:
 
-    padding:
-        0 50px 0 17px;
+                0 6px 0
+                #12402e,
 
-    font-size: 16px;
+                0 12px 25px
+                rgba(46, 125, 91, 0.20),
 
-    font-weight: 600;
+                0 0 0 3px
+                rgba(46, 125, 91, 0.10),
 
-    outline: none;
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
+        }
 
-    transition:
-        .2s;
 
-    box-shadow:
+        input::placeholder {
 
-        0 6px 0
-        #06110a,
+            color:
+                #60756a;
+        }
 
-        0 10px 20px
-        rgba(0,0,0,.28),
 
-        inset 0 1px 0
-        rgba(255,255,255,.05),
+        /* REMOVE NUMBER ARROWS */
 
-        inset 0 -3px 8px
-        rgba(0,0,0,.18);
-}
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
 
+            -webkit-appearance: none;
 
-input:hover {
+            margin: 0;
+        }
 
-    border-color:
-        rgba(190,220,180,.28);
-}
 
+        input[type="number"] {
 
-input:focus {
+            -moz-appearance:
+                textfield;
+        }
 
-    border-color:
-        var(--sage);
 
-    background:
+        /* =========================================================
+           CHECK
+        ========================================================= */
 
-        linear-gradient(
-            145deg,
-            #254b32,
-            #102519
-        );
+        .check {
 
-    box-shadow:
+            position: absolute;
 
-        0 6px 0
-        #244d2f,
+            right: 15px;
 
-        0 12px 25px
-        rgba(79,143,95,.22),
+            top: 50%;
 
-        0 0 0 3px
-        rgba(130,168,120,.12),
+            transform:
+                translateY(-50%)
+                scale(0.7);
 
-        inset 0 1px 0
-        rgba(255,255,255,.09);
-}
+            width: 22px;
+            height: 22px;
 
+            display: flex;
 
-input::placeholder {
+            align-items:
+                center;
 
-    color:
-        #718674;
-}
+            justify-content:
+                center;
 
+            border-radius: 50%;
 
-/* REMOVE NUMBER ARROWS */
+            background:
 
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
+                linear-gradient(
+                    145deg,
+                    #72d69c,
+                    #2e8b62
+                );
 
-    -webkit-appearance: none;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.18);
 
-    margin: 0;
-}
+            color:
+                white;
 
+            font-size: 11px;
 
-input[type=number] {
+            font-weight: 900;
 
-    -moz-appearance:
-        textfield;
-}
+            opacity: 0;
 
+            transition:
+                0.2s;
 
-/* =========================================================
-   CHECK
-========================================================= */
+            box-shadow:
 
-.check {
+                0 3px 0
+                #175236,
 
-    position: absolute;
+                0 5px 10px
+                rgba(46, 125, 91, 0.25);
+        }
 
-    right: 15px;
 
-    top: 50%;
+        input.valid + .check {
 
-    transform:
-        translateY(-50%)
-        scale(.7);
+            opacity: 1;
 
-    width: 22px;
-    height: 22px;
+            transform:
+                translateY(-50%)
+                scale(1);
+        }
 
-    display: flex;
 
-    align-items: center;
+        /* =========================================================
+           BUTTON AREA
+        ========================================================= */
 
-    justify-content: center;
+        .button-area {
 
-    border-radius: 50%;
+            display: grid;
 
-    background:
+            grid-template-columns:
+                1fr 1fr;
 
-        linear-gradient(
-            145deg,
-            #b0d39f,
-            #4f8f5f
-        );
+            gap: 12px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.20);
+            margin-top: 12px;
+        }
 
-    color:
-        #173522;
 
-    font-size: 11px;
+        button {
 
-    font-weight: 900;
+            height: 52px;
 
-    opacity: 0;
+            border: none;
 
-    transition:
-        .2s;
+            border-radius: 15px;
 
-    box-shadow:
+            cursor: pointer;
 
-        0 3px 0
-        #315c39,
+            font-size: 12px;
 
-        0 5px 10px
-        rgba(79,143,95,.30);
-}
+            font-weight: 800;
 
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s;
 
-input.valid + .check {
+            -webkit-tap-highlight-color:
+                transparent;
+        }
 
-    opacity: 1;
 
-    transform:
-        translateY(-50%)
-        scale(1);
-}
+        button:active {
 
+            transform:
+                translateY(4px);
+        }
 
-/* =========================================================
-   BUTTON AREA
-========================================================= */
 
-.button-area {
+        /* =========================================================
+           ADD BUTTON
+        ========================================================= */
 
-    display: grid;
+        .add-button {
 
-    grid-template-columns:
-        1fr 1fr;
+            color:
+                var(--cream);
 
-    gap: 12px;
+            background:
 
-    margin-top: 12px;
-}
+                linear-gradient(
+                    145deg,
+                    #244636,
+                    #132a20
+                );
 
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.08);
 
-button {
+            box-shadow:
 
-    height: 52px;
+                0 6px 0
+                #06130d,
 
-    border: none;
+                0 12px 20px
+                rgba(0, 0, 0, 0.28),
 
-    border-radius: 15px;
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.07);
+        }
 
-    cursor: pointer;
 
-    font-size: 12px;
+        .add-button:hover {
 
-    font-weight: 800;
+            color:
+                var(--cream-light);
 
-    transition:
-        transform .15s,
-        box-shadow .15s;
+            background:
 
-    -webkit-tap-highlight-color:
-        transparent;
-}
+                linear-gradient(
+                    145deg,
+                    #315c47,
+                    #1a3528
+                );
 
+            transform:
+                translateY(-2px);
 
-button:active {
+            box-shadow:
 
-    transform:
-        translateY(4px);
-}
+                0 8px 0
+                #06130d,
 
+                0 15px 25px
+                rgba(0, 0, 0, 0.35);
+        }
 
-/* =========================================================
-   ADD BUTTON
-========================================================= */
 
-.add-button {
+        /* =========================================================
+           SAVE BUTTON
+        ========================================================= */
 
-    color:
-        #e9f0e4;
+        .save-button {
 
-    background:
+            color:
+                #102319;
 
-        linear-gradient(
-            145deg,
-            #365f42,
-            #1b3826
-        );
+            background:
 
-    border:
-        1px solid
-        rgba(190,220,180,.12);
+                linear-gradient(
+                    145deg,
+                    #fffdf5,
+                    #f5eedc 45%,
+                    #d8cdb5
+                );
 
-    box-shadow:
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.55);
 
-        0 6px 0
-        #07150d,
+            box-shadow:
 
-        0 12px 20px
-        rgba(0,0,0,.28),
+                0 6px 0
+                #9c8e70,
 
-        inset 0 1px 0
-        rgba(255,255,255,.08);
-}
+                0 14px 28px
+                rgba(0, 0, 0, 0.28),
 
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.8);
+        }
 
-.add-button:hover {
 
-    color:
-        white;
+        .save-button:hover {
 
-    background:
+            transform:
+                translateY(-3px);
 
-        linear-gradient(
-            145deg,
-            #4b7853,
-            #254b31
-        );
+            background:
 
-    transform:
-        translateY(-2px);
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #fff8e8,
+                    #dfd3b9
+                );
 
-    box-shadow:
+            box-shadow:
 
-        0 8px 0
-        #07150d,
+                0 9px 0
+                #9c8e70,
 
-        0 15px 25px
-        rgba(0,0,0,.35);
-}
+                0 20px 35px
+                rgba(0, 0, 0, 0.38),
 
+                inset 0 1px 0
+                white;
+        }
 
-/* =========================================================
-   SAVE BUTTON
-========================================================= */
 
-.save-button {
+        /* =========================================================
+           TOTAL RESULT
+        ========================================================= */
 
-    color:
-        #18301f;
+        .result {
 
-    background:
+            display: none;
 
-        linear-gradient(
-            145deg,
-            #f8f1df,
-            #eee3c8 45%,
-            #d2c19b
-        );
+            margin-top: 17px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.60);
+            padding:
+                19px 21px;
 
-    box-shadow:
+            border-radius: 19px;
 
-        0 6px 0
-        #806d49,
+            position: relative;
 
-        0 14px 28px
-        rgba(0,0,0,.28),
+            overflow: hidden;
 
-        inset 0 1px 0
-        rgba(255,255,255,.85);
-}
+            background:
 
+                linear-gradient(
+                    145deg,
+                    rgba(46, 125, 91, 0.28),
+                    rgba(15, 52, 38, 0.30)
+                );
 
-.save-button:hover {
+            border:
+                1px solid
+                rgba(143, 190, 163, 0.22);
 
-    transform:
-        translateY(-3px);
+            box-shadow:
 
-    background:
+                0 8px 0
+                rgba(4, 25, 17, 0.85),
 
-        linear-gradient(
-            145deg,
-            #fffdf5,
-            #f8eed7,
-            #d9c8a5
-        );
+                0 18px 30px
+                rgba(0, 0, 0, 0.28),
 
-    box-shadow:
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
+        }
 
-        0 9px 0
-        #806d49,
 
-        0 20px 35px
-        rgba(0,0,0,.38),
+        .result::before {
 
-        inset 0 1px 0
-        white;
-}
+            content: "";
 
+            position: absolute;
 
-/* =========================================================
-   TOTAL RESULT
-========================================================= */
+            width: 120px;
+            height: 120px;
 
-.result {
+            border-radius: 50%;
 
-    display: none;
+            background:
+                rgba(99, 197, 141, 0.10);
 
-    margin-top: 17px;
+            filter:
+                blur(28px);
 
-    padding:
-        19px 21px;
+            top: -65px;
+            right: -35px;
+        }
 
-    border-radius: 19px;
 
-    position: relative;
+        .result.show {
 
-    overflow: hidden;
+            display: flex;
 
-    background:
+            justify-content:
+                space-between;
 
-        linear-gradient(
-            145deg,
-            rgba(79,143,95,.30),
-            rgba(25,65,38,.34)
-        );
+            align-items:
+                center;
 
-    border:
-        1px solid
-        rgba(168,198,159,.25);
+            animation:
+                resultAppear 0.3s ease;
+        }
 
-    box-shadow:
 
-        0 8px 0
-        rgba(4,25,13,.85),
+        @keyframes resultAppear {
 
-        0 18px 30px
-        rgba(0,0,0,.28),
+            from {
 
-        inset 0 1px 0
-        rgba(255,255,255,.08);
-}
+                opacity: 0;
 
+                transform:
+                    translateY(8px)
+                    scale(0.98);
+            }
 
-.result::before {
+            to {
 
-    content: "";
+                opacity: 1;
 
-    position: absolute;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
 
-    width: 120px;
-    height: 120px;
 
-    border-radius: 50%;
+        .result-label {
 
-    background:
-        rgba(145,199,131,.12);
+            display: flex;
 
-    filter:
-        blur(28px);
+            flex-direction:
+                column;
 
-    top: -65px;
-    right: -35px;
-}
+            gap: 4px;
 
+            position: relative;
+        }
 
-.result.show {
 
-    display: flex;
+        .result-label span {
 
-    justify-content:
-        space-between;
+            color:
+                #a9bcaf;
 
-    align-items: center;
+            font-size: 10px;
 
-    animation:
-        resultAppear .3s ease;
-}
+            text-transform:
+                uppercase;
 
+            letter-spacing:
+                1.5px;
 
-@keyframes resultAppear {
+            font-weight: 800;
+        }
 
-    from {
 
-        opacity: 0;
+        .result-label small {
 
-        transform:
-            translateY(8px)
-            scale(.98);
-    }
+            color:
+                #668075;
 
-    to {
+            font-size: 10px;
+        }
 
-        opacity: 1;
 
-        transform:
-            translateY(0)
-            scale(1);
-    }
+        .result strong {
 
-}
+            position: relative;
 
+            color:
+                var(--cream);
 
-.result-label {
+            font-size: 29px;
 
-    display: flex;
+            font-weight: 900;
 
-    flex-direction: column;
+            letter-spacing:
+                -0.8px;
 
-    gap: 4px;
+            text-shadow:
 
-    position: relative;
-}
+                0 3px 12px
+                rgba(245, 238, 220, 0.18);
+        }
 
 
-.result-label span {
+        /* =========================================================
+           HISTORY
+        ========================================================= */
 
-    color:
-        #b6c8b0;
+        .history {
 
-    font-size: 10px;
+            margin-top: 29px;
 
-    text-transform:
-        uppercase;
+            padding-top: 23px;
 
-    letter-spacing: 1.5px;
+            border-top:
+                1px solid
+                rgba(245, 238, 220, 0.07);
+        }
 
-    font-weight: 800;
-}
 
+        .history-header {
 
-.result-label small {
+            display: flex;
 
-    color:
-        #77917c;
+            justify-content:
+                space-between;
 
-    font-size: 10px;
-}
+            align-items:
+                center;
 
+            gap: 15px;
 
-.result strong {
+            margin-bottom: 14px;
+        }
 
-    position: relative;
 
-    color:
-        var(--cream);
+        .history-title h2 {
 
-    font-size: 29px;
+            display: flex;
 
-    font-weight: 900;
+            align-items:
+                center;
 
-    letter-spacing: -.8px;
+            gap: 9px;
 
-    text-shadow:
+            font-size: 15px;
 
-        0 3px 12px
-        rgba(217,201,168,.22);
-}
+            font-weight: 800;
 
+            color:
+                var(--cream-light);
+        }
 
-/* =========================================================
-   HISTORY
-========================================================= */
 
-.history {
+        .history-title h2::before {
 
-    margin-top: 29px;
+            content: "";
 
-    padding-top: 23px;
+            width: 5px;
+            height: 18px;
 
-    border-top:
-        1px solid
-        rgba(210,230,200,.08);
-}
+            border-radius: 10px;
 
+            background:
 
-.history-header {
+                linear-gradient(
+                    180deg,
+                    var(--cream),
+                    var(--green-bright)
+                );
 
-    display: flex;
+            box-shadow:
 
-    justify-content:
-        space-between;
+                0 0 10px
+                rgba(99, 197, 141, 0.35);
+        }
 
-    align-items: center;
 
-    gap: 15px;
+        .history-title span {
 
-    margin-bottom: 14px;
-}
+            display: block;
 
+            margin-top: 4px;
 
-.history-title h2 {
+            color:
+                #60756a;
 
-    display: flex;
+            font-size: 10px;
+        }
 
-    align-items: center;
 
-    gap: 9px;
+        /* =========================================================
+           CLEAR HISTORY
+        ========================================================= */
 
-    font-size: 15px;
+        .clear-history {
 
-    font-weight: 800;
+            height: auto;
 
-    color:
-        var(--cream-light);
-}
+            padding:
+                8px 12px;
 
+            border-radius: 10px;
 
-.history-title h2::before {
+            color:
+                #c8bda8;
 
-    content: "";
+            background:
 
-    width: 5px;
-    height: 18px;
+                linear-gradient(
+                    145deg,
+                    #263c31,
+                    #15261e
+                );
 
-    border-radius: 10px;
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.08);
 
-    background:
+            box-shadow:
 
-        linear-gradient(
-            180deg,
-            var(--mint),
-            var(--leaf)
-        );
+                0 4px 0
+                #06130d,
 
-    box-shadow:
+                0 7px 12px
+                rgba(0, 0, 0, 0.25);
 
-        0 0 10px
-        rgba(130,168,120,.40);
-}
+            font-size: 10px;
+        }
 
 
-.history-title span {
+        .clear-history:hover {
 
-    display: block;
+            color:
+                var(--cream-light);
 
-    margin-top: 4px;
+            background:
 
-    color:
-        #6f8774;
+                linear-gradient(
+                    145deg,
+                    #365442,
+                    #1d3226
+                );
 
-    font-size: 10px;
-}
+            transform:
+                translateY(-2px);
+        }
 
 
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
+        /* =========================================================
+           TABLE WRAPPER
+        ========================================================= */
 
-.clear-history {
+        .table-wrapper {
 
-    height: auto;
+            overflow-x: auto;
 
-    padding:
-        8px 12px;
+            border-radius: 18px;
 
-    border-radius: 10px;
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.08);
 
-    color:
-        #d4c8ad;
+            background:
+                rgba(4, 13, 9, 0.45);
 
-    background:
+            box-shadow:
 
-        linear-gradient(
-            145deg,
-            #344c3a,
-            #1c3023
-        );
+                0 8px 0
+                #06100b,
 
-    border:
-        1px solid
-        rgba(210,230,200,.10);
+                0 14px 25px
+                rgba(0, 0, 0, 0.28),
 
-    box-shadow:
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.04);
 
-        0 4px 0
-        #07150d,
+            scrollbar-width: thin;
 
-        0 7px 12px
-        rgba(0,0,0,.25);
+            scrollbar-color:
+                #405d4d
+                transparent;
+        }
 
-    font-size: 10px;
-}
 
+        .table-wrapper::-webkit-scrollbar {
 
-.clear-history:hover {
+            height: 5px;
+        }
 
-    color:
-        white;
 
-    background:
+        .table-wrapper::-webkit-scrollbar-thumb {
 
-        linear-gradient(
-            145deg,
-            #4b664e,
-            #29422f
-        );
+            background:
+                #405d4d;
 
-    transform:
-        translateY(-2px);
-}
+            border-radius: 20px;
+        }
 
 
-/* =========================================================
-   TABLE WRAPPER
-========================================================= */
+        /* =========================================================
+           TABLE
+        ========================================================= */
 
-.table-wrapper {
+        table {
 
-    overflow-x: auto;
+            width: 100%;
 
-    border-radius: 18px;
+            border-collapse:
+                collapse;
 
-    border:
-        1px solid
-        rgba(210,230,200,.09);
+            min-width: 550px;
+        }
 
-    background:
-        rgba(4,13,8,.48);
 
-    box-shadow:
+        thead {
 
-        0 8px 0
-        #06110a,
+            background:
 
-        0 14px 25px
-        rgba(0,0,0,.28),
+                linear-gradient(
+                    145deg,
+                    #1d382a,
+                    #10251b
+                );
+        }
 
-        inset 0 1px 0
-        rgba(255,255,255,.04);
 
-    scrollbar-width: thin;
+        th {
 
-    scrollbar-color:
-        #4d684f transparent;
-}
+            padding:
+                14px;
 
+            text-align: left;
 
-.table-wrapper::-webkit-scrollbar {
+            color:
+                #899d91;
 
-    height: 5px;
-}
+            font-size: 9px;
 
+            text-transform:
+                uppercase;
 
-.table-wrapper::-webkit-scrollbar-thumb {
+            letter-spacing:
+                1px;
 
-    background:
-        #4d684f;
+            font-weight: 800;
+        }
 
-    border-radius: 20px;
-}
 
+        td {
 
-/* =========================================================
-   TABLE
-========================================================= */
+            padding:
+                14px;
 
-table {
+            border-top:
+                1px solid
+                rgba(245, 238, 220, 0.045);
 
-    width: 100%;
+            color:
+                #b8c7bd;
 
-    border-collapse:
-        collapse;
+            font-size: 11px;
+        }
 
-    min-width: 550px;
-}
 
+        tbody tr {
 
-thead {
+            transition:
+                background 0.2s;
+        }
 
-    background:
 
-        linear-gradient(
-            145deg,
-            #2b4b34,
-            #183122
-        );
-}
+        tbody tr:hover {
 
+            background:
+                rgba(46, 125, 91, 0.055);
+        }
 
-th {
 
-    padding:
-        14px;
+        /* =========================================================
+           HISTORY NUMBER
+        ========================================================= */
 
-    text-align: left;
+        .history-number {
 
-    color:
-        #a1b19f;
+            display: inline-flex;
 
-    font-size: 9px;
+            align-items:
+                center;
 
-    text-transform:
-        uppercase;
+            justify-content:
+                center;
 
-    letter-spacing: 1px;
+            padding:
+                5px 10px;
 
-    font-weight: 800;
-}
+            border-radius: 8px;
 
+            color:
+                var(--cream);
 
-td {
+            background:
 
-    padding:
-        14px;
+                linear-gradient(
+                    145deg,
+                    #315e47,
+                    #173628
+                );
 
-    border-top:
-        1px solid
-        rgba(210,230,200,.05);
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.12);
 
-    color:
-        #becabd;
+            box-shadow:
 
-    font-size: 11px;
-}
+                0 3px 0
+                #07170f,
 
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
 
-tbody tr {
+            font-size: 10px;
 
-    transition:
-        background .2s;
-}
+            font-weight: 900;
 
+            white-space:
+                nowrap;
+        }
 
-tbody tr:hover {
 
-    background:
-        rgba(79,143,95,.07);
-}
+        /* =========================================================
+           NUMBERS CELL
+        ========================================================= */
 
+        .numbers-cell {
 
-/* =========================================================
-   HISTORY NUMBER
-========================================================= */
+            color:
+                #d8ded9;
 
-.history-number {
+            font-family:
+                "Consolas",
+                "Courier New",
+                monospace;
 
-    display: inline-flex;
+            font-size: 11px;
+        }
 
-    align-items: center;
 
-    justify-content: center;
+        /* =========================================================
+           PCS CELL
+        ========================================================= */
 
-    padding:
-        5px 10px;
+        .pcs-cell {
 
-    border-radius: 8px;
+            display: inline-flex;
 
-    color:
-        var(--cream);
+            align-items:
+                center;
 
-    background:
+            justify-content:
+                center;
 
-        linear-gradient(
-            145deg,
-            #477250,
-            #24482f
-        );
+            min-width: 30px;
 
-    border:
-        1px solid
-        rgba(210,230,200,.13);
+            padding:
+                5px 8px;
 
-    box-shadow:
+            border-radius: 8px;
 
-        0 3px 0
-        #07150d,
+            background:
 
-        inset 0 1px 0
-        rgba(255,255,255,.09);
+                linear-gradient(
+                    145deg,
+                    rgba(99, 197, 141, 0.20),
+                    rgba(46, 125, 91, 0.08)
+                );
 
-    font-size: 10px;
+            border:
+                1px solid
+                rgba(99, 197, 141, 0.15);
 
-    font-weight: 900;
+            color:
+                #7ee2a5;
 
-    white-space: nowrap;
-}
+            box-shadow:
 
+                0 3px 0
+                rgba(11, 55, 36, 0.75);
 
-/* =========================================================
-   NUMBERS CELL
-========================================================= */
+            font-weight: 900;
 
-.numbers-cell {
+            font-size: 11px;
+        }
 
-    color:
-        #d9dfd6;
 
-    font-family:
-        "Consolas",
-        "Courier New",
-        monospace;
+        /* =========================================================
+           TOTAL CELL
+        ========================================================= */
 
-    font-size: 11px;
-}
+        .total-cell {
 
+            color:
+                var(--cream);
 
-/* =========================================================
-   PCS CELL
-========================================================= */
+            font-weight: 900;
 
-.pcs-cell {
+            font-size: 12px;
 
-    display: inline-flex;
+            text-shadow:
 
-    align-items: center;
+                0 2px 8px
+                rgba(245, 238, 220, 0.15);
+        }
 
-    justify-content: center;
 
-    min-width: 30px;
+        /* =========================================================
+           EMPTY HISTORY
+        ========================================================= */
 
-    padding:
-        5px 8px;
+        .empty-history {
 
-    border-radius: 8px;
+            padding:
+                32px !important;
 
-    background:
+            text-align:
+                center;
 
-        linear-gradient(
-            145deg,
-            rgba(145,199,131,.23),
-            rgba(79,143,95,.10)
-        );
+            color:
+                #5d7166;
 
-    border:
-        1px solid
-        rgba(145,199,131,.17);
+            font-size: 11px;
 
-    color:
-        #b1d99f;
+            background:
+                rgba(0, 0, 0, 0.08);
+        }
 
-    box-shadow:
 
-        0 3px 0
-        rgba(18,60,29,.75);
+        /* =========================================================
+           FOOTER
+        ========================================================= */
 
-    font-weight: 900;
+        .footer {
 
-    font-size: 11px;
-}
+            margin-top: 20px;
 
+            padding-top: 17px;
 
-/* =========================================================
-   TOTAL CELL
-========================================================= */
+            border-top:
+                1px solid
+                rgba(245, 238, 220, 0.05);
 
-.total-cell {
+            text-align:
+                center;
 
-    color:
-        var(--cream);
+            color:
+                #607167;
 
-    font-weight: 900;
+            font-size: 10px;
+        }
 
-    font-size: 12px;
 
-    text-shadow:
+        .enter-key {
 
-        0 2px 8px
-        rgba(217,201,168,.18);
-}
+            display: inline-flex;
 
+            align-items:
+                center;
 
-/* =========================================================
-   EMPTY HISTORY
-========================================================= */
+            justify-content:
+                center;
 
-.empty-history {
+            min-width: 40px;
 
-    padding: 32px !important;
+            padding:
+                4px 8px;
 
-    text-align: center;
+            margin:
+                0 4px;
 
-    color:
-        #617765;
+            border-radius: 6px;
 
-    font-size: 11px;
+            background:
 
-    background:
-        rgba(0,0,0,.08);
-}
+                linear-gradient(
+                    145deg,
+                    #20372b,
+                    #102219
+                );
 
+            border:
+                1px solid
+                rgba(245, 238, 220, 0.07);
 
-/* =========================================================
-   FOOTER
-========================================================= */
+            box-shadow:
 
-.footer {
+                0 3px 0
+                #06100b;
 
-    margin-top: 20px;
+            color:
+                #aabbb0;
 
-    padding-top: 17px;
+            font-family:
+                "Consolas",
+                monospace;
 
-    border-top:
-        1px solid
-        rgba(210,230,200,.06);
+            font-size: 9px;
 
-    text-align: center;
+            font-weight: 700;
+        }
 
-    color:
-        #6d8271;
 
-    font-size: 10px;
-}
+        /* =========================================================
+           TABLET
+        ========================================================= */
 
+        @media (max-width: 700px) {
 
-.enter-key {
+            body {
 
-    display: inline-flex;
+                padding: 15px;
 
-    align-items: center;
+                align-items:
+                    flex-start;
 
-    justify-content: center;
+                padding-top: 20px;
+            }
 
-    min-width: 40px;
 
-    padding:
-        4px 8px;
+            .container {
 
-    margin:
-        0 4px;
+                padding: 22px;
 
-    border-radius: 6px;
+                border-radius: 27px;
+            }
+        }
 
-    background:
 
-        linear-gradient(
-            145deg,
-            #29422f,
-            #17291e
-        );
+        /* =========================================================
+           MOBILE
+        ========================================================= */
 
-    border:
-        1px solid
-        rgba(210,230,200,.08);
+        @media (max-width: 600px) {
 
-    box-shadow:
+            body {
 
-        0 3px 0
-        #06110a;
+                padding: 9px;
 
-    color:
-        #b1c0b0;
+                padding-top: 12px;
 
-    font-family:
-        "Consolas",
-        monospace;
+                background-attachment:
+                    scroll;
+            }
 
-    font-size: 9px;
 
-    font-weight: 700;
-}
+            .container {
 
+                width: 100%;
 
-/* =========================================================
-   TABLET
-========================================================= */
+                padding: 17px;
 
-@media(max-width: 700px) {
+                border-radius: 23px;
+            }
 
-    body {
 
-        padding: 15px;
+            .header {
 
-        align-items:
-            flex-start;
+                align-items:
+                    flex-start;
 
-        padding-top: 20px;
-    }
+                margin-bottom: 20px;
+            }
 
 
-    .container {
+            .icon {
 
-        padding: 22px;
+                width: 44px;
+                height: 44px;
 
-        border-radius: 27px;
-    }
+                border-radius: 14px;
 
-}
+                font-size: 20px;
 
+                box-shadow:
 
-/* =========================================================
-   MOBILE
-========================================================= */
+                    0 8px 0
+                    #8f8062,
 
-@media(max-width: 600px) {
+                    0 13px 20px
+                    rgba(0, 0, 0, 0.25);
+            }
 
-    body {
 
-        padding: 9px;
+            .title {
 
-        padding-top: 12px;
-    }
+                gap: 11px;
+            }
 
 
-    .container {
+            .title h1 {
 
-        width: 100%;
+                font-size: 16px;
+            }
 
-        padding: 17px;
 
-        border-radius: 23px;
-    }
+            .title p {
 
+                font-size: 9px;
+            }
 
-    .header {
 
-        align-items:
-            flex-start;
+            .counter {
 
-        margin-bottom: 20px;
-    }
+                padding:
+                    7px 9px;
 
+                font-size: 9px;
+            }
 
-    .icon {
 
-        width: 44px;
-        height: 44px;
+            .input-list {
 
-        border-radius: 14px;
+                max-height: 300px;
+            }
 
-        font-size: 20px;
 
-        box-shadow:
+            .input-row {
 
-            0 8px 0
-            #766344,
+                gap: 8px;
 
-            0 13px 20px
-            rgba(0,0,0,.25);
-    }
+                margin-bottom: 10px;
+            }
 
 
-    .title {
+            .number {
 
-        gap: 11px;
-    }
+                width: 36px;
+                height: 48px;
 
+                border-radius: 11px;
 
-    .title h1 {
+                box-shadow:
 
-        font-size: 16px;
-    }
+                    0 4px 0
+                    #06130d,
 
+                    0 7px 12px
+                    rgba(0, 0, 0, 0.25);
+            }
 
-    .title p {
 
-        font-size: 9px;
-    }
+            input {
 
+                height: 48px;
 
-    .counter {
+                border-radius: 13px;
 
-        padding:
-            7px 9px;
+                padding-left: 14px;
 
-        font-size: 9px;
-    }
+                font-size: 15px;
+            }
 
 
-    .input-list {
+            .button-area {
 
-        max-height: 300px;
-    }
+                grid-template-columns:
+                    1fr;
 
+                gap: 10px;
+            }
 
-    .input-row {
 
-        gap: 8px;
+            button {
 
-        margin-bottom: 10px;
-    }
+                height: 50px;
+            }
 
 
-    .number {
+            .result {
 
-        width: 36px;
-        height: 48px;
+                padding:
+                    17px;
 
-        border-radius: 11px;
+                border-radius: 16px;
 
-        box-shadow:
+                box-shadow:
 
-            0 4px 0
-            #07150d,
+                    0 6px 0
+                    rgba(4, 25, 17, 0.85),
 
-            0 7px 12px
-            rgba(0,0,0,.25);
-    }
+                    0 13px 22px
+                    rgba(0, 0, 0, 0.25);
+            }
 
 
-    input {
+            .result strong {
 
-        height: 48px;
+                font-size: 25px;
+            }
 
-        border-radius: 13px;
 
-        padding-left: 14px;
+            .history {
 
-        font-size: 15px;
-    }
+                margin-top: 24px;
 
+                padding-top: 20px;
+            }
 
-    .button-area {
 
-        grid-template-columns:
-            1fr;
+            .history-header {
 
-        gap: 10px;
-    }
+                align-items:
+                    flex-start;
+            }
 
 
-    button {
+            .clear-history {
 
-        height: 50px;
-    }
+                padding:
+                    7px 9px;
+            }
 
 
-    .result {
+            .footer {
 
-        padding:
-            17px;
+                font-size: 9px;
+            }
+        }
 
-        border-radius: 16px;
 
-        box-shadow:
+        /* =========================================================
+           SMALL PHONE
+        ========================================================= */
 
-            0 6px 0
-            rgba(4,25,13,.85),
+        @media (max-width: 380px) {
 
-            0 13px 22px
-            rgba(0,0,0,.25);
-    }
+            .container {
 
+                padding: 14px;
 
-    .result strong {
+                border-radius: 20px;
+            }
 
-        font-size: 25px;
-    }
 
+            .title {
 
-    .history {
+                gap: 8px;
+            }
 
-        margin-top: 24px;
 
-        padding-top: 20px;
-    }
+            .icon {
 
+                width: 39px;
+                height: 39px;
 
-    .history-header {
+                font-size: 18px;
+            }
 
-        align-items:
-            flex-start;
-    }
 
+            .title h1 {
 
-    .clear-history {
+                font-size: 14px;
+            }
 
-        padding:
-            7px 9px;
-    }
 
+            .title p {
 
-    .footer {
+                font-size: 8px;
+            }
 
-        font-size: 9px;
-    }
 
-}
+            .counter {
 
+                font-size: 8px;
 
-/* =========================================================
-   SMALL PHONE
-========================================================= */
+                padding:
+                    6px 8px;
+            }
 
-@media(max-width: 380px) {
 
-    .container {
+            .number {
 
-        padding: 14px;
+                width: 33px;
+            }
+        }
 
-        border-radius: 20px;
-    }
-
-
-    .title {
-
-        gap: 8px;
-    }
-
-
-    .icon {
-
-        width: 39px;
-        height: 39px;
-
-        font-size: 18px;
-    }
-
-
-    .title h1 {
-
-        font-size: 14px;
-    }
-
-
-    .title p {
-
-        font-size: 8px;
-    }
-
-
-    .counter {
-
-        font-size: 8px;
-
-        padding:
-            6px 8px;
-    }
-
-
-    .number {
-
-        width: 33px;
-    }
-
-}
-
-</style>
+    </style>
 
 </head>
 
 
 <body>
 
+    <div class="container">
 
-<div class="container">
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
 
+        <div class="header">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+            <div class="title">
 
-    <div class="header">
+                <div class="icon">
+                    Σ
+                </div>
 
-        <div class="title">
+                <div>
 
-            <div class="icon">
-                Σ
+                    <h1>
+                        Input Yard
+                    </h1>
+
+                    <p>
+                        Silahkan input yard sesuai dengan yang diberikan mandor.
+                    </p>
+
+                </div>
+
             </div>
 
-            <div>
 
-                <h1>
-                    Input Yard
-                </h1>
-
-                <p>
-                    Silahkan input yard sesuai dengan yang diberikan mandor.
-                </p>
-
+            <div
+                class="counter"
+                id="counter"
+            >
+                1 Data
             </div>
 
         </div>
 
+
+        <!-- =====================================================
+             INPUT
+        ====================================================== -->
 
         <div
-            class="counter"
-            id="counter">
-
-            1 Data
-
-        </div>
-
-    </div>
+            class="input-list"
+            id="inputList"
+        ></div>
 
 
-    <!-- =====================================================
-         INPUT
-    ====================================================== -->
+        <!-- =====================================================
+             BUTTON
+        ====================================================== -->
 
-    <div
-        class="input-list"
-        id="inputList">
-    </div>
+        <div class="button-area">
 
-
-    <!-- =====================================================
-         BUTTON
-    ====================================================== -->
-
-    <div class="button-area">
-
-        <button
-            class="add-button"
-            onclick="addInput(true)">
-
-            ＋ Tambah Kolom
-
-        </button>
-
-
-        <button
-            class="save-button"
-            onclick="saveHistory()">
-
-            ✓ Simpan ke History
-
-        </button>
-
-    </div>
-
-
-    <!-- =====================================================
-         TOTAL
-    ====================================================== -->
-
-    <div
-        class="result"
-        id="result">
-
-        <div class="result-label">
-
-            <span>
-                Total Yard
-            </span>
-
-            <small>
-                Jumlah seluruh angka
-            </small>
-
-        </div>
-
-
-        <strong id="total">
-            0
-        </strong>
-
-    </div>
-
-
-    <!-- =====================================================
-         HISTORY
-    ====================================================== -->
-
-    <div class="history">
-
-
-        <div class="history-header">
-
-            <div class="history-title">
-
-                <h2>
-                    History
-                </h2>
-
-                <span>
-                    Riwayat Input Yard
-                </span>
-
-            </div>
+            <button
+                class="add-button"
+                onclick="addInput(true)"
+            >
+                ＋ Tambah Kolom
+            </button>
 
 
             <button
-                class="clear-history"
-                onclick="clearHistory()">
-
-                Hapus History
-
+                class="save-button"
+                onclick="saveHistory()"
+            >
+                ✓ Simpan ke History
             </button>
 
         </div>
 
 
-        <div class="table-wrapper">
+        <!-- =====================================================
+             TOTAL
+        ====================================================== -->
 
-            <table>
+        <div
+            class="result"
+            id="result"
+        >
 
-                <thead>
+            <div class="result-label">
 
-                    <tr>
+                <span>
+                    Total Yard
+                </span>
 
-                        <th>
-                            No
-                        </th>
+                <small>
+                    Jumlah seluruh angka
+                </small>
 
-                        <th>
-                            YARD
-                        </th>
-
-                        <th>
-                            Total PCS
-                        </th>
-
-                        <th>
-                            Total Yard
-                        </th>
-
-                    </tr>
-
-                </thead>
+            </div>
 
 
-                <tbody
-                    id="historyBody">
-
-                    <tr
-                        id="emptyHistory">
-
-                        <td
-                            colspan="4"
-                            class="empty-history">
-
-                            Belum ada history
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+            <strong id="total">
+                0
+            </strong>
 
         </div>
 
-    </div>
+
+        <!-- =====================================================
+             HISTORY
+        ====================================================== -->
+
+        <div class="history">
+
+            <div class="history-header">
+
+                <div class="history-title">
+
+                    <h2>
+                        History
+                    </h2>
+
+                    <span>
+                        Riwayat Input Yard
+                    </span>
+
+                </div>
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+                <button
+                    class="clear-history"
+                    onclick="clearHistory()"
+                >
+                    Hapus History
+                </button>
 
-    <div class="footer">
-
-        Tekan
-
-        <span class="enter-key">
-            Enter
-        </span>
-
-        untuk menambah kolom berikutnya
-
-    </div>
+            </div>
 
 
-</div>
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                YARD
+                            </th>
+
+                            <th>
+                                Total PCS
+                            </th>
+
+                            <th>
+                                Total Yard
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-<script>
+                    <tbody id="historyBody">
 
+                        <tr id="emptyHistory">
 
-/* =========================================================
-   ELEMENT
-========================================================= */
+                            <td
+                                colspan="4"
+                                class="empty-history"
+                            >
+                                Belum ada history
+                            </td>
 
-const inputList =
-    document.getElementById(
-        "inputList"
-    );
+                        </tr>
 
+                    </tbody>
 
-const counter =
-    document.getElementById(
-        "counter"
-    );
+                </table>
 
+            </div>
 
-const result =
-    document.getElementById(
-        "result"
-    );
-
-
-const total =
-    document.getElementById(
-        "total"
-    );
-
-
-const historyBody =
-    document.getElementById(
-        "historyBody"
-    );
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
-
-let number = 0;
-
-
-/* =========================================================
-   ADD INPUT
-========================================================= */
-
-function addInput(
-    focusInput = true
-) {
-
-    number++;
-
-
-    const row =
-        document.createElement(
-            "div"
-        );
-
-
-    row.className =
-        "input-row";
-
-
-    row.innerHTML = `
-
-        <div class="number">
-            ${number}
         </div>
 
-        <div class="input-wrapper">
 
-            <input
-                type="number"
-                placeholder="Masukkan yard..."
-                autocomplete="off"
-            >
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
 
-            <span class="check">
-                ✓
+        <div class="footer">
+
+            Tekan
+
+            <span class="enter-key">
+                Enter
             </span>
 
+            untuk menambah kolom berikutnya
+
         </div>
 
-    `;
+    </div>
 
 
-    inputList.appendChild(row);
+    <script>
+
+        /* =========================================================
+           ELEMENT
+        ========================================================= */
+
+        const inputList =
+            document.getElementById("inputList");
+
+        const counter =
+            document.getElementById("counter");
+
+        const result =
+            document.getElementById("result");
+
+        const total =
+            document.getElementById("total");
+
+        const historyBody =
+            document.getElementById("historyBody");
 
 
-    const input =
-        row.querySelector(
-            "input"
-        );
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+
+        let number = 0;
 
 
-    /* =====================================================
-       INPUT CHANGE
-    ===================================================== */
+        /* =========================================================
+           ADD INPUT
+        ========================================================= */
 
-    input.addEventListener(
-        "input",
-        function() {
+        function addInput(focusInput = true) {
 
-            if (
-                this.value.trim() !== ""
-            ) {
+            number++;
 
-                this.classList.add(
-                    "valid"
-                );
+            const row =
+                document.createElement("div");
 
-            } else {
+            row.className =
+                "input-row";
 
-                this.classList.remove(
-                    "valid"
+
+            row.innerHTML = `
+
+                <div class="number">
+                    ${number}
+                </div>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="number"
+                        placeholder="Masukkan yard..."
+                        autocomplete="off"
+                    >
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                </div>
+
+            `;
+
+
+            inputList.appendChild(row);
+
+
+            const input =
+                row.querySelector("input");
+
+
+            /* =====================================================
+               INPUT CHANGE
+            ===================================================== */
+
+            input.addEventListener(
+                "input",
+                function () {
+
+                    if (
+                        this.value.trim() !== ""
+                    ) {
+
+                        this.classList.add("valid");
+
+                    } else {
+
+                        this.classList.remove("valid");
+
+                    }
+
+                    calculateTotal();
+
+                }
+            );
+
+
+            /* =====================================================
+               ENTER
+            ===================================================== */
+
+            input.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key !== "Enter"
+                    ) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    /*
+                        Enter hanya bekerja
+                        jika angka sudah diisi.
+                    */
+
+                    if (
+                        this.value.trim() === ""
+                    ) {
+                        return;
+                    }
+
+
+                    const inputs =
+                        inputList.querySelectorAll(
+                            "input"
+                        );
+
+
+                    const lastInput =
+                        inputs[
+                            inputs.length - 1
+                        ];
+
+
+                    /*
+                        Jika input terakhir,
+                        buat input baru.
+                    */
+
+                    if (
+                        this === lastInput
+                    ) {
+
+                        addInput(true);
+
+                    } else {
+
+                        /*
+                            Jika bukan input terakhir,
+                            pindah ke input berikutnya.
+                        */
+
+                        const index =
+                            Array
+                                .from(inputs)
+                                .indexOf(this);
+
+
+                        if (
+                            inputs[index + 1]
+                        ) {
+
+                            inputs[
+                                index + 1
+                            ].focus();
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            if (focusInput) {
+
+                setTimeout(
+                    () => input.focus(),
+                    50
                 );
 
             }
 
 
-            calculateTotal();
+            updateCounter();
 
         }
-    );
 
 
-    /* =====================================================
-       ENTER
-    ===================================================== */
+        /* =========================================================
+           CALCULATE TOTAL
+        ========================================================= */
 
-    input.addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key !== "Enter"
-            ) {
-
-                return;
-
-            }
-
-
-            event.preventDefault();
-
-
-            /*
-                Enter hanya bekerja
-                jika angka sudah diisi.
-            */
-
-            if (
-                this.value.trim() === ""
-            ) {
-
-                return;
-
-            }
-
+        function calculateTotal() {
 
             const inputs =
                 inputList.querySelectorAll(
@@ -2316,444 +2322,350 @@ function addInput(
                 );
 
 
-            const lastInput =
-                inputs[
-                    inputs.length - 1
-                ];
+            let sum = 0;
+
+            let filled = 0;
 
 
-            /*
-                Jika input terakhir,
-                buat input baru.
-            */
+            inputs.forEach(
+                input => {
+
+                    const value =
+                        parseFloat(
+                            input.value
+                        );
+
+
+                    if (
+                        !isNaN(value)
+                    ) {
+
+                        sum += value;
+
+                        filled++;
+
+                    }
+
+                }
+            );
+
+
+            total.textContent =
+                sum.toLocaleString("id-ID");
+
 
             if (
-                this === lastInput
+                filled > 0
             ) {
 
-                addInput(true);
+                result.classList.add("show");
 
             } else {
 
-                /*
-                    Jika bukan input terakhir,
-                    pindah ke input berikutnya.
-                */
+                result.classList.remove("show");
 
-                const index =
-                    Array
-                    .from(inputs)
-                    .indexOf(this);
+            }
+
+        }
 
 
-                if (
-                    inputs[index + 1]
-                ) {
+        /* =========================================================
+           UPDATE COUNTER
+        ========================================================= */
 
-                    inputs[
-                        index + 1
-                    ].focus();
+        function updateCounter() {
+
+            const inputs =
+                inputList.querySelectorAll(
+                    "input"
+                );
+
+
+            counter.textContent =
+                `${inputs.length} Data`;
+
+        }
+
+
+        /* =========================================================
+           SAVE HISTORY
+        ========================================================= */
+
+        function saveHistory() {
+
+            const inputs =
+                inputList.querySelectorAll(
+                    "input"
+                );
+
+
+            const values = [];
+
+
+            /*
+                Ambil semua angka
+                yang sudah diisi.
+            */
+
+            inputs.forEach(
+                input => {
+
+                    if (
+                        input.value.trim() !== ""
+                    ) {
+
+                        values.push(
+                            input.value
+                        );
+
+                    }
 
                 }
-
-            }
-
-        }
-    );
+            );
 
 
-    if (focusInput) {
-
-        setTimeout(
-            () => input.focus(),
-            50
-        );
-
-    }
-
-
-    updateCounter();
-
-}
-
-
-/* =========================================================
-   CALCULATE TOTAL
-========================================================= */
-
-function calculateTotal() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    let sum = 0;
-
-    let filled = 0;
-
-
-    inputs.forEach(
-        input => {
-
-            const value =
-                parseFloat(
-                    input.value
-                );
-
+            /*
+                Jangan simpan jika
+                belum ada angka.
+            */
 
             if (
-                !isNaN(value)
+                values.length === 0
             ) {
 
-                sum += value;
-
-                filled++;
-
-            }
-
-        }
-    );
-
-
-    total.textContent =
-        sum.toLocaleString(
-            "id-ID"
-        );
-
-
-    if (
-        filled > 0
-    ) {
-
-        result.classList.add(
-            "show"
-        );
-
-    } else {
-
-        result.classList.remove(
-            "show"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE COUNTER
-========================================================= */
-
-function updateCounter() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    counter.textContent =
-        `${inputs.length} Data`;
-
-}
-
-
-/* =========================================================
-   SAVE HISTORY
-========================================================= */
-
-function saveHistory() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    const values = [];
-
-
-    /*
-        Ambil semua angka
-        yang sudah diisi.
-    */
-
-    inputs.forEach(
-        input => {
-
-            if (
-                input.value.trim() !== ""
-            ) {
-
-                values.push(
-                    input.value
+                alert(
+                    "Silakan masukkan angka terlebih dahulu."
                 );
 
+                return;
+
             }
 
-        }
-    );
 
+            /* =====================================================
+               HITUNG TOTAL
+            ===================================================== */
 
-    /*
-        Jangan simpan jika
-        belum ada angka.
-    */
+            let sum = 0;
 
-    if (
-        values.length === 0
-    ) {
 
-        alert(
-            "Silakan masukkan angka terlebih dahulu."
-        );
+            values.forEach(
+                value => {
 
-        return;
+                    sum +=
+                        parseFloat(value);
 
-    }
+                }
+            );
 
 
-    /* =====================================================
-       HITUNG TOTAL
-    ===================================================== */
+            /* =====================================================
+               HAPUS EMPTY HISTORY
+            ===================================================== */
 
-    let sum = 0;
-
-
-    values.forEach(
-        value => {
-
-            sum +=
-                parseFloat(value);
-
-        }
-    );
-
-
-    /* =====================================================
-       HAPUS EMPTY HISTORY
-    ===================================================== */
-
-    const empty =
-        document.getElementById(
-            "emptyHistory"
-        );
-
-
-    if (empty) {
-
-        empty.remove();
-
-    }
-
-
-    /* =====================================================
-       FORMAT ANGKA
-    ===================================================== */
-
-    const formattedValues =
-        "(" +
-        values.join(", ") +
-        ")";
-
-
-    /* =====================================================
-       BUAT ROW
-    ===================================================== */
-
-    const row =
-        document.createElement(
-            "tr"
-        );
-
-
-    row.innerHTML = `
-
-        <td>
-
-            <span
-                class="history-number">
-
-                SJ 0
-
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="numbers-cell">
-
-                ${formattedValues}
-
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="pcs-cell">
-
-                ${values.length}
-
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="total-cell">
-
-                ${sum.toLocaleString("id-ID")}
-
-            </span>
-
-        </td>
-
-    `;
-
-
-    /*
-        History baru ditambahkan
-        ke bagian paling bawah.
-    */
-
-    historyBody.appendChild(
-        row
-    );
-
-
-    /*
-        Update nomor:
-        SJ 1, SJ 2, SJ 3, dst.
-    */
-
-    updateHistoryNumber();
-
-
-    /*
-        Setelah disimpan,
-        kosongkan input.
-    */
-
-    resetInput();
-
-}
-
-
-/* =========================================================
-   UPDATE HISTORY NUMBER
-========================================================= */
-
-function updateHistoryNumber() {
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr"
-        );
-
-
-    let nomor = 1;
-
-
-    rows.forEach(
-        row => {
-
-            const numberElement =
-                row.querySelector(
-                    ".history-number"
+            const empty =
+                document.getElementById(
+                    "emptyHistory"
                 );
 
 
-            if (numberElement) {
+            if (empty) {
 
-                numberElement.textContent =
-                    `SJ ${nomor}`;
-
-                nomor++;
+                empty.remove();
 
             }
 
+
+            /* =====================================================
+               FORMAT ANGKA
+            ===================================================== */
+
+            const formattedValues =
+                "(" +
+                values.join(", ") +
+                ")";
+
+
+            /* =====================================================
+               BUAT ROW
+            ===================================================== */
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <span
+                        class="history-number"
+                    >
+                        SJ 0
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="numbers-cell"
+                    >
+                        ${formattedValues}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="pcs-cell"
+                    >
+                        ${values.length}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="total-cell"
+                    >
+                        ${sum.toLocaleString("id-ID")}
+                    </span>
+
+                </td>
+
+            `;
+
+
+            /*
+                History baru ditambahkan
+                ke bagian paling bawah.
+            */
+
+            historyBody.appendChild(row);
+
+
+            /*
+                Update nomor:
+                SJ 1, SJ 2, SJ 3, dst.
+            */
+
+            updateHistoryNumber();
+
+
+            /*
+                Setelah disimpan,
+                kosongkan input.
+            */
+
+            resetInput();
+
         }
-    );
-
-}
 
 
-/* =========================================================
-   RESET INPUT
-========================================================= */
+        /* =========================================================
+           UPDATE HISTORY NUMBER
+        ========================================================= */
 
-function resetInput() {
+        function updateHistoryNumber() {
 
-    inputList.innerHTML = "";
-
-
-    number = 0;
-
-
-    total.textContent =
-        "0";
+            const rows =
+                historyBody.querySelectorAll(
+                    "tr"
+                );
 
 
-    result.classList.remove(
-        "show"
-    );
+            let nomor = 1;
 
 
-    /*
-        Buat input baru.
-    */
+            rows.forEach(
+                row => {
 
-    addInput(true);
-
-}
-
-
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
-
-function clearHistory() {
-
-    historyBody.innerHTML = `
-
-        <tr id="emptyHistory">
-
-            <td
-                colspan="4"
-                class="empty-history">
-
-                Belum ada history
-
-            </td>
-
-        </tr>
-
-    `;
-
-}
+                    const numberElement =
+                        row.querySelector(
+                            ".history-number"
+                        );
 
 
-/* =========================================================
-   START
-========================================================= */
+                    if (numberElement) {
 
-addInput(true);
+                        numberElement.textContent =
+                            `SJ ${nomor}`;
+
+                        nomor++;
+
+                    }
+
+                }
+            );
+
+        }
 
 
-</script>
+        /* =========================================================
+           RESET INPUT
+        ========================================================= */
 
+        function resetInput() {
+
+            inputList.innerHTML = "";
+
+            number = 0;
+
+            total.textContent =
+                "0";
+
+            result.classList.remove(
+                "show"
+            );
+
+
+            /*
+                Buat input baru.
+            */
+
+            addInput(true);
+
+        }
+
+
+        /* =========================================================
+           CLEAR HISTORY
+        ========================================================= */
+
+        function clearHistory() {
+
+            historyBody.innerHTML = `
+
+                <tr id="emptyHistory">
+
+                    <td
+                        colspan="4"
+                        class="empty-history"
+                    >
+                        Belum ada history
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+
+        /* =========================================================
+           START
+        ========================================================= */
+
+        addInput(true);
+
+    </script>
 
 </body>
 
 </html>
-```
