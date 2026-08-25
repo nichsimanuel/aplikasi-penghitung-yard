@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 
@@ -32,46 +33,52 @@
 
 
 /* =========================================================
-   COLOR THEME
+   NATURE FOREST COLOR THEME
 ========================================================= */
 
 :root {
 
-    --darkest:
-        #061710;
+    --forest-deep:
+        #10251a;
 
-    --dark:
-        #0b2118;
+    --forest-dark:
+        #173522;
 
-    --dark-2:
-        #102d21;
+    --forest:
+        #1f4d32;
 
-    --dark-3:
-        #163a2b;
+    --forest-light:
+        #2f6b45;
 
-    --green:
-        #1f5c45;
+    --leaf:
+        #4f8f5f;
 
-    --green-light:
-        #2e7d5b;
+    --sage:
+        #82a878;
 
-    --green-bright:
-        #3f9b70;
+    --mint:
+        #a8c69f;
 
     --cream:
-        #f5eedc;
+        #f4ecd8;
 
     --cream-light:
         #fffdf5;
 
-    --cream-dark:
-        #d8cdb5;
+    --sand:
+        #d9c9a8;
+
+    --earth:
+        #715b3d;
+
+    --earth-dark:
+        #4a3b27;
 
     --muted:
-        #8fa59a;
+        #91a895;
 
     --border:
-        rgba(245,238,220,.12);
+        rgba(220,235,205,.13);
 
     --shadow:
         rgba(0,0,0,.55);
@@ -100,24 +107,30 @@ body {
     background:
 
         radial-gradient(
-            circle at 10% 10%,
-            rgba(46,125,91,.28),
+            circle at 8% 12%,
+            rgba(79,143,95,.28),
             transparent 30%
         ),
 
         radial-gradient(
-            circle at 90% 85%,
-            rgba(31,92,69,.28),
-            transparent 32%
+            circle at 90% 15%,
+            rgba(47,107,69,.20),
+            transparent 28%
         ),
 
         radial-gradient(
-            circle at 50% 100%,
-            rgba(245,238,220,.06),
+            circle at 85% 90%,
+            rgba(130,168,120,.14),
             transparent 30%
         ),
 
-        var(--darkest);
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(113,91,61,.12),
+            transparent 28%
+        ),
+
+        #0b1c13;
 
     overflow-x: hidden;
 
@@ -126,7 +139,7 @@ body {
 
 
 /* =========================================================
-   BACKGROUND ORBS
+   BACKGROUND NATURE LIGHT
 ========================================================= */
 
 body::before {
@@ -135,18 +148,18 @@ body::before {
 
     position: fixed;
 
-    width: 300px;
-    height: 300px;
+    width: 340px;
+    height: 340px;
 
     border-radius: 50%;
 
     background:
-        rgba(46,125,91,.14);
+        rgba(79,143,95,.15);
 
     filter:
-        blur(90px);
+        blur(95px);
 
-    top: -120px;
+    top: -130px;
     left: -100px;
 
     pointer-events: none;
@@ -159,19 +172,19 @@ body::after {
 
     position: fixed;
 
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
 
     border-radius: 50%;
 
     background:
-        rgba(245,238,220,.06);
+        rgba(217,201,168,.07);
 
     filter:
-        blur(100px);
+        blur(110px);
 
-    bottom: -150px;
-    right: -120px;
+    bottom: -170px;
+    right: -140px;
 
     pointer-events: none;
 }
@@ -197,27 +210,28 @@ body::after {
 
         linear-gradient(
             145deg,
-            #163a2b,
-            #0a1d15 55%,
-            #07150f
+            #254d35,
+            #163522 45%,
+            #0e2117 75%,
+            #091810
         );
 
     border:
         1px solid
-        rgba(245,238,220,.12);
+        rgba(190,220,180,.16);
 
     box-shadow:
 
         0 45px 100px
-        rgba(0,0,0,.65),
+        rgba(0,0,0,.68),
 
         0 18px 35px
-        rgba(0,0,0,.35),
+        rgba(0,0,0,.38),
 
         inset 0 1px 0
-        rgba(255,255,255,.09),
+        rgba(255,255,255,.10),
 
-        inset 0 -2px 0
+        inset 0 -3px 0
         rgba(0,0,0,.45);
 
     transform:
@@ -238,21 +252,21 @@ body::after {
     box-shadow:
 
         0 55px 110px
-        rgba(0,0,0,.68),
+        rgba(0,0,0,.72),
 
         0 20px 40px
-        rgba(0,0,0,.35),
+        rgba(0,0,0,.40),
 
         inset 0 1px 0
-        rgba(255,255,255,.11),
+        rgba(255,255,255,.12),
 
-        inset 0 -2px 0
-        rgba(0,0,0,.5);
+        inset 0 -3px 0
+        rgba(0,0,0,.52);
 }
 
 
 /* =========================================================
-   TOP LIGHT
+   TOP NATURE LIGHT
 ========================================================= */
 
 .container::before {
@@ -274,15 +288,15 @@ body::after {
         linear-gradient(
             90deg,
             transparent,
-            var(--cream),
-            var(--green-bright),
+            var(--mint),
+            var(--sage),
             transparent
         );
 
     box-shadow:
 
         0 0 18px
-        rgba(245,238,220,.35);
+        rgba(168,198,159,.40);
 }
 
 
@@ -320,7 +334,7 @@ body::after {
 
 
 /* =========================================================
-   3D ICON
+   NATURE ICON
 ========================================================= */
 
 .icon {
@@ -338,7 +352,7 @@ body::after {
     border-radius: 17px;
 
     color:
-        var(--darkest);
+        #173522;
 
     font-size: 23px;
 
@@ -348,32 +362,32 @@ body::after {
 
         linear-gradient(
             145deg,
-            #fffdf5,
-            #e6dbc2 45%,
-            #c9b996
+            #f8f1df,
+            #e4d5b4 48%,
+            #c7b58d
         );
 
     border:
         1px solid
-        rgba(255,255,255,.45);
+        rgba(255,255,255,.50);
 
     box-shadow:
 
         0 11px 0
-        #8f8062,
+        #766344,
 
         0 18px 28px
         rgba(0,0,0,.30),
 
         inset 0 2px 2px
-        rgba(255,255,255,.7),
+        rgba(255,255,255,.75),
 
         inset 0 -5px 8px
         rgba(0,0,0,.10);
 
     text-shadow:
         0 1px 1px
-        rgba(255,255,255,.4);
+        rgba(255,255,255,.45);
 
     transform:
         translateY(-3px);
@@ -429,13 +443,13 @@ body::after {
 
         linear-gradient(
             145deg,
-            #1d4635,
-            #0d261b
+            #315e3e,
+            #173523
         );
 
     border:
         1px solid
-        rgba(245,238,220,.12);
+        rgba(190,220,180,.14);
 
     color:
         var(--cream);
@@ -447,13 +461,13 @@ body::after {
     box-shadow:
 
         0 5px 0
-        #06130d,
+        #07150d,
 
         0 10px 18px
         rgba(0,0,0,.30),
 
         inset 0 1px 0
-        rgba(255,255,255,.07);
+        rgba(255,255,255,.08);
 }
 
 
@@ -467,11 +481,11 @@ body::after {
     border-radius: 50%;
 
     background:
-        #63c58d;
+        #91c783;
 
     box-shadow:
         0 0 10px
-        rgba(99,197,141,.9);
+        rgba(145,199,131,.9);
 }
 
 
@@ -491,7 +505,7 @@ body::after {
     scrollbar-width: thin;
 
     scrollbar-color:
-        #426151 transparent;
+        #58755c transparent;
 }
 
 
@@ -512,8 +526,8 @@ body::after {
     background:
 
         linear-gradient(
-            #557565,
-            #263f33
+            #6d9270,
+            #304c37
         );
 
     border-radius: 20px;
@@ -566,7 +580,7 @@ body::after {
 
 
 /* =========================================================
-   NUMBER 3D
+   NUMBER
 ========================================================= */
 
 .number {
@@ -588,16 +602,16 @@ body::after {
 
         linear-gradient(
             145deg,
-            #244a38,
-            #10271d
+            #365f42,
+            #193524
         );
 
     border:
         1px solid
-        rgba(245,238,220,.09);
+        rgba(210,230,200,.12);
 
     color:
-        #9db5a8;
+        #aec3a9;
 
     font-size: 12px;
 
@@ -606,13 +620,13 @@ body::after {
     box-shadow:
 
         0 5px 0
-        #06130d,
+        #07150d,
 
         0 9px 16px
         rgba(0,0,0,.30),
 
         inset 0 1px 0
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.09);
 
     transform:
         translateZ(10px);
@@ -643,7 +657,7 @@ input {
 
     border:
         1px solid
-        rgba(245,238,220,.10);
+        rgba(210,230,200,.12);
 
     border-radius: 15px;
 
@@ -651,8 +665,8 @@ input {
 
         linear-gradient(
             145deg,
-            #11251c,
-            #081610
+            #183124,
+            #0d1f15
         );
 
     color:
@@ -673,13 +687,13 @@ input {
     box-shadow:
 
         0 6px 0
-        #040d08,
+        #06110a,
 
         0 10px 20px
         rgba(0,0,0,.28),
 
         inset 0 1px 0
-        rgba(255,255,255,.04),
+        rgba(255,255,255,.05),
 
         inset 0 -3px 8px
         rgba(0,0,0,.18);
@@ -689,43 +703,43 @@ input {
 input:hover {
 
     border-color:
-        rgba(245,238,220,.22);
+        rgba(190,220,180,.28);
 }
 
 
 input:focus {
 
     border-color:
-        var(--green-bright);
+        var(--sage);
 
     background:
 
         linear-gradient(
             145deg,
-            #183629,
-            #0a1a12
+            #254b32,
+            #102519
         );
 
     box-shadow:
 
         0 6px 0
-        #12402e,
+        #244d2f,
 
         0 12px 25px
-        rgba(46,125,91,.20),
+        rgba(79,143,95,.22),
 
         0 0 0 3px
-        rgba(46,125,91,.10),
+        rgba(130,168,120,.12),
 
         inset 0 1px 0
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.09);
 }
 
 
 input::placeholder {
 
     color:
-        #60756a;
+        #718674;
 }
 
 
@@ -778,16 +792,16 @@ input[type=number] {
 
         linear-gradient(
             145deg,
-            #72d69c,
-            #2e8b62
+            #b0d39f,
+            #4f8f5f
         );
 
     border:
         1px solid
-        rgba(255,255,255,.18);
+        rgba(255,255,255,.20);
 
     color:
-        white;
+        #173522;
 
     font-size: 11px;
 
@@ -801,10 +815,10 @@ input[type=number] {
     box-shadow:
 
         0 3px 0
-        #175236,
+        #315c39,
 
         0 5px 10px
-        rgba(46,125,91,.25);
+        rgba(79,143,95,.30);
 }
 
 
@@ -866,50 +880,50 @@ button:active {
 
 
 /* =========================================================
-   ADD BUTTON 3D
+   ADD BUTTON
 ========================================================= */
 
 .add-button {
 
     color:
-        var(--cream);
+        #e9f0e4;
 
     background:
 
         linear-gradient(
             145deg,
-            #244636,
-            #132a20
+            #365f42,
+            #1b3826
         );
 
     border:
         1px solid
-        rgba(245,238,220,.08);
+        rgba(190,220,180,.12);
 
     box-shadow:
 
         0 6px 0
-        #06130d,
+        #07150d,
 
         0 12px 20px
         rgba(0,0,0,.28),
 
         inset 0 1px 0
-        rgba(255,255,255,.07);
+        rgba(255,255,255,.08);
 }
 
 
 .add-button:hover {
 
     color:
-        var(--cream-light);
+        white;
 
     background:
 
         linear-gradient(
             145deg,
-            #315c47,
-            #1a3528
+            #4b7853,
+            #254b31
         );
 
     transform:
@@ -918,7 +932,7 @@ button:active {
     box-shadow:
 
         0 8px 0
-        #06130d,
+        #07150d,
 
         0 15px 25px
         rgba(0,0,0,.35);
@@ -926,37 +940,37 @@ button:active {
 
 
 /* =========================================================
-   SAVE BUTTON 3D
+   SAVE BUTTON
 ========================================================= */
 
 .save-button {
 
     color:
-        #102319;
+        #18301f;
 
     background:
 
         linear-gradient(
             145deg,
-            #fffdf5,
-            #f5eedc 45%,
-            #d8cdb5
+            #f8f1df,
+            #eee3c8 45%,
+            #d2c19b
         );
 
     border:
         1px solid
-        rgba(255,255,255,.55);
+        rgba(255,255,255,.60);
 
     box-shadow:
 
         0 6px 0
-        #9c8e70,
+        #806d49,
 
         0 14px 28px
         rgba(0,0,0,.28),
 
         inset 0 1px 0
-        rgba(255,255,255,.8);
+        rgba(255,255,255,.85);
 }
 
 
@@ -969,15 +983,15 @@ button:active {
 
         linear-gradient(
             145deg,
-            #ffffff,
-            #fff8e8,
-            #dfd3b9
+            #fffdf5,
+            #f8eed7,
+            #d9c8a5
         );
 
     box-shadow:
 
         0 9px 0
-        #9c8e70,
+        #806d49,
 
         0 20px 35px
         rgba(0,0,0,.38),
@@ -1010,18 +1024,18 @@ button:active {
 
         linear-gradient(
             145deg,
-            rgba(46,125,91,.28),
-            rgba(15,52,38,.30)
+            rgba(79,143,95,.30),
+            rgba(25,65,38,.34)
         );
 
     border:
         1px solid
-        rgba(143,190,163,.22);
+        rgba(168,198,159,.25);
 
     box-shadow:
 
         0 8px 0
-        rgba(4,25,17,.85),
+        rgba(4,25,13,.85),
 
         0 18px 30px
         rgba(0,0,0,.28),
@@ -1043,7 +1057,7 @@ button:active {
     border-radius: 50%;
 
     background:
-        rgba(99,197,141,.10);
+        rgba(145,199,131,.12);
 
     filter:
         blur(28px);
@@ -1105,7 +1119,7 @@ button:active {
 .result-label span {
 
     color:
-        #a9bcaf;
+        #b6c8b0;
 
     font-size: 10px;
 
@@ -1121,7 +1135,7 @@ button:active {
 .result-label small {
 
     color:
-        #668075;
+        #77917c;
 
     font-size: 10px;
 }
@@ -1143,7 +1157,7 @@ button:active {
     text-shadow:
 
         0 3px 12px
-        rgba(245,238,220,.18);
+        rgba(217,201,168,.22);
 }
 
 
@@ -1159,7 +1173,7 @@ button:active {
 
     border-top:
         1px solid
-        rgba(245,238,220,.07);
+        rgba(210,230,200,.08);
 }
 
 
@@ -1208,14 +1222,14 @@ button:active {
 
         linear-gradient(
             180deg,
-            var(--cream),
-            var(--green-bright)
+            var(--mint),
+            var(--leaf)
         );
 
     box-shadow:
 
         0 0 10px
-        rgba(99,197,141,.35);
+        rgba(130,168,120,.40);
 }
 
 
@@ -1226,14 +1240,14 @@ button:active {
     margin-top: 4px;
 
     color:
-        #60756a;
+        #6f8774;
 
     font-size: 10px;
 }
 
 
 /* =========================================================
-   CLEAR HISTORY 3D
+   CLEAR HISTORY
 ========================================================= */
 
 .clear-history {
@@ -1246,24 +1260,24 @@ button:active {
     border-radius: 10px;
 
     color:
-        #c8bda8;
+        #d4c8ad;
 
     background:
 
         linear-gradient(
             145deg,
-            #263c31,
-            #15261e
+            #344c3a,
+            #1c3023
         );
 
     border:
         1px solid
-        rgba(245,238,220,.08);
+        rgba(210,230,200,.10);
 
     box-shadow:
 
         0 4px 0
-        #06130d,
+        #07150d,
 
         0 7px 12px
         rgba(0,0,0,.25);
@@ -1275,14 +1289,14 @@ button:active {
 .clear-history:hover {
 
     color:
-        var(--cream-light);
+        white;
 
     background:
 
         linear-gradient(
             145deg,
-            #365442,
-            #1d3226
+            #4b664e,
+            #29422f
         );
 
     transform:
@@ -1302,15 +1316,15 @@ button:active {
 
     border:
         1px solid
-        rgba(245,238,220,.08);
+        rgba(210,230,200,.09);
 
     background:
-        rgba(4,13,9,.45);
+        rgba(4,13,8,.48);
 
     box-shadow:
 
         0 8px 0
-        #06100b,
+        #06110a,
 
         0 14px 25px
         rgba(0,0,0,.28),
@@ -1321,7 +1335,7 @@ button:active {
     scrollbar-width: thin;
 
     scrollbar-color:
-        #405d4d transparent;
+        #4d684f transparent;
 }
 
 
@@ -1334,7 +1348,7 @@ button:active {
 .table-wrapper::-webkit-scrollbar-thumb {
 
     background:
-        #405d4d;
+        #4d684f;
 
     border-radius: 20px;
 }
@@ -1361,8 +1375,8 @@ thead {
 
         linear-gradient(
             145deg,
-            #1d382a,
-            #10251b
+            #2b4b34,
+            #183122
         );
 }
 
@@ -1375,7 +1389,7 @@ th {
     text-align: left;
 
     color:
-        #899d91;
+        #a1b19f;
 
     font-size: 9px;
 
@@ -1395,10 +1409,10 @@ td {
 
     border-top:
         1px solid
-        rgba(245,238,220,.045);
+        rgba(210,230,200,.05);
 
     color:
-        #b8c7bd;
+        #becabd;
 
     font-size: 11px;
 }
@@ -1414,7 +1428,7 @@ tbody tr {
 tbody tr:hover {
 
     background:
-        rgba(46,125,91,.055);
+        rgba(79,143,95,.07);
 }
 
 
@@ -1442,21 +1456,21 @@ tbody tr:hover {
 
         linear-gradient(
             145deg,
-            #315e47,
-            #173628
+            #477250,
+            #24482f
         );
 
     border:
         1px solid
-        rgba(245,238,220,.12);
+        rgba(210,230,200,.13);
 
     box-shadow:
 
         0 3px 0
-        #07170f,
+        #07150d,
 
         inset 0 1px 0
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.09);
 
     font-size: 10px;
 
@@ -1473,7 +1487,7 @@ tbody tr:hover {
 .numbers-cell {
 
     color:
-        #d8ded9;
+        #d9dfd6;
 
     font-family:
         "Consolas",
@@ -1507,21 +1521,21 @@ tbody tr:hover {
 
         linear-gradient(
             145deg,
-            rgba(99,197,141,.20),
-            rgba(46,125,91,.08)
+            rgba(145,199,131,.23),
+            rgba(79,143,95,.10)
         );
 
     border:
         1px solid
-        rgba(99,197,141,.15);
+        rgba(145,199,131,.17);
 
     color:
-        #7ee2a5;
+        #b1d99f;
 
     box-shadow:
 
         0 3px 0
-        rgba(11,55,36,.75);
+        rgba(18,60,29,.75);
 
     font-weight: 900;
 
@@ -1545,7 +1559,7 @@ tbody tr:hover {
     text-shadow:
 
         0 2px 8px
-        rgba(245,238,220,.15);
+        rgba(217,201,168,.18);
 }
 
 
@@ -1560,7 +1574,7 @@ tbody tr:hover {
     text-align: center;
 
     color:
-        #5d7166;
+        #617765;
 
     font-size: 11px;
 
@@ -1581,12 +1595,12 @@ tbody tr:hover {
 
     border-top:
         1px solid
-        rgba(245,238,220,.05);
+        rgba(210,230,200,.06);
 
     text-align: center;
 
     color:
-        #607167;
+        #6d8271;
 
     font-size: 10px;
 }
@@ -1614,21 +1628,21 @@ tbody tr:hover {
 
         linear-gradient(
             145deg,
-            #20372b,
-            #102219
+            #29422f,
+            #17291e
         );
 
     border:
         1px solid
-        rgba(245,238,220,.07);
+        rgba(210,230,200,.08);
 
     box-shadow:
 
         0 3px 0
-        #06100b;
+        #06110a;
 
     color:
-        #aabbb0;
+        #b1c0b0;
 
     font-family:
         "Consolas",
@@ -1712,7 +1726,7 @@ tbody tr:hover {
         box-shadow:
 
             0 8px 0
-            #8f8062,
+            #766344,
 
             0 13px 20px
             rgba(0,0,0,.25);
@@ -1770,7 +1784,7 @@ tbody tr:hover {
         box-shadow:
 
             0 4px 0
-            #06130d,
+            #07150d,
 
             0 7px 12px
             rgba(0,0,0,.25);
@@ -1814,7 +1828,7 @@ tbody tr:hover {
         box-shadow:
 
             0 6px 0
-            rgba(4,25,17,.85),
+            rgba(4,25,13,.85),
 
             0 13px 22px
             rgba(0,0,0,.25);
@@ -2742,3 +2756,4 @@ addInput(true);
 </body>
 
 </html>
+```
