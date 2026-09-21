@@ -12,7 +12,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-
     font-family:
         "Segoe UI",
         Inter,
@@ -20,13 +19,7 @@
         sans-serif;
 }
 
-
-/* =========================================================
-   COLOR THEME
-========================================================= */
-
 :root {
-
     --darkest: #061710;
     --dark: #0b2118;
     --dark-2: #102d21;
@@ -43,69 +36,41 @@
     --muted: #8fa59a;
 }
 
-
-/* =========================================================
-   BODY
-========================================================= */
-
 body {
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     padding: 25px;
-
     color: var(--cream-light);
 
     background:
-
         linear-gradient(
             rgba(6, 23, 16, 0.78),
             rgba(6, 23, 16, 0.92)
         ),
-
         url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=85");
 
     background-size: cover;
-
     background-position: center;
-
     background-attachment: fixed;
-
     overflow-x: hidden;
-
     perspective: 1400px;
 }
 
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
 body::before {
-
     content: "";
-
     position: fixed;
-
     inset: 0;
-
     pointer-events: none;
-
     z-index: -1;
 
     background:
-
         radial-gradient(
             circle at 10% 10%,
             rgba(46, 125, 91, 0.28),
             transparent 30%
         ),
-
         radial-gradient(
             circle at 90% 85%,
             rgba(31, 92, 69, 0.28),
@@ -113,25 +78,14 @@ body::before {
         );
 }
 
-
-/* =========================================================
-   MAIN CONTAINER
-========================================================= */
-
 .container {
-
     width: 760px;
-
     max-width: 100%;
-
     position: relative;
-
     padding: 28px;
-
     border-radius: 32px;
 
     background:
-
         linear-gradient(
             145deg,
             rgba(22, 58, 43, 0.96),
@@ -144,7 +98,6 @@ body::before {
         rgba(245, 238, 220, 0.12);
 
     box-shadow:
-
         0 45px 100px
         rgba(0, 0, 0, 0.65),
 
@@ -167,33 +120,22 @@ body::before {
         blur(12px);
 }
 
-
 .container:hover {
-
     transform:
         rotateX(0deg)
         translateY(-2px);
 }
 
-
 .container::before {
-
     content: "";
-
     position: absolute;
-
     top: 0;
-
     left: 12%;
-
     width: 76%;
-
     height: 2px;
-
     border-radius: 50%;
 
     background:
-
         linear-gradient(
             90deg,
             transparent,
@@ -203,73 +145,42 @@ body::before {
         );
 
     box-shadow:
-
         0 0 18px
         rgba(245, 238, 220, 0.35);
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
+/* HEADER */
 
 .header {
-
     display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
+    justify-content: space-between;
+    align-items: center;
     gap: 15px;
-
     margin-bottom: 25px;
 }
 
-
 .title {
-
     display: flex;
-
-    align-items:
-        center;
-
+    align-items: center;
     gap: 14px;
 }
 
-
-/* =========================================================
-   ICON
-========================================================= */
-
 .icon {
-
     width: 52px;
     height: 52px;
 
     display: flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    align-items: center;
+    justify-content: center;
 
     flex-shrink: 0;
-
     border-radius: 17px;
 
-    color:
-        var(--darkest);
-
+    color: var(--darkest);
     font-size: 23px;
-
     font-weight: 900;
 
     background:
-
         linear-gradient(
             145deg,
             #fffdf5,
@@ -282,7 +193,6 @@ body::before {
         rgba(255, 255, 255, 0.45);
 
     box-shadow:
-
         0 11px 0
         #8f8062,
 
@@ -296,40 +206,21 @@ body::before {
         translateY(-3px);
 }
 
-
 .title h1 {
-
     font-size: 20px;
-
     font-weight: 800;
-
-    color:
-        var(--cream-light);
+    color: var(--cream-light);
 }
 
-
 .title p {
-
     margin-top: 4px;
-
-    color:
-        var(--muted);
-
+    color: var(--muted);
     font-size: 12px;
 }
 
-
-/* =========================================================
-   COUNTER
-========================================================= */
-
 .counter {
-
     display: flex;
-
-    align-items:
-        center;
-
+    align-items: center;
     gap: 7px;
 
     padding:
@@ -338,7 +229,6 @@ body::before {
     border-radius: 20px;
 
     background:
-
         linear-gradient(
             145deg,
             #1d4635,
@@ -349,18 +239,14 @@ body::before {
         1px solid
         rgba(245, 238, 220, 0.12);
 
-    color:
-        var(--cream);
-
+    color: var(--cream);
     font-size: 11px;
-
     font-weight: 700;
 
     white-space:
         nowrap;
 
     box-shadow:
-
         0 5px 0
         #06130d,
 
@@ -368,9 +254,7 @@ body::before {
         rgba(0, 0, 0, 0.30);
 }
 
-
 .counter::before {
-
     content: "";
 
     width: 7px;
@@ -386,15 +270,10 @@ body::before {
         rgba(99, 197, 141, 0.9);
 }
 
-
-/* =========================================================
-   INPUT LIST
-========================================================= */
+/* INPUT LIST */
 
 .input-list {
-
     max-height: 325px;
-
     overflow-y: auto;
 
     padding:
@@ -408,17 +287,12 @@ body::before {
         transparent;
 }
 
-
 .input-list::-webkit-scrollbar {
-
     width: 5px;
 }
 
-
 .input-list::-webkit-scrollbar-thumb {
-
     background:
-
         linear-gradient(
             #557565,
             #263f33
@@ -427,72 +301,48 @@ body::before {
     border-radius: 20px;
 }
 
-
-/* =========================================================
-   INPUT ROW
-========================================================= */
+/* INPUT ROW */
 
 .input-row {
-
     display: flex;
-
-    align-items:
-        center;
-
+    align-items: center;
     gap: 12px;
-
     margin-bottom: 13px;
 
     animation:
         inputAppear 0.28s ease;
 }
 
-
 @keyframes inputAppear {
-
     from {
-
         opacity: 0;
-
         transform:
             translateY(12px)
             rotateX(-8deg);
     }
 
     to {
-
         opacity: 1;
-
         transform:
             translateY(0)
             rotateX(0);
     }
 }
 
-
-/* =========================================================
-   NUMBER
-========================================================= */
+/* NUMBER */
 
 .number {
-
     width: 43px;
     height: 52px;
 
     display: flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    align-items: center;
+    justify-content: center;
 
     flex-shrink: 0;
-
     border-radius: 14px;
 
     background:
-
         linear-gradient(
             145deg,
             #244a38,
@@ -507,11 +357,9 @@ body::before {
         #9db5a8;
 
     font-size: 12px;
-
     font-weight: 800;
 
     box-shadow:
-
         0 5px 0
         #06130d,
 
@@ -519,27 +367,17 @@ body::before {
         rgba(0, 0, 0, 0.30);
 }
 
-
-/* =========================================================
-   INPUT WRAPPER
-========================================================= */
+/* INPUT WRAPPER */
 
 .input-wrapper {
-
     position: relative;
-
     flex: 1;
 }
 
-
-/* =========================================================
-   INPUT
-========================================================= */
+/* INPUT */
 
 .input-wrapper input {
-
     width: 100%;
-
     height: 52px;
 
     border:
@@ -549,7 +387,6 @@ body::before {
     border-radius: 15px;
 
     background:
-
         linear-gradient(
             145deg,
             #11251c,
@@ -563,16 +400,13 @@ body::before {
         0 50px 0 17px;
 
     font-size: 16px;
-
     font-weight: 600;
 
     outline: none;
-
     transition:
         0.2s;
 
     box-shadow:
-
         0 6px 0
         #040d08,
 
@@ -580,14 +414,11 @@ body::before {
         rgba(0, 0, 0, 0.28);
 }
 
-
 .input-wrapper input:focus {
-
     border-color:
         var(--green-bright);
 
     background:
-
         linear-gradient(
             145deg,
             #183629,
@@ -595,7 +426,6 @@ body::before {
         );
 
     box-shadow:
-
         0 6px 0
         #12402e,
 
@@ -603,41 +433,30 @@ body::before {
         rgba(46, 125, 91, 0.10);
 }
 
-
 .input-wrapper input::placeholder {
-
     color:
         #60756a;
 }
 
-
 .input-wrapper input::-webkit-inner-spin-button,
 .input-wrapper input::-webkit-outer-spin-button {
-
     -webkit-appearance:
         none;
 
     margin: 0;
 }
 
-
 .input-wrapper input[type="number"] {
-
     -moz-appearance:
         textfield;
 }
 
-
-/* =========================================================
-   CHECK
-========================================================= */
+/* CHECK */
 
 .check {
-
     position: absolute;
 
     right: 15px;
-
     top: 50%;
 
     transform:
@@ -648,17 +467,12 @@ body::before {
     height: 22px;
 
     display: flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 
     background:
-
         linear-gradient(
             145deg,
             #72d69c,
@@ -669,18 +483,14 @@ body::before {
         white;
 
     font-size: 11px;
-
     font-weight: 900;
 
     opacity: 0;
-
     transition:
         0.2s;
 }
 
-
 .input-wrapper input.valid + .check {
-
     opacity: 1;
 
     transform:
@@ -688,13 +498,9 @@ body::before {
         scale(1);
 }
 
-
-/* =========================================================
-   BUTTON
-========================================================= */
+/* BUTTON */
 
 .button-area {
-
     display: grid;
 
     grid-template-columns:
@@ -705,40 +511,31 @@ body::before {
     margin-top: 12px;
 }
 
-
 button {
-
     height: 52px;
 
     border: none;
-
     border-radius: 15px;
 
     cursor: pointer;
 
     font-size: 12px;
-
     font-weight: 800;
 
     transition:
         0.15s;
 }
 
-
 button:active {
-
     transform:
         translateY(4px);
 }
 
-
 .add-button {
-
     color:
         var(--cream);
 
     background:
-
         linear-gradient(
             145deg,
             #244636,
@@ -746,7 +543,6 @@ button:active {
         );
 
     box-shadow:
-
         0 6px 0
         #06130d,
 
@@ -754,14 +550,11 @@ button:active {
         rgba(0, 0, 0, 0.28);
 }
 
-
 .save-button {
-
     color:
         #102319;
 
     background:
-
         linear-gradient(
             145deg,
             #fffdf5,
@@ -770,7 +563,6 @@ button:active {
         );
 
     box-shadow:
-
         0 6px 0
         #9c8e70,
 
@@ -778,13 +570,9 @@ button:active {
         rgba(0, 0, 0, 0.28);
 }
 
-
-/* =========================================================
-   RESULT
-========================================================= */
+/* RESULT */
 
 .result {
-
     display: none;
 
     margin-top: 17px;
@@ -795,7 +583,6 @@ button:active {
     border-radius: 19px;
 
     background:
-
         linear-gradient(
             145deg,
             rgba(46, 125, 91, 0.28),
@@ -807,7 +594,6 @@ button:active {
         rgba(143, 190, 163, 0.22);
 
     box-shadow:
-
         0 8px 0
         rgba(4, 25, 17, 0.85),
 
@@ -815,9 +601,7 @@ button:active {
         rgba(0, 0, 0, 0.28);
 }
 
-
 .result.show {
-
     display: flex;
 
     justify-content:
@@ -827,20 +611,13 @@ button:active {
         center;
 }
 
-
 .result-label {
-
     display: flex;
-
-    flex-direction:
-        column;
-
+    flex-direction: column;
     gap: 4px;
 }
 
-
 .result-label span {
-
     color:
         #a9bcaf;
 
@@ -855,33 +632,26 @@ button:active {
     font-weight: 800;
 }
 
-
 .result-label small {
-
     color:
         #668075;
 
     font-size: 10px;
 }
 
-
 .result strong {
-
     color:
         var(--cream);
 
     font-size: 29px;
-
     font-weight: 900;
 }
-
 
 /* =========================================================
    HISTORY
 ========================================================= */
 
 .history {
-
     margin-top: 29px;
 
     padding-top: 23px;
@@ -889,11 +659,12 @@ button:active {
     border-top:
         1px solid
         rgba(245, 238, 220, 0.07);
+
+    /* FONT HISTORY BOLD */
+    font-weight: 700;
 }
 
-
 .history-header {
-
     display: flex;
 
     justify-content:
@@ -907,20 +678,16 @@ button:active {
     margin-bottom: 14px;
 }
 
-
 .history-title h2 {
-
     font-size: 15px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     color:
         var(--cream-light);
 }
 
-
 .history-title span {
-
     display: block;
 
     margin-top: 4px;
@@ -929,15 +696,13 @@ button:active {
         #60756a;
 
     font-size: 10px;
+
+    font-weight: 700;
 }
 
-
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
+/* CLEAR HISTORY */
 
 .clear-history {
-
     height: auto;
 
     padding:
@@ -949,7 +714,6 @@ button:active {
         #c8bda8;
 
     background:
-
         linear-gradient(
             145deg,
             #263c31,
@@ -957,7 +721,6 @@ button:active {
         );
 
     box-shadow:
-
         0 4px 0
         #06130d,
 
@@ -965,15 +728,13 @@ button:active {
         rgba(0, 0, 0, 0.25);
 
     font-size: 10px;
+
+    font-weight: 800;
 }
 
-
-/* =========================================================
-   TABLE
-========================================================= */
+/* TABLE */
 
 .table-wrapper {
-
     overflow-x:
         auto;
 
@@ -987,7 +748,6 @@ button:active {
         rgba(4, 13, 9, 0.45);
 
     box-shadow:
-
         0 8px 0
         #06100b,
 
@@ -995,9 +755,7 @@ button:active {
         rgba(0, 0, 0, 0.28);
 }
 
-
 table {
-
     width: 100%;
 
     border-collapse:
@@ -1007,11 +765,8 @@ table {
         680px;
 }
 
-
 thead {
-
     background:
-
         linear-gradient(
             145deg,
             #1d382a,
@@ -1019,9 +774,7 @@ thead {
         );
 }
 
-
 th {
-
     padding:
         14px;
 
@@ -1039,11 +792,12 @@ th {
 
     letter-spacing:
         1px;
+
+    /* BOLD */
+    font-weight: 900;
 }
 
-
 td {
-
     padding:
         14px;
 
@@ -1056,15 +810,14 @@ td {
 
     font-size:
         11px;
+
+    /* BOLD */
+    font-weight: 700;
 }
 
-
-/* =========================================================
-   SJ NUMBER
-========================================================= */
+/* SJ NUMBER */
 
 .history-number {
-
     display: inline-flex;
 
     align-items:
@@ -1083,7 +836,6 @@ td {
         var(--cream);
 
     background:
-
         linear-gradient(
             145deg,
             #315e47,
@@ -1091,7 +843,6 @@ td {
         );
 
     box-shadow:
-
         0 3px 0
         #07170f;
 
@@ -1102,13 +853,9 @@ td {
         900;
 }
 
-
-/* =========================================================
-   YARD
-========================================================= */
+/* YARD */
 
 .numbers-cell {
-
     color:
         #d8ded9;
 
@@ -1119,15 +866,15 @@ td {
 
     font-size:
         11px;
+
+    /* BOLD */
+    font-weight:
+        700;
 }
 
-
-/* =========================================================
-   PCS
-========================================================= */
+/* PCS */
 
 .pcs-cell {
-
     display: inline-flex;
 
     align-items:
@@ -1146,7 +893,6 @@ td {
         8px;
 
     background:
-
         linear-gradient(
             145deg,
             rgba(99, 197, 141, 0.20),
@@ -1160,13 +906,9 @@ td {
         900;
 }
 
-
-/* =========================================================
-   TOTAL YARD
-========================================================= */
+/* TOTAL YARD */
 
 .total-cell {
-
     color:
         var(--cream);
 
@@ -1177,20 +919,14 @@ td {
         12px;
 }
 
-
-/* =========================================================
-   WARNA
-========================================================= */
+/* WARNA */
 
 .color-cell {
-
     min-width:
         140px;
 }
 
-
 .color-input {
-
     width:
         125px;
 
@@ -1208,7 +944,6 @@ td {
         rgba(245, 238, 220, 0.12);
 
     background:
-
         linear-gradient(
             145deg,
             #11251c,
@@ -1227,34 +962,29 @@ td {
     box-shadow:
         inset 0 1px 0
         rgba(255,255,255,.04);
+
+    /* BOLD */
+    font-weight:
+        700;
 }
 
-
 .color-input::placeholder {
-
     color:
         #60756a;
 }
 
-
 .color-input:focus {
-
     border-color:
         var(--green-bright);
 
     box-shadow:
-
         0 0 0 3px
         rgba(46, 125, 91, 0.10);
 }
 
-
-/* =========================================================
-   EMPTY HISTORY
-========================================================= */
+/* EMPTY HISTORY */
 
 .empty-history {
-
     padding:
         32px !important;
 
@@ -1266,15 +996,14 @@ td {
 
     font-size:
         11px;
+
+    font-weight:
+        700;
 }
 
-
-/* =========================================================
-   FOOTER
-========================================================= */
+/* FOOTER */
 
 .footer {
-
     margin-top:
         20px;
 
@@ -1295,9 +1024,7 @@ td {
         10px;
 }
 
-
 .enter-key {
-
     display:
         inline-flex;
 
@@ -1320,7 +1047,6 @@ td {
         6px;
 
     background:
-
         linear-gradient(
             145deg,
             #20372b,
@@ -1345,15 +1071,11 @@ td {
         700;
 }
 
-
-/* =========================================================
-   TABLET
-========================================================= */
+/* TABLET */
 
 @media (max-width: 700px) {
 
     body {
-
         padding:
             15px;
 
@@ -1364,9 +1086,7 @@ td {
             20px;
     }
 
-
     .container {
-
         padding:
             22px;
 
@@ -1375,15 +1095,11 @@ td {
     }
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
+/* MOBILE */
 
 @media (max-width: 600px) {
 
     body {
-
         padding:
             9px;
 
@@ -1394,9 +1110,7 @@ td {
             scroll;
     }
 
-
     .container {
-
         width:
             100%;
 
@@ -1407,9 +1121,7 @@ td {
             23px;
     }
 
-
     .header {
-
         align-items:
             flex-start;
 
@@ -1417,9 +1129,7 @@ td {
             20px;
     }
 
-
     .icon {
-
         width:
             44px;
 
@@ -1433,30 +1143,22 @@ td {
             20px;
     }
 
-
     .title {
-
         gap:
             11px;
     }
 
-
     .title h1 {
-
         font-size:
             16px;
     }
 
-
     .title p {
-
         font-size:
             9px;
     }
 
-
     .counter {
-
         padding:
             7px 9px;
 
@@ -1464,16 +1166,12 @@ td {
             9px;
     }
 
-
     .input-list {
-
         max-height:
             300px;
     }
 
-
     .input-row {
-
         gap:
             8px;
 
@@ -1481,9 +1179,7 @@ td {
             10px;
     }
 
-
     .number {
-
         width:
             36px;
 
@@ -1491,9 +1187,7 @@ td {
             48px;
     }
 
-
     .input-wrapper input {
-
         height:
             48px;
 
@@ -1507,9 +1201,7 @@ td {
             15px;
     }
 
-
     .button-area {
-
         grid-template-columns:
             1fr;
 
@@ -1517,16 +1209,12 @@ td {
             10px;
     }
 
-
     button {
-
         height:
             50px;
     }
 
-
     .result {
-
         padding:
             17px;
 
@@ -1534,16 +1222,12 @@ td {
             16px;
     }
 
-
     .result strong {
-
         font-size:
             25px;
     }
 
-
     .history {
-
         margin-top:
             24px;
 
@@ -1551,23 +1235,17 @@ td {
             20px;
     }
 
-
     .history-header {
-
         align-items:
             flex-start;
     }
 
-
     .clear-history {
-
         padding:
             7px 9px;
     }
 
-
     .color-input {
-
         width:
             110px;
 
@@ -1578,23 +1256,17 @@ td {
             10px;
     }
 
-
     .footer {
-
         font-size:
             9px;
     }
 }
 
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
+/* SMALL PHONE */
 
 @media (max-width: 380px) {
 
     .container {
-
         padding:
             14px;
 
@@ -1602,16 +1274,12 @@ td {
             20px;
     }
 
-
     .title {
-
         gap:
             8px;
     }
 
-
     .icon {
-
         width:
             39px;
 
@@ -1622,23 +1290,17 @@ td {
             18px;
     }
 
-
     .title h1 {
-
         font-size:
             14px;
     }
 
-
     .title p {
-
         font-size:
             8px;
     }
 
-
     .counter {
-
         font-size:
             8px;
 
@@ -1646,9 +1308,7 @@ td {
             6px 8px;
     }
 
-
     .number {
-
         width:
             33px;
     }
@@ -1657,14 +1317,11 @@ td {
 </style>
 </head>
 
-
 <body>
 
 <div class="container">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -1688,7 +1345,6 @@ td {
 
         </div>
 
-
         <div
             class="counter"
             id="counter"
@@ -1699,9 +1355,7 @@ td {
     </div>
 
 
-    <!-- =====================================================
-         INPUT
-    ====================================================== -->
+    <!-- INPUT -->
 
     <div
         class="input-list"
@@ -1709,9 +1363,7 @@ td {
     ></div>
 
 
-    <!-- =====================================================
-         BUTTON
-    ====================================================== -->
+    <!-- BUTTON -->
 
     <div class="button-area">
 
@@ -1721,7 +1373,6 @@ td {
         >
             ＋ Tambah Kolom
         </button>
-
 
         <button
             class="save-button"
@@ -1733,9 +1384,7 @@ td {
     </div>
 
 
-    <!-- =====================================================
-         TOTAL
-    ====================================================== -->
+    <!-- TOTAL -->
 
     <div
         class="result"
@@ -1754,7 +1403,6 @@ td {
 
         </div>
 
-
         <strong id="total">
             0
         </strong>
@@ -1762,9 +1410,7 @@ td {
     </div>
 
 
-    <!-- =====================================================
-         HISTORY
-    ====================================================== -->
+    <!-- HISTORY -->
 
     <div class="history">
 
@@ -1781,7 +1427,6 @@ td {
                 </span>
 
             </div>
-
 
             <button
                 class="clear-history"
@@ -1848,9 +1493,7 @@ td {
     </div>
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+    <!-- FOOTER -->
 
     <div class="footer">
 
@@ -1941,9 +1584,7 @@ function addInput(focusInput = true) {
         row.querySelector("input");
 
 
-    /* =====================================================
-       INPUT CHANGE
-    ===================================================== */
+    /* INPUT CHANGE */
 
     input.addEventListener(
         "input",
@@ -1967,9 +1608,7 @@ function addInput(focusInput = true) {
     );
 
 
-    /* =====================================================
-       ENTER
-    ===================================================== */
+    /* ENTER */
 
     input.addEventListener(
         "keydown",
@@ -1982,7 +1621,6 @@ function addInput(focusInput = true) {
                 return;
 
             }
-
 
             event.preventDefault();
 
@@ -2145,9 +1783,7 @@ function saveHistory() {
     const values = [];
 
 
-    /* =====================================================
-       AMBIL SEMUA ANGKA
-    ===================================================== */
+    /* AMBIL SEMUA ANGKA */
 
     inputs.forEach(
         input => {
@@ -2166,9 +1802,7 @@ function saveHistory() {
     );
 
 
-    /* =====================================================
-       JIKA BELUM ADA ANGKA
-    ===================================================== */
+    /* JIKA BELUM ADA ANGKA */
 
     if (
         values.length === 0
@@ -2183,9 +1817,7 @@ function saveHistory() {
     }
 
 
-    /* =====================================================
-       HITUNG TOTAL
-    ===================================================== */
+    /* HITUNG TOTAL */
 
     let sum = 0;
 
@@ -2200,9 +1832,7 @@ function saveHistory() {
     );
 
 
-    /* =====================================================
-       HAPUS EMPTY HISTORY
-    ===================================================== */
+    /* HAPUS EMPTY HISTORY */
 
     const empty =
         document.getElementById(
@@ -2217,9 +1847,7 @@ function saveHistory() {
     }
 
 
-    /* =====================================================
-       FORMAT YARD
-    ===================================================== */
+    /* FORMAT YARD */
 
     const formattedValues =
         "(" +
@@ -2227,18 +1855,22 @@ function saveHistory() {
         ")";
 
 
-    /* =====================================================
-       BUAT HISTORY ROW
-    ===================================================== */
+    /* BUAT HISTORY ROW */
 
-    const row = document.createElement("tr");
+    const row =
+        document.createElement("tr");
+
 
     row.innerHTML = `
-    <td>
-        <span class="history-number">
-            0
-        </span>
-    </td>
+
+        <td>
+
+            <span class="history-number">
+                0
+            </span>
+
+        </td>
+
 
         <td>
 
@@ -2287,23 +1919,17 @@ function saveHistory() {
     `;
 
 
-    /* =====================================================
-       TAMBAHKAN KE HISTORY
-    ===================================================== */
+    /* TAMBAHKAN KE HISTORY */
 
     historyBody.appendChild(row);
 
 
-    /* =====================================================
-       UPDATE NOMOR SJ
-    ===================================================== */
+    /* UPDATE NOMOR SJ */
 
     updateHistoryNumber();
 
 
-    /* =====================================================
-       RESET INPUT
-    ===================================================== */
+    /* RESET INPUT */
 
     resetInput();
 
@@ -2319,22 +1945,29 @@ function updateHistoryNumber() {
     const rows =
         historyBody.querySelectorAll("tr");
 
+
     let nomor = 1;
+
 
     rows.forEach(row => {
 
         const numberElement =
             row.querySelector(".history-number");
 
+
         if (numberElement) {
 
-            numberElement.textContent = nomor;
+            numberElement.textContent =
+                nomor;
 
             nomor++;
+
         }
 
     });
+
 }
+
 
 /* =========================================================
    RESET INPUT
