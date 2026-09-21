@@ -1,2671 +1,2398 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>APLIKASI HITUNG YARD SURAT JALAN MANUAL</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<style>
 
-    <title>APLIKASI HITUNG YARD SURAT JALAN MANUAL</title>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 
-    <style>
+    font-family:
+        "Segoe UI",
+        Inter,
+        Arial,
+        sans-serif;
+}
 
-        /* =========================================================
-           RESET
-        ========================================================= */
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+/* =========================================================
+   COLOR THEME
+========================================================= */
 
-            font-family:
-                "Segoe UI",
-                Inter,
-                Arial,
-                sans-serif;
-        }
+:root {
 
+    --darkest: #061710;
+    --dark: #0b2118;
+    --dark-2: #102d21;
+    --dark-3: #163a2b;
 
-        /* =========================================================
-           COLOR THEME
-        ========================================================= */
+    --green: #1f5c45;
+    --green-light: #2e7d5b;
+    --green-bright: #3f9b70;
 
-        :root {
+    --cream: #f5eedc;
+    --cream-light: #fffdf5;
+    --cream-dark: #d8cdb5;
 
-            --darkest: #061710;
-            --dark: #0b2118;
-            --dark-2: #102d21;
-            --dark-3: #163a2b;
+    --muted: #8fa59a;
+}
 
-            --green: #1f5c45;
-            --green-light: #2e7d5b;
-            --green-bright: #3f9b70;
 
-            --cream: #f5eedc;
-            --cream-light: #fffdf5;
-            --cream-dark: #d8cdb5;
+/* =========================================================
+   BODY
+========================================================= */
 
-            --muted: #8fa59a;
+body {
 
-            --border:
-                rgba(245, 238, 220, 0.12);
+    min-height: 100vh;
 
-            --shadow:
-                rgba(0, 0, 0, 0.55);
-        }
+    display: flex;
 
+    justify-content: center;
+    align-items: center;
 
-        /* =========================================================
-           BODY
-        ========================================================= */
+    padding: 25px;
 
-        body {
+    color: var(--cream-light);
 
-            min-height: 100vh;
+    background:
 
-            display: flex;
+        linear-gradient(
+            rgba(6, 23, 16, 0.78),
+            rgba(6, 23, 16, 0.92)
+        ),
 
-            justify-content: center;
-            align-items: center;
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=85");
 
-            padding: 25px;
+    background-size: cover;
 
-            color:
-                var(--cream-light);
+    background-position: center;
 
-            background:
+    background-attachment: fixed;
 
-                linear-gradient(
-                    rgba(6, 23, 16, 0.78),
-                    rgba(6, 23, 16, 0.92)
-                ),
+    overflow-x: hidden;
 
-                url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=85");
+    perspective: 1400px;
+}
 
-            background-size: cover;
 
-            background-position: center;
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
-            background-attachment: fixed;
+body::before {
 
-            overflow-x: hidden;
+    content: "";
 
-            perspective: 1400px;
-        }
+    position: fixed;
 
+    inset: 0;
 
-        /* =========================================================
-           BACKGROUND OVERLAY
-        ========================================================= */
+    pointer-events: none;
 
-        body::before {
+    z-index: -1;
 
-            content: "";
+    background:
 
-            position: fixed;
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(46, 125, 91, 0.28),
+            transparent 30%
+        ),
 
-            inset: 0;
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(31, 92, 69, 0.28),
+            transparent 32%
+        );
+}
 
-            background:
 
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(46, 125, 91, 0.28),
-                    transparent 30%
-                ),
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
-                radial-gradient(
-                    circle at 90% 85%,
-                    rgba(31, 92, 69, 0.28),
-                    transparent 32%
-                );
+.container {
 
-            pointer-events: none;
+    width: 760px;
 
-            z-index: -1;
-        }
+    max-width: 100%;
 
+    position: relative;
 
-        /* =========================================================
-           MAIN CONTAINER
-        ========================================================= */
+    padding: 28px;
 
-        .container {
+    border-radius: 32px;
 
-            width: 760px;
+    background:
 
-            max-width: 100%;
+        linear-gradient(
+            145deg,
+            rgba(22, 58, 43, 0.96),
+            rgba(10, 29, 21, 0.97) 55%,
+            rgba(7, 21, 15, 0.98)
+        );
 
-            position: relative;
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.12);
 
-            padding: 28px;
+    box-shadow:
 
-            border-radius: 32px;
+        0 45px 100px
+        rgba(0, 0, 0, 0.65),
 
-            background:
+        0 18px 35px
+        rgba(0, 0, 0, 0.35),
 
-                linear-gradient(
-                    145deg,
-                    rgba(22, 58, 43, 0.96),
-                    rgba(10, 29, 21, 0.97) 55%,
-                    rgba(7, 21, 15, 0.98)
-                );
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.09),
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.12);
+        inset 0 -2px 0
+        rgba(0, 0, 0, 0.45);
 
-            box-shadow:
+    transform:
+        rotateX(0.5deg);
 
-                0 45px 100px
-                rgba(0, 0, 0, 0.65),
+    transition:
+        0.35s;
 
-                0 18px 35px
-                rgba(0, 0, 0, 0.35),
+    backdrop-filter:
+        blur(12px);
+}
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.09),
 
-                inset 0 -2px 0
-                rgba(0, 0, 0, 0.45);
+.container:hover {
 
-            transform:
-                rotateX(0.5deg);
+    transform:
+        rotateX(0deg)
+        translateY(-2px);
+}
 
-            transition:
-                transform 0.35s ease,
-                box-shadow 0.35s ease;
 
-            backdrop-filter:
-                blur(12px);
-        }
+.container::before {
 
+    content: "";
 
-        .container:hover {
+    position: absolute;
 
-            transform:
-                rotateX(0deg)
-                translateY(-2px);
+    top: 0;
 
-            box-shadow:
+    left: 12%;
 
-                0 55px 110px
-                rgba(0, 0, 0, 0.68),
+    width: 76%;
 
-                0 20px 40px
-                rgba(0, 0, 0, 0.35),
+    height: 2px;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.11),
+    border-radius: 50%;
 
-                inset 0 -2px 0
-                rgba(0, 0, 0, 0.5);
-        }
+    background:
 
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cream),
+            var(--green-bright),
+            transparent
+        );
 
-        /* =========================================================
-           TOP LIGHT
-        ========================================================= */
+    box-shadow:
 
-        .container::before {
+        0 0 18px
+        rgba(245, 238, 220, 0.35);
+}
 
-            content: "";
 
-            position: absolute;
+/* =========================================================
+   HEADER
+========================================================= */
 
-            top: 0;
-            left: 12%;
+.header {
 
-            width: 76%;
-            height: 2px;
+    display: flex;
 
-            border-radius: 50%;
+    justify-content:
+        space-between;
 
-            background:
+    align-items:
+        center;
 
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--cream),
-                    var(--green-bright),
-                    transparent
-                );
+    gap: 15px;
 
-            box-shadow:
+    margin-bottom: 25px;
+}
 
-                0 0 18px
-                rgba(245, 238, 220, 0.35);
-        }
 
+.title {
 
-        /* =========================================================
-           HEADER
-        ========================================================= */
+    display: flex;
 
-        .header {
+    align-items:
+        center;
 
-            display: flex;
+    gap: 14px;
+}
 
-            justify-content:
-                space-between;
 
-            align-items:
-                center;
+/* =========================================================
+   ICON
+========================================================= */
 
-            gap: 15px;
+.icon {
 
-            margin-bottom: 25px;
-        }
+    width: 52px;
+    height: 52px;
 
+    display: flex;
 
-        /* =========================================================
-           TITLE
-        ========================================================= */
+    align-items:
+        center;
 
-        .title {
+    justify-content:
+        center;
 
-            display: flex;
+    flex-shrink: 0;
 
-            align-items:
-                center;
+    border-radius: 17px;
 
-            gap: 14px;
-        }
+    color:
+        var(--darkest);
 
+    font-size: 23px;
 
-        /* =========================================================
-           3D ICON
-        ========================================================= */
+    font-weight: 900;
 
-        .icon {
+    background:
 
-            width: 52px;
-            height: 52px;
+        linear-gradient(
+            145deg,
+            #fffdf5,
+            #e6dbc2 45%,
+            #c9b996
+        );
 
-            display: flex;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.45);
 
-            align-items:
-                center;
+    box-shadow:
 
-            justify-content:
-                center;
+        0 11px 0
+        #8f8062,
 
-            flex-shrink: 0;
+        0 18px 28px
+        rgba(0, 0, 0, 0.30),
 
-            border-radius: 17px;
+        inset 0 2px 2px
+        rgba(255, 255, 255, 0.7);
 
-            color:
-                var(--darkest);
+    transform:
+        translateY(-3px);
+}
 
-            font-size: 23px;
 
-            font-weight: 900;
+.title h1 {
 
-            background:
+    font-size: 20px;
 
-                linear-gradient(
-                    145deg,
-                    #fffdf5,
-                    #e6dbc2 45%,
-                    #c9b996
-                );
+    font-weight: 800;
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.45);
+    color:
+        var(--cream-light);
+}
 
-            box-shadow:
 
-                0 11px 0
-                #8f8062,
+.title p {
 
-                0 18px 28px
-                rgba(0, 0, 0, 0.30),
+    margin-top: 4px;
 
-                inset 0 2px 2px
-                rgba(255, 255, 255, 0.7),
+    color:
+        var(--muted);
 
-                inset 0 -5px 8px
-                rgba(0, 0, 0, 0.10);
+    font-size: 12px;
+}
 
-            text-shadow:
-                0 1px 1px
-                rgba(255, 255, 255, 0.4);
 
-            transform:
-                translateY(-3px);
-        }
+/* =========================================================
+   COUNTER
+========================================================= */
 
+.counter {
 
-        .title h1 {
+    display: flex;
 
-            font-size: 20px;
+    align-items:
+        center;
 
-            font-weight: 800;
+    gap: 7px;
 
-            letter-spacing:
-                -0.4px;
+    padding:
+        9px 14px;
 
-            color:
-                var(--cream-light);
+    border-radius: 20px;
 
-            text-shadow:
-                0 2px 10px
-                rgba(0, 0, 0, 0.35);
-        }
+    background:
 
+        linear-gradient(
+            145deg,
+            #1d4635,
+            #0d261b
+        );
 
-        .title p {
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.12);
 
-            margin-top: 4px;
+    color:
+        var(--cream);
 
-            color:
-                var(--muted);
+    font-size: 11px;
 
-            font-size: 12px;
-        }
+    font-weight: 700;
 
+    white-space:
+        nowrap;
 
-        /* =========================================================
-           COUNTER
-        ========================================================= */
+    box-shadow:
 
-        .counter {
+        0 5px 0
+        #06130d,
 
-            display: flex;
+        0 10px 18px
+        rgba(0, 0, 0, 0.30);
+}
 
-            align-items:
-                center;
 
-            gap: 7px;
+.counter::before {
 
-            padding:
-                9px 14px;
+    content: "";
 
-            border-radius: 20px;
+    width: 7px;
+    height: 7px;
 
-            background:
+    border-radius: 50%;
 
-                linear-gradient(
-                    145deg,
-                    #1d4635,
-                    #0d261b
-                );
+    background:
+        #63c58d;
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.12);
+    box-shadow:
+        0 0 10px
+        rgba(99, 197, 141, 0.9);
+}
 
-            color:
-                var(--cream);
 
-            font-size: 11px;
+/* =========================================================
+   INPUT LIST
+========================================================= */
 
-            font-weight: 700;
+.input-list {
 
-            white-space: nowrap;
+    max-height: 325px;
 
-            box-shadow:
+    overflow-y: auto;
 
-                0 5px 0
-                #06130d,
+    padding:
+        5px 7px 5px 3px;
 
-                0 10px 18px
-                rgba(0, 0, 0, 0.30),
+    scrollbar-width:
+        thin;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.07);
-        }
+    scrollbar-color:
+        #426151
+        transparent;
+}
 
 
-        .counter::before {
+.input-list::-webkit-scrollbar {
 
-            content: "";
+    width: 5px;
+}
 
-            width: 7px;
-            height: 7px;
 
-            border-radius: 50%;
+.input-list::-webkit-scrollbar-thumb {
 
-            background:
-                #63c58d;
+    background:
 
-            box-shadow:
-                0 0 10px
-                rgba(99, 197, 141, 0.9);
-        }
+        linear-gradient(
+            #557565,
+            #263f33
+        );
 
+    border-radius: 20px;
+}
 
-        /* =========================================================
-           INPUT LIST
-        ========================================================= */
 
-        .input-list {
+/* =========================================================
+   INPUT ROW
+========================================================= */
 
-            max-height: 325px;
+.input-row {
 
-            overflow-y: auto;
+    display: flex;
 
-            padding:
-                5px 7px 5px 3px;
+    align-items:
+        center;
 
-            scrollbar-width: thin;
+    gap: 12px;
 
-            scrollbar-color:
-                #426151
-                transparent;
-        }
+    margin-bottom: 13px;
 
+    animation:
+        inputAppear 0.28s ease;
+}
 
-        .input-list::-webkit-scrollbar {
 
-            width: 5px;
-        }
+@keyframes inputAppear {
 
+    from {
 
-        .input-list::-webkit-scrollbar-track {
+        opacity: 0;
 
-            background:
-                transparent;
-        }
+        transform:
+            translateY(12px)
+            rotateX(-8deg);
+    }
 
+    to {
 
-        .input-list::-webkit-scrollbar-thumb {
+        opacity: 1;
 
-            background:
+        transform:
+            translateY(0)
+            rotateX(0);
+    }
+}
 
-                linear-gradient(
-                    #557565,
-                    #263f33
-                );
 
-            border-radius: 20px;
-        }
+/* =========================================================
+   NUMBER
+========================================================= */
 
+.number {
 
-        /* =========================================================
-           INPUT ROW
-        ========================================================= */
+    width: 43px;
+    height: 52px;
 
-        .input-row {
+    display: flex;
 
-            display: flex;
+    align-items:
+        center;
 
-            align-items:
-                center;
+    justify-content:
+        center;
 
-            gap: 12px;
+    flex-shrink: 0;
 
-            margin-bottom: 13px;
+    border-radius: 14px;
 
-            animation:
-                inputAppear 0.28s ease;
+    background:
 
-            transform-style:
-                preserve-3d;
-        }
+        linear-gradient(
+            145deg,
+            #244a38,
+            #10271d
+        );
 
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.09);
 
-        @keyframes inputAppear {
+    color:
+        #9db5a8;
 
-            from {
+    font-size: 12px;
 
-                opacity: 0;
+    font-weight: 800;
 
-                transform:
-                    translateY(12px)
-                    rotateX(-8deg);
-            }
+    box-shadow:
 
-            to {
+        0 5px 0
+        #06130d,
 
-                opacity: 1;
+        0 9px 16px
+        rgba(0, 0, 0, 0.30);
+}
 
-                transform:
-                    translateY(0)
-                    rotateX(0);
-            }
-        }
 
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
 
-        /* =========================================================
-           NUMBER 3D
-        ========================================================= */
+.input-wrapper {
 
-        .number {
+    position: relative;
 
-            width: 43px;
-            height: 52px;
+    flex: 1;
+}
 
-            display: flex;
 
-            align-items:
-                center;
+/* =========================================================
+   INPUT
+========================================================= */
 
-            justify-content:
-                center;
+.input-wrapper input {
 
-            flex-shrink: 0;
+    width: 100%;
 
-            border-radius: 14px;
+    height: 52px;
 
-            background:
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.10);
 
-                linear-gradient(
-                    145deg,
-                    #244a38,
-                    #10271d
-                );
+    border-radius: 15px;
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.09);
+    background:
 
-            color:
-                #9db5a8;
+        linear-gradient(
+            145deg,
+            #11251c,
+            #081610
+        );
 
-            font-size: 12px;
+    color:
+        var(--cream-light);
 
-            font-weight: 800;
+    padding:
+        0 50px 0 17px;
 
-            box-shadow:
+    font-size: 16px;
 
-                0 5px 0
-                #06130d,
+    font-weight: 600;
 
-                0 9px 16px
-                rgba(0, 0, 0, 0.30),
+    outline: none;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.08);
+    transition:
+        0.2s;
 
-            transform:
-                translateZ(10px);
-        }
+    box-shadow:
 
+        0 6px 0
+        #040d08,
 
-        /* =========================================================
-           INPUT WRAPPER
-        ========================================================= */
+        0 10px 20px
+        rgba(0, 0, 0, 0.28);
+}
 
-        .input-wrapper {
 
-            position: relative;
+.input-wrapper input:focus {
 
-            flex: 1;
-        }
+    border-color:
+        var(--green-bright);
 
+    background:
 
-        /* =========================================================
-           INPUT
-        ========================================================= */
+        linear-gradient(
+            145deg,
+            #183629,
+            #0a1a12
+        );
 
-        input {
+    box-shadow:
 
-            width: 100%;
+        0 6px 0
+        #12402e,
 
-            height: 52px;
+        0 0 0 3px
+        rgba(46, 125, 91, 0.10);
+}
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.10);
 
-            border-radius: 15px;
+.input-wrapper input::placeholder {
 
-            background:
+    color:
+        #60756a;
+}
 
-                linear-gradient(
-                    145deg,
-                    #11251c,
-                    #081610
-                );
 
-            color:
-                var(--cream-light);
+.input-wrapper input::-webkit-inner-spin-button,
+.input-wrapper input::-webkit-outer-spin-button {
 
-            padding:
-                0 50px 0 17px;
+    -webkit-appearance:
+        none;
 
-            font-size: 16px;
+    margin: 0;
+}
 
-            font-weight: 600;
 
-            outline: none;
+.input-wrapper input[type="number"] {
 
-            transition:
-                0.2s;
+    -moz-appearance:
+        textfield;
+}
 
-            box-shadow:
 
-                0 6px 0
-                #040d08,
+/* =========================================================
+   CHECK
+========================================================= */
 
-                0 10px 20px
-                rgba(0, 0, 0, 0.28),
+.check {
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.04),
+    position: absolute;
 
-                inset 0 -3px 8px
-                rgba(0, 0, 0, 0.18);
-        }
+    right: 15px;
 
+    top: 50%;
 
-        input:hover {
+    transform:
+        translateY(-50%)
+        scale(0.7);
 
-            border-color:
-                rgba(245, 238, 220, 0.22);
-        }
+    width: 22px;
+    height: 22px;
 
+    display: flex;
 
-        input:focus {
+    align-items:
+        center;
 
-            border-color:
-                var(--green-bright);
+    justify-content:
+        center;
 
-            background:
+    border-radius: 50%;
 
-                linear-gradient(
-                    145deg,
-                    #183629,
-                    #0a1a12
-                );
+    background:
 
-            box-shadow:
+        linear-gradient(
+            145deg,
+            #72d69c,
+            #2e8b62
+        );
 
-                0 6px 0
-                #12402e,
+    color:
+        white;
 
-                0 12px 25px
-                rgba(46, 125, 91, 0.20),
+    font-size: 11px;
 
-                0 0 0 3px
-                rgba(46, 125, 91, 0.10),
+    font-weight: 900;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.08);
-        }
+    opacity: 0;
 
+    transition:
+        0.2s;
+}
 
-        input::placeholder {
 
-            color:
-                #60756a;
-        }
+.input-wrapper input.valid + .check {
 
+    opacity: 1;
 
-        /* REMOVE NUMBER ARROWS */
+    transform:
+        translateY(-50%)
+        scale(1);
+}
 
-        input::-webkit-inner-spin-button,
-        input::-webkit-outer-spin-button {
 
-            -webkit-appearance: none;
+/* =========================================================
+   BUTTON
+========================================================= */
 
-            margin: 0;
-        }
+.button-area {
 
+    display: grid;
 
-        input[type="number"] {
+    grid-template-columns:
+        1fr 1fr;
 
-            -moz-appearance:
-                textfield;
-        }
+    gap: 12px;
 
+    margin-top: 12px;
+}
 
-        /* =========================================================
-           CHECK
-        ========================================================= */
 
-        .check {
+button {
 
-            position: absolute;
+    height: 52px;
 
-            right: 15px;
+    border: none;
 
-            top: 50%;
+    border-radius: 15px;
 
-            transform:
-                translateY(-50%)
-                scale(0.7);
+    cursor: pointer;
 
-            width: 22px;
-            height: 22px;
+    font-size: 12px;
 
-            display: flex;
+    font-weight: 800;
 
-            align-items:
-                center;
+    transition:
+        0.15s;
+}
 
-            justify-content:
-                center;
 
-            border-radius: 50%;
+button:active {
 
-            background:
+    transform:
+        translateY(4px);
+}
 
-                linear-gradient(
-                    145deg,
-                    #72d69c,
-                    #2e8b62
-                );
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.18);
+.add-button {
 
-            color:
-                white;
+    color:
+        var(--cream);
 
-            font-size: 11px;
+    background:
 
-            font-weight: 900;
+        linear-gradient(
+            145deg,
+            #244636,
+            #132a20
+        );
 
-            opacity: 0;
+    box-shadow:
 
-            transition:
-                0.2s;
+        0 6px 0
+        #06130d,
 
-            box-shadow:
+        0 12px 20px
+        rgba(0, 0, 0, 0.28);
+}
 
-                0 3px 0
-                #175236,
 
-                0 5px 10px
-                rgba(46, 125, 91, 0.25);
-        }
+.save-button {
 
+    color:
+        #102319;
 
-        input.valid + .check {
+    background:
 
-            opacity: 1;
+        linear-gradient(
+            145deg,
+            #fffdf5,
+            #f5eedc 45%,
+            #d8cdb5
+        );
 
-            transform:
-                translateY(-50%)
-                scale(1);
-        }
+    box-shadow:
 
+        0 6px 0
+        #9c8e70,
 
-        /* =========================================================
-           BUTTON AREA
-        ========================================================= */
+        0 14px 28px
+        rgba(0, 0, 0, 0.28);
+}
 
-        .button-area {
 
-            display: grid;
+/* =========================================================
+   RESULT
+========================================================= */
 
-            grid-template-columns:
-                1fr 1fr;
+.result {
 
-            gap: 12px;
+    display: none;
 
-            margin-top: 12px;
-        }
+    margin-top: 17px;
 
+    padding:
+        19px 21px;
 
-        button {
+    border-radius: 19px;
 
-            height: 52px;
+    background:
 
-            border: none;
+        linear-gradient(
+            145deg,
+            rgba(46, 125, 91, 0.28),
+            rgba(15, 52, 38, 0.30)
+        );
 
-            border-radius: 15px;
+    border:
+        1px solid
+        rgba(143, 190, 163, 0.22);
 
-            cursor: pointer;
+    box-shadow:
 
-            font-size: 12px;
+        0 8px 0
+        rgba(4, 25, 17, 0.85),
 
-            font-weight: 800;
+        0 18px 30px
+        rgba(0, 0, 0, 0.28);
+}
 
-            transition:
-                transform 0.15s,
-                box-shadow 0.15s;
 
-            -webkit-tap-highlight-color:
-                transparent;
-        }
+.result.show {
 
+    display: flex;
 
-        button:active {
+    justify-content:
+        space-between;
 
-            transform:
-                translateY(4px);
-        }
+    align-items:
+        center;
+}
 
 
-        /* =========================================================
-           ADD BUTTON
-        ========================================================= */
+.result-label {
 
-        .add-button {
+    display: flex;
 
-            color:
-                var(--cream);
+    flex-direction:
+        column;
 
-            background:
+    gap: 4px;
+}
 
-                linear-gradient(
-                    145deg,
-                    #244636,
-                    #132a20
-                );
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.08);
+.result-label span {
 
-            box-shadow:
+    color:
+        #a9bcaf;
 
-                0 6px 0
-                #06130d,
+    font-size: 10px;
 
-                0 12px 20px
-                rgba(0, 0, 0, 0.28),
+    text-transform:
+        uppercase;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.07);
-        }
+    letter-spacing:
+        1.5px;
 
+    font-weight: 800;
+}
 
-        .add-button:hover {
 
-            color:
-                var(--cream-light);
+.result-label small {
 
-            background:
+    color:
+        #668075;
 
-                linear-gradient(
-                    145deg,
-                    #315c47,
-                    #1a3528
-                );
+    font-size: 10px;
+}
 
-            transform:
-                translateY(-2px);
 
-            box-shadow:
+.result strong {
 
-                0 8px 0
-                #06130d,
+    color:
+        var(--cream);
 
-                0 15px 25px
-                rgba(0, 0, 0, 0.35);
-        }
+    font-size: 29px;
 
+    font-weight: 900;
+}
 
-        /* =========================================================
-           SAVE BUTTON
-        ========================================================= */
 
-        .save-button {
+/* =========================================================
+   HISTORY
+========================================================= */
 
-            color:
-                #102319;
+.history {
 
-            background:
+    margin-top: 29px;
 
-                linear-gradient(
-                    145deg,
-                    #fffdf5,
-                    #f5eedc 45%,
-                    #d8cdb5
-                );
+    padding-top: 23px;
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.55);
+    border-top:
+        1px solid
+        rgba(245, 238, 220, 0.07);
+}
 
-            box-shadow:
 
-                0 6px 0
-                #9c8e70,
+.history-header {
 
-                0 14px 28px
-                rgba(0, 0, 0, 0.28),
+    display: flex;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.8);
-        }
+    justify-content:
+        space-between;
 
+    align-items:
+        center;
 
-        .save-button:hover {
+    gap: 15px;
 
-            transform:
-                translateY(-3px);
+    margin-bottom: 14px;
+}
 
-            background:
 
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #fff8e8,
-                    #dfd3b9
-                );
+.history-title h2 {
 
-            box-shadow:
+    font-size: 15px;
 
-                0 9px 0
-                #9c8e70,
+    font-weight: 800;
 
-                0 20px 35px
-                rgba(0, 0, 0, 0.38),
+    color:
+        var(--cream-light);
+}
 
-                inset 0 1px 0
-                white;
-        }
 
+.history-title span {
 
-        /* =========================================================
-           TOTAL RESULT
-        ========================================================= */
+    display: block;
 
-        .result {
+    margin-top: 4px;
 
-            display: none;
+    color:
+        #60756a;
 
-            margin-top: 17px;
+    font-size: 10px;
+}
 
-            padding:
-                19px 21px;
 
-            border-radius: 19px;
+/* =========================================================
+   CLEAR HISTORY
+========================================================= */
 
-            position: relative;
+.clear-history {
 
-            overflow: hidden;
+    height: auto;
 
-            background:
+    padding:
+        8px 12px;
 
-                linear-gradient(
-                    145deg,
-                    rgba(46, 125, 91, 0.28),
-                    rgba(15, 52, 38, 0.30)
-                );
+    border-radius: 10px;
 
-            border:
-                1px solid
-                rgba(143, 190, 163, 0.22);
+    color:
+        #c8bda8;
 
-            box-shadow:
+    background:
 
-                0 8px 0
-                rgba(4, 25, 17, 0.85),
+        linear-gradient(
+            145deg,
+            #263c31,
+            #15261e
+        );
 
-                0 18px 30px
-                rgba(0, 0, 0, 0.28),
+    box-shadow:
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.08);
-        }
+        0 4px 0
+        #06130d,
 
+        0 7px 12px
+        rgba(0, 0, 0, 0.25);
 
-        .result::before {
+    font-size: 10px;
+}
 
-            content: "";
 
-            position: absolute;
+/* =========================================================
+   TABLE
+========================================================= */
 
-            width: 120px;
-            height: 120px;
+.table-wrapper {
 
-            border-radius: 50%;
+    overflow-x:
+        auto;
 
-            background:
-                rgba(99, 197, 141, 0.10);
+    border-radius: 18px;
 
-            filter:
-                blur(28px);
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.08);
 
-            top: -65px;
-            right: -35px;
-        }
+    background:
+        rgba(4, 13, 9, 0.45);
 
+    box-shadow:
 
-        .result.show {
+        0 8px 0
+        #06100b,
 
-            display: flex;
+        0 14px 25px
+        rgba(0, 0, 0, 0.28);
+}
 
-            justify-content:
-                space-between;
 
-            align-items:
-                center;
+table {
 
-            animation:
-                resultAppear 0.3s ease;
-        }
+    width: 100%;
 
+    border-collapse:
+        collapse;
 
-        @keyframes resultAppear {
+    min-width:
+        680px;
+}
 
-            from {
 
-                opacity: 0;
+thead {
 
-                transform:
-                    translateY(8px)
-                    scale(0.98);
-            }
+    background:
 
-            to {
+        linear-gradient(
+            145deg,
+            #1d382a,
+            #10251b
+        );
+}
 
-                opacity: 1;
 
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
+th {
 
+    padding:
+        14px;
 
-        .result-label {
+    text-align:
+        left;
 
-            display: flex;
+    color:
+        #899d91;
 
-            flex-direction:
-                column;
+    font-size:
+        9px;
 
-            gap: 4px;
+    text-transform:
+        uppercase;
 
-            position: relative;
-        }
+    letter-spacing:
+        1px;
+}
 
 
-        .result-label span {
+td {
 
-            color:
-                #a9bcaf;
+    padding:
+        14px;
 
-            font-size: 10px;
+    border-top:
+        1px solid
+        rgba(245, 238, 220, 0.045);
 
-            text-transform:
-                uppercase;
+    color:
+        #b8c7bd;
 
-            letter-spacing:
-                1.5px;
+    font-size:
+        11px;
+}
 
-            font-weight: 800;
-        }
 
+/* =========================================================
+   SJ NUMBER
+========================================================= */
 
-        .result-label small {
+.history-number {
 
-            color:
-                #668075;
+    display: inline-flex;
 
-            font-size: 10px;
-        }
+    align-items:
+        center;
 
+    justify-content:
+        center;
 
-        .result strong {
+    padding:
+        5px 10px;
 
-            position: relative;
+    border-radius:
+        8px;
 
-            color:
-                var(--cream);
+    color:
+        var(--cream);
 
-            font-size: 29px;
+    background:
 
-            font-weight: 900;
+        linear-gradient(
+            145deg,
+            #315e47,
+            #173628
+        );
 
-            letter-spacing:
-                -0.8px;
+    box-shadow:
 
-            text-shadow:
+        0 3px 0
+        #07170f;
 
-                0 3px 12px
-                rgba(245, 238, 220, 0.18);
-        }
+    font-size:
+        10px;
 
+    font-weight:
+        900;
+}
 
-        /* =========================================================
-           HISTORY
-        ========================================================= */
 
-        .history {
+/* =========================================================
+   YARD
+========================================================= */
 
-            margin-top: 29px;
+.numbers-cell {
 
-            padding-top: 23px;
+    color:
+        #d8ded9;
 
-            border-top:
-                1px solid
-                rgba(245, 238, 220, 0.07);
-        }
+    font-family:
+        "Consolas",
+        "Courier New",
+        monospace;
 
+    font-size:
+        11px;
+}
 
-        .history-header {
 
-            display: flex;
+/* =========================================================
+   PCS
+========================================================= */
 
-            justify-content:
-                space-between;
+.pcs-cell {
 
-            align-items:
-                center;
+    display: inline-flex;
 
-            gap: 15px;
+    align-items:
+        center;
 
-            margin-bottom: 14px;
-        }
+    justify-content:
+        center;
 
+    min-width:
+        30px;
 
-        .history-title h2 {
+    padding:
+        5px 8px;
 
-            display: flex;
+    border-radius:
+        8px;
 
-            align-items:
-                center;
+    background:
 
-            gap: 9px;
+        linear-gradient(
+            145deg,
+            rgba(99, 197, 141, 0.20),
+            rgba(46, 125, 91, 0.08)
+        );
 
-            font-size: 15px;
+    color:
+        #7ee2a5;
 
-            font-weight: 800;
+    font-weight:
+        900;
+}
 
-            color:
-                var(--cream-light);
-        }
 
+/* =========================================================
+   TOTAL YARD
+========================================================= */
 
-        .history-title h2::before {
+.total-cell {
 
-            content: "";
+    color:
+        var(--cream);
 
-            width: 5px;
-            height: 18px;
+    font-weight:
+        900;
 
-            border-radius: 10px;
+    font-size:
+        12px;
+}
 
-            background:
 
-                linear-gradient(
-                    180deg,
-                    var(--cream),
-                    var(--green-bright)
-                );
+/* =========================================================
+   WARNA
+========================================================= */
 
-            box-shadow:
+.color-cell {
 
-                0 0 10px
-                rgba(99, 197, 141, 0.35);
-        }
+    min-width:
+        140px;
+}
 
 
-        .history-title span {
+.color-input {
 
-            display: block;
+    width:
+        125px;
 
-            margin-top: 4px;
+    height:
+        34px;
 
-            color:
-                #60756a;
+    padding:
+        0 10px;
 
-            font-size: 10px;
-        }
+    border-radius:
+        9px;
 
+    border:
+        1px solid
+        rgba(245, 238, 220, 0.12);
 
-        /* =========================================================
-           CLEAR HISTORY
-        ========================================================= */
+    background:
 
-        .clear-history {
+        linear-gradient(
+            145deg,
+            #11251c,
+            #081610
+        );
 
-            height: auto;
+    color:
+        var(--cream-light);
 
-            padding:
-                8px 12px;
+    font-size:
+        11px;
 
-            border-radius: 10px;
+    outline:
+        none;
 
-            color:
-                #c8bda8;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+}
 
-            background:
 
-                linear-gradient(
-                    145deg,
-                    #263c31,
-                    #15261e
-                );
+.color-input::placeholder {
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.08);
+    color:
+        #60756a;
+}
 
-            box-shadow:
 
-                0 4px 0
-                #06130d,
+.color-input:focus {
 
-                0 7px 12px
-                rgba(0, 0, 0, 0.25);
+    border-color:
+        var(--green-bright);
 
-            font-size: 10px;
-        }
+    box-shadow:
 
+        0 0 0 3px
+        rgba(46, 125, 91, 0.10);
+}
 
-        .clear-history:hover {
 
-            color:
-                var(--cream-light);
+/* =========================================================
+   EMPTY HISTORY
+========================================================= */
 
-            background:
+.empty-history {
 
-                linear-gradient(
-                    145deg,
-                    #365442,
-                    #1d3226
-                );
+    padding:
+        32px !important;
 
-            transform:
-                translateY(-2px);
-        }
+    text-align:
+        center;
 
+    color:
+        #5d7166;
 
-        /* =========================================================
-           TABLE WRAPPER
-        ========================================================= */
+    font-size:
+        11px;
+}
 
-        .table-wrapper {
 
-            overflow-x: auto;
+/* =========================================================
+   FOOTER
+========================================================= */
 
-            border-radius: 18px;
+.footer {
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.08);
+    margin-top:
+        20px;
 
-            background:
-                rgba(4, 13, 9, 0.45);
+    padding-top:
+        17px;
 
-            box-shadow:
+    border-top:
+        1px solid
+        rgba(245, 238, 220, 0.05);
 
-                0 8px 0
-                #06100b,
+    text-align:
+        center;
 
-                0 14px 25px
-                rgba(0, 0, 0, 0.28),
+    color:
+        #607167;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.04);
+    font-size:
+        10px;
+}
 
-            scrollbar-width: thin;
 
-            scrollbar-color:
-                #405d4d
-                transparent;
-        }
+.enter-key {
 
+    display:
+        inline-flex;
 
-        .table-wrapper::-webkit-scrollbar {
+    align-items:
+        center;
 
-            height: 5px;
-        }
+    justify-content:
+        center;
 
+    min-width:
+        40px;
 
-        .table-wrapper::-webkit-scrollbar-thumb {
+    padding:
+        4px 8px;
 
-            background:
-                #405d4d;
+    margin:
+        0 4px;
 
-            border-radius: 20px;
-        }
+    border-radius:
+        6px;
 
+    background:
 
-        /* =========================================================
-           TABLE
-        ========================================================= */
+        linear-gradient(
+            145deg,
+            #20372b,
+            #102219
+        );
 
-        table {
+    box-shadow:
+        0 3px 0
+        #06100b;
 
-            width: 100%;
+    color:
+        #aabbb0;
 
-            border-collapse:
-                collapse;
+    font-family:
+        "Consolas",
+        monospace;
 
-            min-width: 550px;
-        }
+    font-size:
+        9px;
 
+    font-weight:
+        700;
+}
 
-        thead {
 
-            background:
+/* =========================================================
+   TABLET
+========================================================= */
 
-                linear-gradient(
-                    145deg,
-                    #1d382a,
-                    #10251b
-                );
-        }
+@media (max-width: 700px) {
 
+    body {
 
-        th {
+        padding:
+            15px;
 
-            padding:
-                14px;
+        align-items:
+            flex-start;
 
-            text-align: left;
+        padding-top:
+            20px;
+    }
 
-            color:
-                #899d91;
 
-            font-size: 9px;
+    .container {
 
-            text-transform:
-                uppercase;
+        padding:
+            22px;
 
-            letter-spacing:
-                1px;
+        border-radius:
+            27px;
+    }
+}
 
-            font-weight: 800;
-        }
 
+/* =========================================================
+   MOBILE
+========================================================= */
 
-        td {
+@media (max-width: 600px) {
 
-            padding:
-                14px;
+    body {
 
-            border-top:
-                1px solid
-                rgba(245, 238, 220, 0.045);
+        padding:
+            9px;
 
-            color:
-                #b8c7bd;
+        padding-top:
+            12px;
 
-            font-size: 11px;
-        }
+        background-attachment:
+            scroll;
+    }
 
 
-        tbody tr {
+    .container {
 
-            transition:
-                background 0.2s;
-        }
+        width:
+            100%;
 
+        padding:
+            17px;
 
-        tbody tr:hover {
+        border-radius:
+            23px;
+    }
 
-            background:
-                rgba(46, 125, 91, 0.055);
-        }
 
+    .header {
 
-        /* =========================================================
-           HISTORY NUMBER
-        ========================================================= */
+        align-items:
+            flex-start;
 
-        .history-number {
+        margin-bottom:
+            20px;
+    }
 
-            display: inline-flex;
 
-            align-items:
-                center;
+    .icon {
 
-            justify-content:
-                center;
+        width:
+            44px;
 
-            padding:
-                5px 10px;
+        height:
+            44px;
 
-            border-radius: 8px;
+        border-radius:
+            14px;
 
-            color:
-                var(--cream);
+        font-size:
+            20px;
+    }
 
-            background:
 
-                linear-gradient(
-                    145deg,
-                    #315e47,
-                    #173628
-                );
+    .title {
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.12);
+        gap:
+            11px;
+    }
 
-            box-shadow:
 
-                0 3px 0
-                #07170f,
+    .title h1 {
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.08);
+        font-size:
+            16px;
+    }
 
-            font-size: 10px;
 
-            font-weight: 900;
+    .title p {
 
-            white-space:
-                nowrap;
-        }
+        font-size:
+            9px;
+    }
 
 
-        /* =========================================================
-           NUMBERS CELL
-        ========================================================= */
+    .counter {
 
-        .numbers-cell {
+        padding:
+            7px 9px;
 
-            color:
-                #d8ded9;
+        font-size:
+            9px;
+    }
 
-            font-family:
-                "Consolas",
-                "Courier New",
-                monospace;
 
-            font-size: 11px;
-        }
+    .input-list {
 
+        max-height:
+            300px;
+    }
 
-        /* =========================================================
-           PCS CELL
-        ========================================================= */
 
-        .pcs-cell {
+    .input-row {
 
-            display: inline-flex;
+        gap:
+            8px;
 
-            align-items:
-                center;
+        margin-bottom:
+            10px;
+    }
 
-            justify-content:
-                center;
 
-            min-width: 30px;
+    .number {
 
-            padding:
-                5px 8px;
+        width:
+            36px;
 
-            border-radius: 8px;
+        height:
+            48px;
+    }
 
-            background:
 
-                linear-gradient(
-                    145deg,
-                    rgba(99, 197, 141, 0.20),
-                    rgba(46, 125, 91, 0.08)
-                );
+    .input-wrapper input {
 
-            border:
-                1px solid
-                rgba(99, 197, 141, 0.15);
+        height:
+            48px;
 
-            color:
-                #7ee2a5;
+        border-radius:
+            13px;
 
-            box-shadow:
+        padding-left:
+            14px;
 
-                0 3px 0
-                rgba(11, 55, 36, 0.75);
+        font-size:
+            15px;
+    }
 
-            font-weight: 900;
 
-            font-size: 11px;
-        }
+    .button-area {
 
+        grid-template-columns:
+            1fr;
 
-        /* =========================================================
-           TOTAL CELL
-        ========================================================= */
+        gap:
+            10px;
+    }
 
-        .total-cell {
 
-            color:
-                var(--cream);
+    button {
 
-            font-weight: 900;
+        height:
+            50px;
+    }
 
-            font-size: 12px;
 
-            text-shadow:
+    .result {
 
-                0 2px 8px
-                rgba(245, 238, 220, 0.15);
-        }
+        padding:
+            17px;
 
+        border-radius:
+            16px;
+    }
 
-        /* =========================================================
-           EMPTY HISTORY
-        ========================================================= */
 
-        .empty-history {
+    .result strong {
 
-            padding:
-                32px !important;
+        font-size:
+            25px;
+    }
 
-            text-align:
-                center;
 
-            color:
-                #5d7166;
+    .history {
 
-            font-size: 11px;
+        margin-top:
+            24px;
 
-            background:
-                rgba(0, 0, 0, 0.08);
-        }
+        padding-top:
+            20px;
+    }
 
 
-        /* =========================================================
-           FOOTER
-        ========================================================= */
+    .history-header {
 
-        .footer {
+        align-items:
+            flex-start;
+    }
 
-            margin-top: 20px;
 
-            padding-top: 17px;
+    .clear-history {
 
-            border-top:
-                1px solid
-                rgba(245, 238, 220, 0.05);
+        padding:
+            7px 9px;
+    }
 
-            text-align:
-                center;
 
-            color:
-                #607167;
+    .color-input {
 
-            font-size: 10px;
-        }
+        width:
+            110px;
 
+        height:
+            32px;
 
-        .enter-key {
+        font-size:
+            10px;
+    }
 
-            display: inline-flex;
 
-            align-items:
-                center;
+    .footer {
 
-            justify-content:
-                center;
+        font-size:
+            9px;
+    }
+}
 
-            min-width: 40px;
 
-            padding:
-                4px 8px;
+/* =========================================================
+   SMALL PHONE
+========================================================= */
 
-            margin:
-                0 4px;
+@media (max-width: 380px) {
 
-            border-radius: 6px;
+    .container {
 
-            background:
+        padding:
+            14px;
 
-                linear-gradient(
-                    145deg,
-                    #20372b,
-                    #102219
-                );
+        border-radius:
+            20px;
+    }
 
-            border:
-                1px solid
-                rgba(245, 238, 220, 0.07);
 
-            box-shadow:
+    .title {
 
-                0 3px 0
-                #06100b;
+        gap:
+            8px;
+    }
 
-            color:
-                #aabbb0;
 
-            font-family:
-                "Consolas",
-                monospace;
+    .icon {
 
-            font-size: 9px;
+        width:
+            39px;
 
-            font-weight: 700;
-        }
+        height:
+            39px;
 
+        font-size:
+            18px;
+    }
 
-        /* =========================================================
-           TABLET
-        ========================================================= */
 
-        @media (max-width: 700px) {
+    .title h1 {
 
-            body {
+        font-size:
+            14px;
+    }
 
-                padding: 15px;
 
-                align-items:
-                    flex-start;
+    .title p {
 
-                padding-top: 20px;
-            }
+        font-size:
+            8px;
+    }
 
 
-            .container {
+    .counter {
 
-                padding: 22px;
+        font-size:
+            8px;
 
-                border-radius: 27px;
-            }
-        }
+        padding:
+            6px 8px;
+    }
 
 
-        /* =========================================================
-           MOBILE
-        ========================================================= */
+    .number {
 
-        @media (max-width: 600px) {
+        width:
+            33px;
+    }
+}
 
-            body {
-
-                padding: 9px;
-
-                padding-top: 12px;
-
-                background-attachment:
-                    scroll;
-            }
-
-
-            .container {
-
-                width: 100%;
-
-                padding: 17px;
-
-                border-radius: 23px;
-            }
-
-
-            .header {
-
-                align-items:
-                    flex-start;
-
-                margin-bottom: 20px;
-            }
-
-
-            .icon {
-
-                width: 44px;
-                height: 44px;
-
-                border-radius: 14px;
-
-                font-size: 20px;
-
-                box-shadow:
-
-                    0 8px 0
-                    #8f8062,
-
-                    0 13px 20px
-                    rgba(0, 0, 0, 0.25);
-            }
-
-
-            .title {
-
-                gap: 11px;
-            }
-
-
-            .title h1 {
-
-                font-size: 16px;
-            }
-
-
-            .title p {
-
-                font-size: 9px;
-            }
-
-
-            .counter {
-
-                padding:
-                    7px 9px;
-
-                font-size: 9px;
-            }
-
-
-            .input-list {
-
-                max-height: 300px;
-            }
-
-
-            .input-row {
-
-                gap: 8px;
-
-                margin-bottom: 10px;
-            }
-
-
-            .number {
-
-                width: 36px;
-                height: 48px;
-
-                border-radius: 11px;
-
-                box-shadow:
-
-                    0 4px 0
-                    #06130d,
-
-                    0 7px 12px
-                    rgba(0, 0, 0, 0.25);
-            }
-
-
-            input {
-
-                height: 48px;
-
-                border-radius: 13px;
-
-                padding-left: 14px;
-
-                font-size: 15px;
-            }
-
-
-            .button-area {
-
-                grid-template-columns:
-                    1fr;
-
-                gap: 10px;
-            }
-
-
-            button {
-
-                height: 50px;
-            }
-
-
-            .result {
-
-                padding:
-                    17px;
-
-                border-radius: 16px;
-
-                box-shadow:
-
-                    0 6px 0
-                    rgba(4, 25, 17, 0.85),
-
-                    0 13px 22px
-                    rgba(0, 0, 0, 0.25);
-            }
-
-
-            .result strong {
-
-                font-size: 25px;
-            }
-
-
-            .history {
-
-                margin-top: 24px;
-
-                padding-top: 20px;
-            }
-
-
-            .history-header {
-
-                align-items:
-                    flex-start;
-            }
-
-
-            .clear-history {
-
-                padding:
-                    7px 9px;
-            }
-
-
-            .footer {
-
-                font-size: 9px;
-            }
-        }
-
-
-        /* =========================================================
-           SMALL PHONE
-        ========================================================= */
-
-        @media (max-width: 380px) {
-
-            .container {
-
-                padding: 14px;
-
-                border-radius: 20px;
-            }
-
-
-            .title {
-
-                gap: 8px;
-            }
-
-
-            .icon {
-
-                width: 39px;
-                height: 39px;
-
-                font-size: 18px;
-            }
-
-
-            .title h1 {
-
-                font-size: 14px;
-            }
-
-
-            .title p {
-
-                font-size: 8px;
-            }
-
-
-            .counter {
-
-                font-size: 8px;
-
-                padding:
-                    6px 8px;
-            }
-
-
-            .number {
-
-                width: 33px;
-            }
-        }
-
-    </style>
-
+</style>
 </head>
 
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- =====================================================
-             HEADER
-        ====================================================== -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-        <div class="header">
+    <div class="header">
 
-            <div class="title">
+        <div class="title">
 
-                <div class="icon">
-                    Σ
-                </div>
-
-                <div>
-
-                    <h1>
-                        Input Yard
-                    </h1>
-
-                    <p>
-                        Silahkan input yard sesuai dengan yang diberikan mandor.
-                    </p>
-
-                </div>
-
+            <div class="icon">
+                Σ
             </div>
 
+            <div>
 
-            <div
-                class="counter"
-                id="counter"
-            >
-                1 Data
+                <h1>
+                    Input Yard
+                </h1>
+
+                <p>
+                    Silahkan input yard sesuai dengan yang diberikan mandor.
+                </p>
+
             </div>
 
         </div>
 
 
-        <!-- =====================================================
-             INPUT
-        ====================================================== -->
-
         <div
-            class="input-list"
-            id="inputList"
-        ></div>
-
-
-        <!-- =====================================================
-             BUTTON
-        ====================================================== -->
-
-        <div class="button-area">
-
-            <button
-                class="add-button"
-                onclick="addInput(true)"
-            >
-                ＋ Tambah Kolom
-            </button>
-
-
-            <button
-                class="save-button"
-                onclick="saveHistory()"
-            >
-                ✓ Simpan ke History
-            </button>
-
-        </div>
-
-
-        <!-- =====================================================
-             TOTAL
-        ====================================================== -->
-
-        <div
-            class="result"
-            id="result"
+            class="counter"
+            id="counter"
         >
-
-            <div class="result-label">
-
-                <span>
-                    Total Yard
-                </span>
-
-                <small>
-                    Jumlah seluruh angka
-                </small>
-
-            </div>
-
-
-            <strong id="total">
-                0
-            </strong>
-
+            1 Data
         </div>
 
-
-        <!-- =====================================================
-             HISTORY
-        ====================================================== -->
-
-        <div class="history">
-
-            <div class="history-header">
-
-                <div class="history-title">
-
-                    <h2>
-                        History
-                    </h2>
-
-                    <span>
-                        Riwayat Input Yard
-                    </span>
-
-                </div>
+    </div>
 
 
-                <button
-                    class="clear-history"
-                    onclick="clearHistory()"
-                >
-                    Hapus History
-                </button>
+    <!-- =====================================================
+         INPUT
+    ====================================================== -->
 
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                No
-                            </th>
-
-                            <th>
-                                YARD
-                            </th>
-
-                            <th>
-                                Total PCS
-                            </th>
-
-                            <th>
-                                Total Yard
-                            </th>
-
-                        </tr>
-
-                    </thead>
+    <div
+        class="input-list"
+        id="inputList"
+    ></div>
 
 
-                    <tbody id="historyBody">
+    <!-- =====================================================
+         BUTTON
+    ====================================================== -->
 
-                        <tr id="emptyHistory">
+    <div class="button-area">
 
-                            <td
-                                colspan="4"
-                                class="empty-history"
-                            >
-                                Belum ada history
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
+        <button
+            class="add-button"
+            onclick="addInput(true)"
+        >
+            ＋ Tambah Kolom
+        </button>
 
 
-        <!-- =====================================================
-             FOOTER
-        ====================================================== -->
+        <button
+            class="save-button"
+            onclick="saveHistory()"
+        >
+            ✓ Simpan ke History
+        </button>
 
-        <div class="footer">
+    </div>
 
-            Tekan
 
-            <span class="enter-key">
-                Enter
+    <!-- =====================================================
+         TOTAL
+    ====================================================== -->
+
+    <div
+        class="result"
+        id="result"
+    >
+
+        <div class="result-label">
+
+            <span>
+                Total Yard
             </span>
 
-            untuk menambah kolom berikutnya
+            <small>
+                Jumlah seluruh angka
+            </small>
+
+        </div>
+
+
+        <strong id="total">
+            0
+        </strong>
+
+    </div>
+
+
+    <!-- =====================================================
+         HISTORY
+    ====================================================== -->
+
+    <div class="history">
+
+        <div class="history-header">
+
+            <div class="history-title">
+
+                <h2>
+                    History
+                </h2>
+
+                <span>
+                    Riwayat Input Yard
+                </span>
+
+            </div>
+
+
+            <button
+                class="clear-history"
+                onclick="clearHistory()"
+            >
+                Hapus History
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            YARD
+                        </th>
+
+                        <th>
+                            Total PCS
+                        </th>
+
+                        <th>
+                            Total Yard
+                        </th>
+
+                        <th>
+                            Warna
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="historyBody">
+
+                    <tr id="emptyHistory">
+
+                        <td
+                            colspan="5"
+                            class="empty-history"
+                        >
+                            Belum ada history
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
 
         </div>
 
     </div>
 
 
-    <script>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-        /* =========================================================
-           ELEMENT
-        ========================================================= */
+    <div class="footer">
 
-        const inputList =
-            document.getElementById("inputList");
+        Tekan
 
-        const counter =
-            document.getElementById("counter");
+        <span class="enter-key">
+            Enter
+        </span>
 
-        const result =
-            document.getElementById("result");
+        untuk menambah kolom berikutnya
 
-        const total =
-            document.getElementById("total");
+    </div>
 
-        const historyBody =
-            document.getElementById("historyBody");
+</div>
 
 
-        /* =========================================================
-           VARIABLES
-        ========================================================= */
+<script>
 
-        let number = 0;
+/* =========================================================
+   ELEMENT
+========================================================= */
 
+const inputList =
+    document.getElementById("inputList");
 
-        /* =========================================================
-           ADD INPUT
-        ========================================================= */
+const counter =
+    document.getElementById("counter");
 
-        function addInput(focusInput = true) {
+const result =
+    document.getElementById("result");
 
-            number++;
+const total =
+    document.getElementById("total");
 
-            const row =
-                document.createElement("div");
+const historyBody =
+    document.getElementById("historyBody");
 
-            row.className =
-                "input-row";
 
+/* =========================================================
+   VARIABLES
+========================================================= */
 
-            row.innerHTML = `
+let number = 0;
 
-                <div class="number">
-                    ${number}
-                </div>
 
-                <div class="input-wrapper">
+/* =========================================================
+   ADD INPUT
+========================================================= */
 
-                    <input
-                        type="number"
-                        placeholder="Masukkan yard..."
-                        autocomplete="off"
-                    >
+function addInput(focusInput = true) {
 
-                    <span class="check">
-                        ✓
-                    </span>
+    number++;
 
-                </div>
+    const row =
+        document.createElement("div");
 
-            `;
+    row.className =
+        "input-row";
 
 
-            inputList.appendChild(row);
+    row.innerHTML = `
 
+        <div class="number">
+            ${number}
+        </div>
 
-            const input =
-                row.querySelector("input");
+        <div class="input-wrapper">
 
+            <input
+                type="number"
+                placeholder="Masukkan yard..."
+                autocomplete="off"
+            >
 
-            /* =====================================================
-               INPUT CHANGE
-            ===================================================== */
+            <span class="check">
+                ✓
+            </span>
 
-            input.addEventListener(
-                "input",
-                function () {
+        </div>
 
-                    if (
-                        this.value.trim() !== ""
-                    ) {
+    `;
 
-                        this.classList.add("valid");
 
-                    } else {
+    inputList.appendChild(row);
 
-                        this.classList.remove("valid");
 
-                    }
+    const input =
+        row.querySelector("input");
 
-                    calculateTotal();
 
-                }
-            );
+    /* =====================================================
+       INPUT CHANGE
+    ===================================================== */
 
-
-            /* =====================================================
-               ENTER
-            ===================================================== */
-
-            input.addEventListener(
-                "keydown",
-                function (event) {
-
-                    if (
-                        event.key !== "Enter"
-                    ) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    /*
-                        Enter hanya bekerja
-                        jika angka sudah diisi.
-                    */
-
-                    if (
-                        this.value.trim() === ""
-                    ) {
-                        return;
-                    }
-
-
-                    const inputs =
-                        inputList.querySelectorAll(
-                            "input"
-                        );
-
-
-                    const lastInput =
-                        inputs[
-                            inputs.length - 1
-                        ];
-
-
-                    /*
-                        Jika input terakhir,
-                        buat input baru.
-                    */
-
-                    if (
-                        this === lastInput
-                    ) {
-
-                        addInput(true);
-
-                    } else {
-
-                        /*
-                            Jika bukan input terakhir,
-                            pindah ke input berikutnya.
-                        */
-
-                        const index =
-                            Array
-                                .from(inputs)
-                                .indexOf(this);
-
-
-                        if (
-                            inputs[index + 1]
-                        ) {
-
-                            inputs[
-                                index + 1
-                            ].focus();
-
-                        }
-
-                    }
-
-                }
-            );
-
-
-            if (focusInput) {
-
-                setTimeout(
-                    () => input.focus(),
-                    50
-                );
-
-            }
-
-
-            updateCounter();
-
-        }
-
-
-        /* =========================================================
-           CALCULATE TOTAL
-        ========================================================= */
-
-        function calculateTotal() {
-
-            const inputs =
-                inputList.querySelectorAll(
-                    "input"
-                );
-
-
-            let sum = 0;
-
-            let filled = 0;
-
-
-            inputs.forEach(
-                input => {
-
-                    const value =
-                        parseFloat(
-                            input.value
-                        );
-
-
-                    if (
-                        !isNaN(value)
-                    ) {
-
-                        sum += value;
-
-                        filled++;
-
-                    }
-
-                }
-            );
-
-
-            total.textContent =
-                sum.toLocaleString("id-ID");
-
+    input.addEventListener(
+        "input",
+        function () {
 
             if (
-                filled > 0
+                this.value.trim() !== ""
             ) {
 
-                result.classList.add("show");
+                this.classList.add("valid");
 
             } else {
 
-                result.classList.remove("show");
+                this.classList.remove("valid");
 
             }
 
-        }
-
-
-        /* =========================================================
-           UPDATE COUNTER
-        ========================================================= */
-
-        function updateCounter() {
-
-            const inputs =
-                inputList.querySelectorAll(
-                    "input"
-                );
-
-
-            counter.textContent =
-                `${inputs.length} Data`;
+            calculateTotal();
 
         }
+    );
 
 
-        /* =========================================================
-           SAVE HISTORY
-        ========================================================= */
+    /* =====================================================
+       ENTER
+    ===================================================== */
 
-        function saveHistory() {
-
-            const inputs =
-                inputList.querySelectorAll(
-                    "input"
-                );
-
-
-            const values = [];
-
-
-            /*
-                Ambil semua angka
-                yang sudah diisi.
-            */
-
-            inputs.forEach(
-                input => {
-
-                    if (
-                        input.value.trim() !== ""
-                    ) {
-
-                        values.push(
-                            input.value
-                        );
-
-                    }
-
-                }
-            );
-
-
-            /*
-                Jangan simpan jika
-                belum ada angka.
-            */
+    input.addEventListener(
+        "keydown",
+        function (event) {
 
             if (
-                values.length === 0
+                event.key !== "Enter"
             ) {
-
-                alert(
-                    "Silakan masukkan angka terlebih dahulu."
-                );
 
                 return;
 
             }
 
 
-            /* =====================================================
-               HITUNG TOTAL
-            ===================================================== */
-
-            let sum = 0;
+            event.preventDefault();
 
 
-            values.forEach(
-                value => {
+            if (
+                this.value.trim() === ""
+            ) {
 
-                    sum +=
-                        parseFloat(value);
-
-                }
-            );
-
-
-            /* =====================================================
-               HAPUS EMPTY HISTORY
-            ===================================================== */
-
-            const empty =
-                document.getElementById(
-                    "emptyHistory"
-                );
-
-
-            if (empty) {
-
-                empty.remove();
+                return;
 
             }
 
 
-            /* =====================================================
-               FORMAT ANGKA
-            ===================================================== */
-
-            const formattedValues =
-                "(" +
-                values.join(", ") +
-                ")";
-
-
-            /* =====================================================
-               BUAT ROW
-            ===================================================== */
-
-            const row =
-                document.createElement("tr");
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    <span
-                        class="history-number"
-                    >
-                        SJ 0
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <span
-                        class="numbers-cell"
-                    >
-                        ${formattedValues}
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <span
-                        class="pcs-cell"
-                    >
-                        ${values.length}
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <span
-                        class="total-cell"
-                    >
-                        ${sum.toLocaleString("id-ID")}
-                    </span>
-
-                </td>
-
-            `;
-
-
-            /*
-                History baru ditambahkan
-                ke bagian paling bawah.
-            */
-
-            historyBody.appendChild(row);
-
-
-            /*
-                Update nomor:
-                SJ 1, SJ 2, SJ 3, dst.
-            */
-
-            updateHistoryNumber();
-
-
-            /*
-                Setelah disimpan,
-                kosongkan input.
-            */
-
-            resetInput();
-
-        }
-
-
-        /* =========================================================
-           UPDATE HISTORY NUMBER
-        ========================================================= */
-
-        function updateHistoryNumber() {
-
-            const rows =
-                historyBody.querySelectorAll(
-                    "tr"
+            const inputs =
+                inputList.querySelectorAll(
+                    "input"
                 );
 
 
-            let nomor = 1;
+            const lastInput =
+                inputs[
+                    inputs.length - 1
+                ];
 
 
-            rows.forEach(
-                row => {
+            if (
+                this === lastInput
+            ) {
 
-                    const numberElement =
-                        row.querySelector(
-                            ".history-number"
-                        );
+                addInput(true);
+
+            } else {
+
+                const index =
+                    Array
+                        .from(inputs)
+                        .indexOf(this);
 
 
-                    if (numberElement) {
+                if (
+                    inputs[index + 1]
+                ) {
 
-                        numberElement.textContent =
-                            `SJ ${nomor}`;
-
-                        nomor++;
-
-                    }
+                    inputs[
+                        index + 1
+                    ].focus();
 
                 }
-            );
+
+            }
 
         }
+    );
 
 
-        /* =========================================================
-           RESET INPUT
-        ========================================================= */
+    if (focusInput) {
 
-        function resetInput() {
+        setTimeout(
+            () => input.focus(),
+            50
+        );
 
-            inputList.innerHTML = "";
-
-            number = 0;
-
-            total.textContent =
-                "0";
-
-            result.classList.remove(
-                "show"
-            );
+    }
 
 
-            /*
-                Buat input baru.
-            */
+    updateCounter();
 
-            addInput(true);
+}
+
+
+/* =========================================================
+   CALCULATE TOTAL
+========================================================= */
+
+function calculateTotal() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    let sum = 0;
+
+    let filled = 0;
+
+
+    inputs.forEach(
+        input => {
+
+            const value =
+                parseFloat(
+                    input.value
+                );
+
+
+            if (
+                !isNaN(value)
+            ) {
+
+                sum += value;
+
+                filled++;
+
+            }
 
         }
+    );
 
 
-        /* =========================================================
-           CLEAR HISTORY
-        ========================================================= */
+    total.textContent =
+        sum.toLocaleString("id-ID");
 
-        function clearHistory() {
 
-            historyBody.innerHTML = `
+    if (
+        filled > 0
+    ) {
 
-                <tr id="emptyHistory">
+        result.classList.add("show");
 
-                    <td
-                        colspan="4"
-                        class="empty-history"
-                    >
-                        Belum ada history
-                    </td>
+    } else {
 
-                </tr>
+        result.classList.remove("show");
 
-            `;
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE COUNTER
+========================================================= */
+
+function updateCounter() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    counter.textContent =
+        `${inputs.length} Data`;
+
+}
+
+
+/* =========================================================
+   SAVE HISTORY
+========================================================= */
+
+function saveHistory() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+
+    const values = [];
+
+
+    /* =====================================================
+       AMBIL SEMUA ANGKA
+    ===================================================== */
+
+    inputs.forEach(
+        input => {
+
+            if (
+                input.value.trim() !== ""
+            ) {
+
+                values.push(
+                    input.value
+                );
+
+            }
 
         }
+    );
 
 
-        /* =========================================================
-           START
-        ========================================================= */
+    /* =====================================================
+       JIKA BELUM ADA ANGKA
+    ===================================================== */
 
-        addInput(true);
+    if (
+        values.length === 0
+    ) {
 
-    </script>
+        alert(
+            "Silakan masukkan angka terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       HITUNG TOTAL
+    ===================================================== */
+
+    let sum = 0;
+
+
+    values.forEach(
+        value => {
+
+            sum +=
+                parseFloat(value);
+
+        }
+    );
+
+
+    /* =====================================================
+       HAPUS EMPTY HISTORY
+    ===================================================== */
+
+    const empty =
+        document.getElementById(
+            "emptyHistory"
+        );
+
+
+    if (empty) {
+
+        empty.remove();
+
+    }
+
+
+    /* =====================================================
+       FORMAT YARD
+    ===================================================== */
+
+    const formattedValues =
+        "(" +
+        values.join(", ") +
+        ")";
+
+
+    /* =====================================================
+       BUAT HISTORY ROW
+    ===================================================== */
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+    <td>
+        <span class="history-number">
+            0
+        </span>
+    </td>
+
+        <td>
+
+            <span
+                class="numbers-cell"
+            >
+                ${formattedValues}
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <span
+                class="pcs-cell"
+            >
+                ${values.length}
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <span
+                class="total-cell"
+            >
+                ${sum.toLocaleString("id-ID")}
+            </span>
+
+        </td>
+
+
+        <td class="color-cell">
+
+            <input
+                type="text"
+                class="color-input"
+                placeholder="Input warna..."
+                autocomplete="off"
+            >
+
+        </td>
+
+    `;
+
+
+    /* =====================================================
+       TAMBAHKAN KE HISTORY
+    ===================================================== */
+
+    historyBody.appendChild(row);
+
+
+    /* =====================================================
+       UPDATE NOMOR SJ
+    ===================================================== */
+
+    updateHistoryNumber();
+
+
+    /* =====================================================
+       RESET INPUT
+    ===================================================== */
+
+    resetInput();
+
+}
+
+
+/* =========================================================
+   UPDATE HISTORY NUMBER
+========================================================= */
+
+function updateHistoryNumber() {
+
+    const rows =
+        historyBody.querySelectorAll("tr");
+
+    let nomor = 1;
+
+    rows.forEach(row => {
+
+        const numberElement =
+            row.querySelector(".history-number");
+
+        if (numberElement) {
+
+            numberElement.textContent = nomor;
+
+            nomor++;
+        }
+
+    });
+}
+
+/* =========================================================
+   RESET INPUT
+========================================================= */
+
+function resetInput() {
+
+    inputList.innerHTML =
+        "";
+
+    number = 0;
+
+
+    total.textContent =
+        "0";
+
+
+    result.classList.remove(
+        "show"
+    );
+
+
+    addInput(true);
+
+}
+
+
+/* =========================================================
+   CLEAR HISTORY
+========================================================= */
+
+function clearHistory() {
+
+    historyBody.innerHTML = `
+
+        <tr id="emptyHistory">
+
+            <td
+                colspan="5"
+                class="empty-history"
+            >
+                Belum ada history
+            </td>
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+addInput(true);
+
+</script>
 
 </body>
-
 </html>
