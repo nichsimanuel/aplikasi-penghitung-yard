@@ -146,16 +146,9 @@ body::before{
     position:relative;
 }
 
+/* TITIK PUTIH PADA LOGO SNP DIHILANGKAN */
 .icon::after{
-    content:"";
-    position:absolute;
-    width:12px;
-    height:12px;
-    border-radius:50%;
-    background:#fff;
-    right:7px;
-    top:7px;
-    opacity:.75;
+    display:none;
 }
 
 .title h1{
@@ -1983,6 +1976,7 @@ function editHistory(button) {
     const row =
         button.closest("tr");
 
+
     if (!row) {
         return;
     }
@@ -2306,6 +2300,7 @@ function saveEditedHistory(button) {
 
     const row =
         button.closest("tr");
+
 
     if (!row) {
         return;
@@ -2640,146 +2635,15 @@ document.addEventListener(
             return;
         }
 
-
-        const editingRows =
-            historyBody.querySelectorAll(
-                "tr.editing"
-            );
-
-
-        if (
-            editingRows.length === 0
-        ) {
-            return;
-        }
-
-
-        const cancel =
-            confirm(
-                "Batalkan perubahan pada history?"
-            );
-
-
-        if (!cancel) {
-            return;
-        }
-
-
-        editingRows.forEach(
-            row => {
-
-                const yardInput =
-                    row.querySelector(
-                        ".yard-edit-input"
-                    );
-
-
-                if (!yardInput) {
-                    return;
-                }
-
-
-                let savedYards = [];
-
-
-                try {
-
-                    savedYards =
-                        JSON.parse(
-                            row.dataset.yards ||
-                            "[]"
-                        );
-
-                } catch (error) {
-
-                    savedYards = [];
-
-                }
-
-
-                if (
-                    savedYards.length === 0
-                ) {
-                    return;
-                }
-
-
-                const yardCell =
-                    row.querySelector(
-                        ".numbers-cell"
-                    );
-
-                const pcsCell =
-                    row.querySelector(
-                        ".pcs-cell"
-                    );
-
-                const totalCell =
-                    row.querySelector(
-                        ".total-cell"
-                    );
-
-
-                yardCell.textContent =
-                    formatYardDisplay(
-                        savedYards
-                    );
-
-
-                pcsCell.textContent =
-                    formatNumber(
-                        savedYards.length
-                    );
-
-
-                totalCell.textContent =
-                    formatNumber(
-                        calculateYardTotal(
-                            savedYards
-                        )
-                    );
-
-
-                const button =
-                    row.querySelector(
-                        ".save-history-button"
-                    );
-
-
-                if (button) {
-
-                    button.className =
-                        "edit-history-button";
-
-                    button.innerHTML =
-                        "✎ Edit";
-
-                    button.onclick =
-                        function () {
-
-                            editHistory(this);
-
-                        };
-
-                }
-
-
-                row.classList.remove(
-                    "editing"
-                );
-
-            }
-        );
-
     }
 );
 
 
 /* =========================================================
-   START
+   INITIAL INPUT
 ========================================================= */
 
-addInput(true);
+addInput(false);
 
 </script>
 
