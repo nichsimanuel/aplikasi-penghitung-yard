@@ -861,16 +861,6 @@ td {
     -moz-appearance: textfield;
 }
 
-/*
-   YARD MENJADI SUMBER UTAMA.
-
-   PCS DAN TOTAL YARD DIBUAT OTOMATIS
-   DARI YARD.
-
-   KEDUANYA DIBERI TAMPILAN READONLY
-   SAAT EDIT SUPAYA TETAP TERKONEK.
-*/
-
 .connected-field {
     opacity: 0.82;
 
@@ -1316,7 +1306,6 @@ td {
 
     @page {
         size: A4 landscape;
-
         margin: 12mm;
     }
 
@@ -1328,14 +1317,11 @@ td {
     html,
     body {
         width: 100%;
-
         min-height: auto;
-
         margin: 0;
         padding: 0;
 
         background: #fff !important;
-
         color: #111 !important;
 
         overflow: visible !important;
@@ -1358,15 +1344,12 @@ td {
 
     .container {
         width: 100% !important;
-
         max-width: none !important;
 
         padding: 0 !important;
-
         margin: 0 !important;
 
         border: none !important;
-
         border-radius: 0 !important;
 
         background: #fff !important;
@@ -1393,7 +1376,6 @@ td {
 
     .icon {
         width: 42px !important;
-
         height: 42px !important;
 
         border-radius: 8px !important;
@@ -1412,7 +1394,6 @@ td {
 
     .title h1 {
         color: #111 !important;
-
         font-size: 18px !important;
     }
 
@@ -1454,7 +1435,6 @@ td {
 
     .history-title h2 {
         color: #111 !important;
-
         font-size: 16px !important;
     }
 
@@ -1533,13 +1513,20 @@ td {
     th:nth-child(1),
     td:nth-child(1) {
         width: 7%;
-
         text-align: center;
     }
+
+    /*
+       KOLOM YARD
+       DIBUAT LEBIH LEBAR,
+       ISI TENGAH DAN JUSTIFY
+    */
 
     th:nth-child(2),
     td:nth-child(2) {
         width: 48%;
+
+        text-align: center !important;
     }
 
     th:nth-child(3),
@@ -1559,6 +1546,8 @@ td {
     th:nth-child(5),
     td:nth-child(5) {
         width: 18%;
+
+        text-align: center;
     }
 
     .history-number,
@@ -1582,6 +1571,16 @@ td {
         font-size: 10px !important;
     }
 
+    /*
+       KHUSUS ISI YARD SAAT PRINT
+
+       - text-align: justify
+       - width penuh
+       - tetap berada di tengah secara visual
+       - jarak angka dirapikan
+       - jika banyak angka, otomatis turun baris
+    */
+
     .numbers-cell {
         display: block !important;
 
@@ -1598,13 +1597,20 @@ td {
 
         font-weight: 700 !important;
 
+        text-align: justify !important;
+
+        text-align-last: center !important;
+
         white-space: normal !important;
 
         overflow-wrap: anywhere !important;
 
         word-break: break-word !important;
 
-        line-height: 1.45 !important;
+        line-height: 1.55 !important;
+
+        padding:
+            0 8px !important;
     }
 
     .total-cell {
@@ -1676,9 +1682,9 @@ td {
 
     tr {
         page-break-inside: avoid;
-
         break-inside: avoid;
     }
+
 }
 
 </style>
@@ -2179,13 +2185,9 @@ function saveHistory() {
     }
 
 
-    /* TOTAL YARD DARI SEMUA YARD */
-
     const totalYard =
         calculateYardTotal(values);
 
-
-    /* TOTAL PCS = JUMLAH DATA YARD */
 
     const totalPCS =
         values.length;
@@ -2361,13 +2363,6 @@ function editHistory(button) {
     row.classList.add("editing");
 
 
-    /*
-       DATA YARD ASLI DISIMPAN DI DATASET.
-
-       CONTOH:
-       [10, 20, 30]
-    */
-
     let yards = [];
 
 
@@ -2384,10 +2379,6 @@ function editHistory(button) {
 
     }
 
-
-    /*
-       FALLBACK JIKA DATASET TIDAK ADA
-    */
 
     if (
         yards.length === 0
@@ -2407,10 +2398,6 @@ function editHistory(button) {
 
     }
 
-
-    /* =====================================================
-       YARD
-    ===================================================== */
 
     const yardCell =
         row.querySelector(
@@ -2433,10 +2420,6 @@ function editHistory(button) {
     `;
 
 
-    /* =====================================================
-       TOTAL PCS
-    ===================================================== */
-
     const pcsCell =
         row.querySelector(
             ".pcs-cell"
@@ -2455,10 +2438,6 @@ function editHistory(button) {
 
     `;
 
-
-    /* =====================================================
-       TOTAL YARD
-    ===================================================== */
 
     const totalCell =
         row.querySelector(
@@ -2480,15 +2459,6 @@ function editHistory(button) {
     `;
 
 
-    /*
-       EVENT INPUT YARD
-
-       SETIAP KALI YARD DIUBAH:
-       - PARSE ULANG YARD
-       - TOTAL PCS OTOMATIS BERUBAH
-       - TOTAL YARD OTOMATIS BERUBAH
-    */
-
     const yardInput =
         row.querySelector(
             ".yard-edit-input"
@@ -2499,17 +2469,11 @@ function editHistory(button) {
         "input",
         function () {
 
-            updateConnectedHistory(
-                row
-            );
+            updateConnectedHistory(row);
 
         }
     );
 
-
-    /*
-       ENTER DI YARD = SAVE
-    */
 
     yardInput.addEventListener(
         "keydown",
@@ -2533,8 +2497,6 @@ function editHistory(button) {
     );
 
 
-    /* BUTTON */
-
     button.className =
         "save-history-button";
 
@@ -2544,9 +2506,7 @@ function editHistory(button) {
     button.onclick =
         function () {
 
-            saveEditedHistory(
-                this
-            );
+            saveEditedHistory(this);
 
         };
 
@@ -2563,13 +2523,7 @@ function editHistory(button) {
     );
 
 
-    /*
-       PASTIKAN NILAI TERHUBUNG
-    */
-
-    updateConnectedHistory(
-        row
-    );
+    updateConnectedHistory(row);
 
 }
 
@@ -2612,52 +2566,25 @@ function updateConnectedHistory(row) {
     }
 
 
-    /*
-       PARSE YARD DARI TEXT.
-
-       CONTOH:
-       "10, 20, 30"
-       MENJADI:
-       [10, 20, 30]
-    */
-
     const values =
         parseYardText(
             yardInput.value
         );
 
 
-    /*
-       TOTAL PCS
-       = JUMLAH ANGKA YARD
-    */
-
     const totalPCS =
         values.length;
 
 
-    /*
-       TOTAL YARD
-       = PENJUMLAHAN SEMUA ANGKA YARD
-    */
-
     const totalYard =
-        calculateYardTotal(
-            values
-        );
+        calculateYardTotal(values);
 
-
-    /*
-       UPDATE OTOMATIS
-    */
 
     pcsInput.value =
         totalPCS;
 
     totalYardInput.value =
-        removeTrailingZeros(
-            totalYard
-        );
+        removeTrailingZeros(totalYard);
 
 }
 
@@ -2676,13 +2603,6 @@ function parseYardText(text) {
     }
 
 
-    /*
-       Hilangkan:
-       (
-       )
-       spasi berlebih
-    */
-
     let cleanText =
         String(text)
             .replace(/[()]/g, "")
@@ -2695,13 +2615,6 @@ function parseYardText(text) {
         return [];
     }
 
-
-    /*
-       Bisa menggunakan:
-       10,20,30
-       10 20 30
-       10;20;30
-    */
 
     const parts =
         cleanText.split(
@@ -2730,9 +2643,7 @@ function parseYardText(text) {
 
 
             const value =
-                Number(
-                    normalized
-                );
+                Number(normalized);
 
 
             if (
@@ -2777,10 +2688,6 @@ function saveEditedHistory(button) {
     }
 
 
-    /*
-       AMBIL YARD TERBARU
-    */
-
     const values =
         parseYardText(
             yardInput.value
@@ -2802,35 +2709,17 @@ function saveEditedHistory(button) {
     }
 
 
-    /*
-       HITUNG ULANG DARI YARD
-
-       INI BAGIAN UTAMA YANG MEMBUAT
-       YARD, TOTAL PCS, DAN TOTAL YARD
-       SELALU TERHUBUNG.
-    */
-
     const totalPCS =
         values.length;
 
 
     const totalYard =
-        calculateYardTotal(
-            values
-        );
+        calculateYardTotal(values);
 
-
-    /*
-       SIMPAN DATA YARD TERBARU
-    */
 
     row.dataset.yards =
         JSON.stringify(values);
 
-
-    /* =====================================================
-       YARD
-    ===================================================== */
 
     const yardCell =
         row.querySelector(
@@ -2839,14 +2728,8 @@ function saveEditedHistory(button) {
 
 
     yardCell.textContent =
-        formatYardDisplay(
-            values
-        );
+        formatYardDisplay(values);
 
-
-    /* =====================================================
-       TOTAL PCS
-    ===================================================== */
 
     const pcsCell =
         row.querySelector(
@@ -2855,14 +2738,8 @@ function saveEditedHistory(button) {
 
 
     pcsCell.textContent =
-        formatNumber(
-            totalPCS
-        );
+        formatNumber(totalPCS);
 
-
-    /* =====================================================
-       TOTAL YARD
-    ===================================================== */
 
     const totalCell =
         row.querySelector(
@@ -2871,14 +2748,8 @@ function saveEditedHistory(button) {
 
 
     totalCell.textContent =
-        formatNumber(
-            totalYard
-        );
+        formatNumber(totalYard);
 
-
-    /*
-       BUTTON KEMBALI MENJADI EDIT
-    */
 
     button.className =
         "edit-history-button";
@@ -2889,9 +2760,7 @@ function saveEditedHistory(button) {
     button.onclick =
         function () {
 
-            editHistory(
-                this
-            );
+            editHistory(this);
 
         };
 
@@ -3192,11 +3061,6 @@ document.addEventListener(
                 }
 
 
-                /*
-                   Kembalikan berdasarkan
-                   nilai terakhir yang tersimpan
-                */
-
                 let savedYards = [];
 
 
@@ -3275,9 +3139,7 @@ document.addEventListener(
                     button.onclick =
                         function () {
 
-                            editHistory(
-                                this
-                            );
+                            editHistory(this);
 
                         };
 
