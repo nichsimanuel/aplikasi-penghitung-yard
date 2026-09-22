@@ -1,2031 +1,977 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>APLIKASI HITUNG YARD SURAT JALAN MANUAL</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family:
-        "Segoe UI",
-        Inter,
-        Arial,
-        sans-serif;
-}
-
-:root {
-    --darkest: #061710;
-    --dark: #0b2118;
-    --dark-2: #102d21;
-    --dark-3: #163a2b;
-
-    --green: #1f5c45;
-    --green-light: #2e7d5b;
-    --green-bright: #3f9b70;
-
-    --cream: #f5eedc;
-    --cream-light: #fffdf5;
-    --cream-dark: #d8cdb5;
-
-    --muted: #8fa59a;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
-    color: var(--cream-light);
-
-    background:
-        linear-gradient(
-            rgba(6, 23, 16, 0.78),
-            rgba(6, 23, 16, 0.92)
-        ),
-        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=85");
-
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    overflow-x: hidden;
-    perspective: 1400px;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(46, 125, 91, 0.28),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 85%,
-            rgba(31, 92, 69, 0.28),
-            transparent 32%
-        );
-}
-
-.container {
-    width: 760px;
-    max-width: 100%;
-    position: relative;
-    padding: 28px;
-    border-radius: 32px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(22, 58, 43, 0.96),
-            rgba(10, 29, 21, 0.97) 55%,
-            rgba(7, 21, 15, 0.98)
-        );
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.12);
-
-    box-shadow:
-        0 45px 100px
-        rgba(0, 0, 0, 0.65),
-
-        0 18px 35px
-        rgba(0, 0, 0, 0.35),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.09),
-
-        inset 0 -2px 0
-        rgba(0, 0, 0, 0.45);
-
-    transform:
-        rotateX(0.5deg);
-
-    transition:
-        0.35s;
-
-    backdrop-filter:
-        blur(12px);
-}
-
-.container:hover {
-    transform:
-        rotateX(0deg)
-        translateY(-2px);
-}
-
-.container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 12%;
-    width: 76%;
-    height: 2px;
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--cream),
-            var(--green-bright),
-            transparent
-        );
-
-    box-shadow:
-        0 0 18px
-        rgba(245, 238, 220, 0.35);
-}
-
-/* HEADER */
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.title {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.icon {
-    width: 52px;
-    height: 52px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-    border-radius: 17px;
-
-    color: var(--darkest);
-    font-size: 23px;
-    font-weight: 900;
-
-    background:
-        linear-gradient(
-            145deg,
-            #fffdf5,
-            #e6dbc2 45%,
-            #c9b996
-        );
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.45);
-
-    box-shadow:
-        0 11px 0
-        #8f8062,
-
-        0 18px 28px
-        rgba(0, 0, 0, 0.30),
-
-        inset 0 2px 2px
-        rgba(255, 255, 255, 0.7);
-
-    transform:
-        translateY(-3px);
-}
-
-.title h1 {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--cream-light);
-}
-
-.title p {
-    margin-top: 4px;
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.counter {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    padding:
-        9px 14px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #1d4635,
-            #0d261b
-        );
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.12);
-
-    color: var(--cream);
-    font-size: 11px;
-    font-weight: 700;
-
-    white-space:
-        nowrap;
-
-    box-shadow:
-        0 5px 0
-        #06130d,
-
-        0 10px 18px
-        rgba(0, 0, 0, 0.30);
-}
-
-.counter::before {
-    content: "";
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background:
-        #63c58d;
-
-    box-shadow:
-        0 0 10px
-        rgba(99, 197, 141, 0.9);
-}
-
-/* INPUT LIST */
-
-.input-list {
-    max-height: 325px;
-    overflow-y: auto;
-
-    padding:
-        5px 7px 5px 3px;
-
-    scrollbar-width:
-        thin;
-
-    scrollbar-color:
-        #426151
-        transparent;
-}
-
-.input-list::-webkit-scrollbar {
-    width: 5px;
-}
-
-.input-list::-webkit-scrollbar-thumb {
-    background:
-        linear-gradient(
-            #557565,
-            #263f33
-        );
-
-    border-radius: 20px;
-}
-
-/* INPUT ROW */
-
-.input-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 13px;
-
-    animation:
-        inputAppear 0.28s ease;
-}
-
-@keyframes inputAppear {
-    from {
-        opacity: 0;
-        transform:
-            translateY(12px)
-            rotateX(-8deg);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Yard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
     }
-
-    to {
-        opacity: 1;
-        transform:
-            translateY(0)
-            rotateX(0);
-    }
-}
-
-/* NUMBER */
-
-.number {
-    width: 43px;
-    height: 52px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #244a38,
-            #10271d
-        );
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.09);
-
-    color:
-        #9db5a8;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    box-shadow:
-        0 5px 0
-        #06130d,
-
-        0 9px 16px
-        rgba(0, 0, 0, 0.30);
-}
-
-/* INPUT WRAPPER */
-
-.input-wrapper {
-    position: relative;
-    flex: 1;
-}
-
-/* INPUT */
-
-.input-wrapper input {
-    width: 100%;
-    height: 52px;
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.10);
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #11251c,
-            #081610
-        );
-
-    color:
-        var(--cream-light);
-
-    padding:
-        0 50px 0 17px;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    outline: none;
-    transition:
-        0.2s;
-
-    box-shadow:
-        0 6px 0
-        #040d08,
-
-        0 10px 20px
-        rgba(0, 0, 0, 0.28);
-}
-
-.input-wrapper input:focus {
-    border-color:
-        var(--green-bright);
-
-    background:
-        linear-gradient(
-            145deg,
-            #183629,
-            #0a1a12
-        );
-
-    box-shadow:
-        0 6px 0
-        #12402e,
-
-        0 0 0 3px
-        rgba(46, 125, 91, 0.10);
-}
-
-.input-wrapper input::placeholder {
-    color:
-        #60756a;
-}
-
-.input-wrapper input::-webkit-inner-spin-button,
-.input-wrapper input::-webkit-outer-spin-button {
-    -webkit-appearance:
-        none;
-
-    margin: 0;
-}
-
-.input-wrapper input[type="number"] {
-    -moz-appearance:
-        textfield;
-}
-
-/* CHECK */
-
-.check {
-    position: absolute;
-
-    right: 15px;
-    top: 50%;
-
-    transform:
-        translateY(-50%)
-        scale(0.7);
-
-    width: 22px;
-    height: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #72d69c,
-            #2e8b62
-        );
-
-    color:
-        white;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    opacity: 0;
-    transition:
-        0.2s;
-}
-
-.input-wrapper input.valid + .check {
-    opacity: 1;
-
-    transform:
-        translateY(-50%)
-        scale(1);
-}
-
-/* BUTTON */
-
-.button-area {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 12px;
-
-    margin-top: 12px;
-}
-
-button {
-    height: 52px;
-
-    border: none;
-    border-radius: 15px;
-
-    cursor: pointer;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    transition:
-        0.15s;
-}
-
-button:active {
-    transform:
-        translateY(4px);
-}
-
-.add-button {
-    color:
-        var(--cream);
-
-    background:
-        linear-gradient(
-            145deg,
-            #244636,
-            #132a20
-        );
-
-    box-shadow:
-        0 6px 0
-        #06130d,
-
-        0 12px 20px
-        rgba(0, 0, 0, 0.28);
-}
-
-.save-button {
-    color:
-        #102319;
-
-    background:
-        linear-gradient(
-            145deg,
-            #fffdf5,
-            #f5eedc 45%,
-            #d8cdb5
-        );
-
-    box-shadow:
-        0 6px 0
-        #9c8e70,
-
-        0 14px 28px
-        rgba(0, 0, 0, 0.28);
-}
-
-/* RESULT */
-
-.result {
-    display: none;
-
-    margin-top: 17px;
-
-    padding:
-        19px 21px;
-
-    border-radius: 19px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(46, 125, 91, 0.28),
-            rgba(15, 52, 38, 0.30)
-        );
-
-    border:
-        1px solid
-        rgba(143, 190, 163, 0.22);
-
-    box-shadow:
-        0 8px 0
-        rgba(4, 25, 17, 0.85),
-
-        0 18px 30px
-        rgba(0, 0, 0, 0.28);
-}
-
-.result.show {
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-}
-
-.result-label {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.result-label span {
-    color:
-        #a9bcaf;
-
-    font-size: 10px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        1.5px;
-
-    font-weight: 800;
-}
-
-.result-label small {
-    color:
-        #668075;
-
-    font-size: 10px;
-}
-
-.result strong {
-    color:
-        var(--cream);
-
-    font-size: 29px;
-    font-weight: 900;
-}
-
-/* =========================================================
-   HISTORY
-========================================================= */
-
-.history {
-    margin-top: 29px;
-
-    padding-top: 23px;
-
-    border-top:
-        1px solid
-        rgba(245, 238, 220, 0.07);
-
-    /* FONT HISTORY BOLD */
-    font-weight: 700;
-}
-
-.history-header {
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    gap: 15px;
-
-    margin-bottom: 14px;
-}
-
-.history-title h2 {
-    font-size: 15px;
-
-    font-weight: 900;
-
-    color:
-        var(--cream-light);
-}
-
-.history-title span {
-    display: block;
-
-    margin-top: 4px;
-
-    color:
-        #60756a;
-
-    font-size: 10px;
-
-    font-weight: 700;
-}
-
-/* CLEAR HISTORY */
-
-.clear-history {
-    height: auto;
-
-    padding:
-        8px 12px;
-
-    border-radius: 10px;
-
-    color:
-        #c8bda8;
-
-    background:
-        linear-gradient(
-            145deg,
-            #263c31,
-            #15261e
-        );
-
-    box-shadow:
-        0 4px 0
-        #06130d,
-
-        0 7px 12px
-        rgba(0, 0, 0, 0.25);
-
-    font-size: 10px;
-
-    font-weight: 800;
-}
-
-/* TABLE */
-
-.table-wrapper {
-    overflow-x:
-        auto;
-
-    border-radius: 18px;
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.08);
-
-    background:
-        rgba(4, 13, 9, 0.45);
-
-    box-shadow:
-        0 8px 0
-        #06100b,
-
-        0 14px 25px
-        rgba(0, 0, 0, 0.28);
-}
-
-table {
-    width: 100%;
-
-    border-collapse:
-        collapse;
-
-    min-width:
-        680px;
-}
-
-thead {
-    background:
-        linear-gradient(
-            145deg,
-            #1d382a,
-            #10251b
-        );
-}
-
-th {
-    padding:
-        14px;
-
-    text-align:
-        left;
-
-    color:
-        #899d91;
-
-    font-size:
-        9px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        1px;
-
-    /* BOLD */
-    font-weight: 900;
-}
-
-td {
-    padding:
-        14px;
-
-    border-top:
-        1px solid
-        rgba(245, 238, 220, 0.045);
-
-    color:
-        #b8c7bd;
-
-    font-size:
-        11px;
-
-    /* BOLD */
-    font-weight: 700;
-}
-
-/* SJ NUMBER */
-
-.history-number {
-    display: inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    padding:
-        5px 10px;
-
-    border-radius:
-        8px;
-
-    color:
-        var(--cream);
-
-    background:
-        linear-gradient(
-            145deg,
-            #315e47,
-            #173628
-        );
-
-    box-shadow:
-        0 3px 0
-        #07170f;
-
-    font-size:
-        10px;
-
-    font-weight:
-        900;
-}
-
-/* YARD */
-
-.numbers-cell {
-    color:
-        #d8ded9;
-
-    font-family:
-        "Consolas",
-        "Courier New",
-        monospace;
-
-    font-size:
-        11px;
-
-    /* BOLD */
-    font-weight:
-        700;
-}
-
-/* PCS */
-
-.pcs-cell {
-    display: inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    min-width:
-        30px;
-
-    padding:
-        5px 8px;
-
-    border-radius:
-        8px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(99, 197, 141, 0.20),
-            rgba(46, 125, 91, 0.08)
-        );
-
-    color:
-        #7ee2a5;
-
-    font-weight:
-        900;
-}
-
-/* TOTAL YARD */
-
-.total-cell {
-    color:
-        var(--cream);
-
-    font-weight:
-        900;
-
-    font-size:
-        12px;
-}
-
-/* WARNA */
-
-.color-cell {
-    min-width:
-        140px;
-}
-
-.color-input {
-    width:
-        125px;
-
-    height:
-        34px;
-
-    padding:
-        0 10px;
-
-    border-radius:
-        9px;
-
-    border:
-        1px solid
-        rgba(245, 238, 220, 0.12);
-
-    background:
-        linear-gradient(
-            145deg,
-            #11251c,
-            #081610
-        );
-
-    color:
-        var(--cream-light);
-
-    font-size:
-        11px;
-
-    outline:
-        none;
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,.04);
-
-    /* BOLD */
-    font-weight:
-        700;
-}
-
-.color-input::placeholder {
-    color:
-        #60756a;
-}
-
-.color-input:focus {
-    border-color:
-        var(--green-bright);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(46, 125, 91, 0.10);
-}
-
-/* EMPTY HISTORY */
-
-.empty-history {
-    padding:
-        32px !important;
-
-    text-align:
-        center;
-
-    color:
-        #5d7166;
-
-    font-size:
-        11px;
-
-    font-weight:
-        700;
-}
-
-/* FOOTER */
-
-.footer {
-    margin-top:
-        20px;
-
-    padding-top:
-        17px;
-
-    border-top:
-        1px solid
-        rgba(245, 238, 220, 0.05);
-
-    text-align:
-        center;
-
-    color:
-        #607167;
-
-    font-size:
-        10px;
-}
-
-.enter-key {
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    min-width:
-        40px;
-
-    padding:
-        4px 8px;
-
-    margin:
-        0 4px;
-
-    border-radius:
-        6px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #20372b,
-            #102219
-        );
-
-    box-shadow:
-        0 3px 0
-        #06100b;
-
-    color:
-        #aabbb0;
-
-    font-family:
-        "Consolas",
-        monospace;
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-}
-
-/* TABLET */
-
-@media (max-width: 700px) {
 
     body {
-        padding:
-            15px;
-
-        align-items:
-            flex-start;
-
-        padding-top:
-            20px;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #dfe9df;
+      color: #193d2b;
     }
 
     .container {
-        padding:
-            22px;
-
-        border-radius:
-            27px;
-    }
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    body {
-        padding:
-            9px;
-
-        padding-top:
-            12px;
-
-        background-attachment:
-            scroll;
-    }
-
-    .container {
-        width:
-            100%;
-
-        padding:
-            17px;
-
-        border-radius:
-            23px;
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 25px;
+      background: #eef5ee;
+      box-shadow:
+        10px 10px 25px rgba(0, 0, 0, 0.12),
+        -10px -10px 25px rgba(255, 255, 255, 0.8);
     }
 
     .header {
-        align-items:
-            flex-start;
-
-        margin-bottom:
-            20px;
+      text-align: center;
+      margin-bottom: 25px;
     }
 
-    .icon {
-        width:
-            44px;
-
-        height:
-            44px;
-
-        border-radius:
-            14px;
-
-        font-size:
-            20px;
+    .header h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 800;
+      color: #1b5135;
     }
 
-    .title {
-        gap:
-            11px;
-    }
-
-    .title h1 {
-        font-size:
-            16px;
-    }
-
-    .title p {
-        font-size:
-            9px;
-    }
-
-    .counter {
-        padding:
-            7px 9px;
-
-        font-size:
-            9px;
+    .header p {
+      margin-top: 8px;
+      color: #557260;
+      font-weight: 600;
     }
 
     .input-list {
-        max-height:
-            300px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
     }
 
-    .input-row {
-        gap:
-            8px;
-
-        margin-bottom:
-            10px;
+    .input-item {
+      position: relative;
     }
 
-    .number {
-        width:
-            36px;
-
-        height:
-            48px;
+    .input-item label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #355d45;
     }
 
-    .input-wrapper input {
-        height:
-            48px;
+    .yard-input {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      outline: none;
+      background: #edf4ed;
+      color: #193d2b;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow:
+        inset 4px 4px 8px rgba(0, 0, 0, 0.08),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+      transition: 0.2s ease;
+    }
 
-        border-radius:
-            13px;
-
-        padding-left:
-            14px;
-
-        font-size:
-            15px;
+    .yard-input:focus {
+      box-shadow:
+        inset 2px 2px 5px rgba(0, 0, 0, 0.12),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.9),
+        0 0 0 2px #6ca67d;
     }
 
     .button-area {
-        grid-template-columns:
-            1fr;
-
-        gap:
-            10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
     }
 
     button {
-        height:
-            50px;
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 13px 22px;
+      font-size: 15px;
+      font-weight: 800;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .add-button {
+      background: #d5e6d8;
+      color: #215638;
+      box-shadow:
+        5px 5px 12px rgba(0, 0, 0, 0.12),
+        -5px -5px 12px rgba(255, 255, 255, 0.8);
+    }
+
+    .save-button {
+      background: #276c45;
+      color: white;
+      box-shadow:
+        5px 5px 12px rgba(0, 0, 0, 0.18),
+        -5px -5px 12px rgba(255, 255, 255, 0.6);
     }
 
     .result {
-        padding:
-            17px;
-
-        border-radius:
-            16px;
-    }
-
-    .result strong {
-        font-size:
-            25px;
+      text-align: center;
+      margin: 20px 0 30px;
+      padding: 18px;
+      border-radius: 15px;
+      background: #dcebdc;
+      color: #174b2e;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow:
+        inset 3px 3px 7px rgba(0, 0, 0, 0.08),
+        inset -3px -3px 7px rgba(255, 255, 255, 0.8);
     }
 
     .history {
-        margin-top:
-            24px;
-
-        padding-top:
-            20px;
+      margin-top: 25px;
     }
 
     .history-header {
-        align-items:
-            flex-start;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #1d5135;
     }
 
-    .clear-history {
-        padding:
-            7px 9px;
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 15px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      background: #f5f9f5;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    th,
+    td {
+      border: 1px solid #aac2ad;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #276c45;
+      color: white;
+      font-weight: 900;
+    }
+
+    td {
+      color: #214832;
+      font-weight: 800;
+    }
+
+    .numbers-cell {
+      display: block;
+      width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .yard-edit {
+      width: 100%;
+      min-height: 55px;
+      resize: vertical;
+      padding: 8px;
+      border: 1px solid #a7c0ad;
+      border-radius: 8px;
+      outline: none;
+      background: white;
+      color: #193d2b;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .yard-edit:focus {
+      border-color: #276c45;
+      box-shadow: 0 0 0 2px rgba(39, 108, 69, 0.15);
+    }
+
+    .total-cell {
+      font-weight: 900;
+      white-space: nowrap;
     }
 
     .color-input {
-        width:
-            110px;
+      width: 100%;
+      max-width: 150px;
+      padding: 8px;
+      border: 1px solid #a7c0ad;
+      border-radius: 8px;
+      outline: none;
+      text-align: center;
+      font-weight: 800;
+      color: #193d2b;
+      background: white;
+    }
 
-        height:
-            32px;
+    .print-history-area {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-        font-size:
-            10px;
+    .print-history-button {
+      min-width: 220px;
+      padding: 16px 25px;
+      background: #1d5135;
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow:
+        6px 6px 15px rgba(0, 0, 0, 0.18),
+        -5px -5px 12px rgba(255, 255, 255, 0.6);
     }
 
     .footer {
-        font-size:
-            9px;
-    }
-}
-
-/* SMALL PHONE */
-
-@media (max-width: 380px) {
-
-    .container {
-        padding:
-            14px;
-
-        border-radius:
-            20px;
+      margin-top: 25px;
+      text-align: center;
+      font-size: 12px;
+      color: #718879;
+      font-weight: 600;
     }
 
-    .title {
-        gap:
-            8px;
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 15px;
+        border-radius: 18px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .input-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .button-area {
+        flex-direction: column;
+      }
+
+      .button-area button {
+        width: 100%;
+      }
+
+      table {
+        min-width: 650px;
+      }
     }
 
-    .icon {
-        width:
-            39px;
+    /* =========================================================
+       PRINT
+       HANYA BAGIAN HISTORY YANG DICETAK
+       ========================================================= */
+    @media print {
 
-        height:
-            39px;
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
 
-        font-size:
-            18px;
+      html,
+      body {
+        width: 100%;
+        height: auto;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+      }
+
+      body {
+        color: #000 !important;
+      }
+
+      /* Sembunyikan semua bagian */
+      .header,
+      .input-list,
+      .button-area,
+      .result,
+      .footer,
+      .print-history-area {
+        display: none !important;
+      }
+
+      /* Container hanya menjadi pembungkus */
+      .container {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* Hanya history yang muncul */
+      .history {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+
+      .history-header {
+        display: block !important;
+        margin: 0 0 12px 0 !important;
+        padding: 0 !important;
+        text-align: center !important;
+        color: #000 !important;
+        font-size: 22px !important;
+        font-weight: 900 !important;
+      }
+
+      .table-wrapper {
+        display: block !important;
+        width: 100% !important;
+        overflow: visible !important;
+      }
+
+      table {
+        width: 100% !important;
+        min-width: 0 !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        background: #fff !important;
+        color: #000 !important;
+        border-radius: 0 !important;
+      }
+
+      thead {
+        display: table-header-group !important;
+      }
+
+      tr {
+        page-break-inside: avoid !important;
+      }
+
+      th,
+      td {
+        border: 1px solid #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+        padding: 7px !important;
+        font-weight: 800 !important;
+        vertical-align: middle !important;
+      }
+
+      th {
+        background: #eaeaea !important;
+        color: #000 !important;
+        text-align: center !important;
+        font-weight: 900 !important;
+      }
+
+      /* Lebar kolom */
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 7% !important;
+        text-align: center !important;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 43% !important;
+        text-align: left !important;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 15% !important;
+        text-align: center !important;
+      }
+
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 17% !important;
+        text-align: center !important;
+      }
+
+      th:nth-child(5),
+      td:nth-child(5) {
+        width: 18% !important;
+        text-align: center !important;
+      }
+
+      /*
+       * YARD:
+       * Saat print textarea dibuat transparan
+       * agar isi YARD tetap terlihat seperti teks.
+       */
+      .yard-edit {
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        height: auto !important;
+        resize: none !important;
+        overflow: visible !important;
+        border: none !important;
+        outline: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        line-height: 1.4 !important;
+        white-space: pre-wrap !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+      }
+
+      .numbers-cell {
+        display: block !important;
+        width: 100% !important;
+        color: #000 !important;
+        font-weight: 800 !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+      }
+
+      .total-cell {
+        color: #000 !important;
+        font-weight: 900 !important;
+      }
+
+      /*
+       * Warna selalu berada di tengah
+       */
+      .color-input {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        border: none !important;
+        outline: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #000 !important;
+        text-align: center !important;
+        font-weight: 800 !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+      }
+
+      /* Hilangkan spinner/input decoration */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     }
-
-    .title h1 {
-        font-size:
-            14px;
-    }
-
-    .title p {
-        font-size:
-            8px;
-    }
-
-    .counter {
-        font-size:
-            8px;
-
-        padding:
-            6px 8px;
-    }
-
-    .number {
-        width:
-            33px;
-    }
-}
-
-</style>
+  </style>
 </head>
 
 <body>
 
-<div class="container">
-
-    <!-- HEADER -->
+  <div class="container">
 
     <div class="header">
-
-        <div class="title">
-
-            <div class="icon">
-                Σ
-            </div>
-
-            <div>
-
-                <h1>
-                    Input Yard
-                </h1>
-
-                <p>
-                    Silahkan input yard sesuai dengan yang diberikan mandor.
-                </p>
-
-            </div>
-
-        </div>
-
-        <div
-            class="counter"
-            id="counter"
-        >
-            1 Data
-        </div>
-
+      <h1>INPUT YARD</h1>
+      <p>Masukkan data yard dan simpan ke history</p>
     </div>
 
-
-    <!-- INPUT -->
-
-    <div
-        class="input-list"
-        id="inputList"
-    ></div>
-
-
-    <!-- BUTTON -->
+    <div class="input-list" id="inputList"></div>
 
     <div class="button-area">
+      <button
+        class="add-button"
+        type="button"
+        onclick="addInput(true)">
+        ＋ Tambah Kolom
+      </button>
 
-        <button
-            class="add-button"
-            onclick="addInput(true)"
-        >
-            ＋ Tambah Kolom
-        </button>
-
-        <button
-            class="save-button"
-            onclick="saveHistory()"
-        >
-            ✓ Simpan ke History
-        </button>
-
+      <button
+        class="save-button"
+        type="button"
+        onclick="saveHistory()">
+        ✓ Simpan ke History
+      </button>
     </div>
 
-
-    <!-- TOTAL -->
-
-    <div
-        class="result"
-        id="result"
-    >
-
-        <div class="result-label">
-
-            <span>
-                Total Yard
-            </span>
-
-            <small>
-                Jumlah seluruh angka
-            </small>
-
-        </div>
-
-        <strong id="total">
-            0
-        </strong>
-
+    <div class="result" id="result">
+      Total Yard: 0
     </div>
-
-
-    <!-- HISTORY -->
 
     <div class="history">
 
-        <div class="history-header">
+      <div class="history-header">
+        HISTORY
+      </div>
 
-            <div class="history-title">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>YARD</th>
+              <th>Total PCS</th>
+              <th>Total Yard</th>
+              <th>Warna</th>
+            </tr>
+          </thead>
 
-                <h2>
-                    History
-                </h2>
+          <tbody id="historyBody">
+          </tbody>
+        </table>
+      </div>
 
-                <span>
-                    Riwayat Input Yard
-                </span>
-
-            </div>
-
-            <button
-                class="clear-history"
-                onclick="clearHistory()"
-            >
-                Hapus History
-            </button>
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            No
-                        </th>
-
-                        <th>
-                            YARD
-                        </th>
-
-                        <th>
-                            Total PCS
-                        </th>
-
-                        <th>
-                            Total Yard
-                        </th>
-
-                        <th>
-                            Warna
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="historyBody">
-
-                    <tr id="emptyHistory">
-
-                        <td
-                            colspan="5"
-                            class="empty-history"
-                        >
-                            Belum ada history
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
+      <div class="print-history-area">
+        <button
+          class="print-history-button"
+          type="button"
+          onclick="printHistory()">
+          🖨 PRINT HISTORY
+        </button>
+      </div>
 
     </div>
-
-
-    <!-- FOOTER -->
 
     <div class="footer">
-
-        Tekan
-
-        <span class="enter-key">
-            Enter
-        </span>
-
-        untuk menambah kolom berikutnya
-
+      Input Yard System
     </div>
 
-</div>
+  </div>
 
+  <script>
+    let inputCount = 0;
 
-<script>
+    /*
+     * =========================================================
+     * TAMBAH INPUT
+     * =========================================================
+     */
+    function addInput(focusInput = true) {
+      inputCount++;
 
-/* =========================================================
-   ELEMENT
-========================================================= */
+      const inputList = document.getElementById("inputList");
 
-const inputList =
-    document.getElementById("inputList");
+      const wrapper = document.createElement("div");
+      wrapper.className = "input-item";
 
-const counter =
-    document.getElementById("counter");
+      const label = document.createElement("label");
+      label.textContent = "YARD " + inputCount;
 
-const result =
-    document.getElementById("result");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.step = "any";
+      input.min = "0";
+      input.className = "yard-input";
+      input.placeholder = "0";
+      input.setAttribute("data-index", inputCount);
 
-const total =
-    document.getElementById("total");
+      input.addEventListener("input", calculateTotal);
 
-const historyBody =
-    document.getElementById("historyBody");
+      input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
 
+          const inputs =
+            Array.from(document.querySelectorAll(".yard-input"));
 
-/* =========================================================
-   VARIABLES
-========================================================= */
+          const currentIndex = inputs.indexOf(input);
 
-let number = 0;
-
-
-/* =========================================================
-   ADD INPUT
-========================================================= */
-
-function addInput(focusInput = true) {
-
-    number++;
-
-    const row =
-        document.createElement("div");
-
-    row.className =
-        "input-row";
-
-
-    row.innerHTML = `
-
-        <div class="number">
-            ${number}
-        </div>
-
-        <div class="input-wrapper">
-
-            <input
-                type="number"
-                placeholder="Masukkan yard..."
-                autocomplete="off"
-            >
-
-            <span class="check">
-                ✓
-            </span>
-
-        </div>
-
-    `;
-
-
-    inputList.appendChild(row);
-
-
-    const input =
-        row.querySelector("input");
-
-
-    /* INPUT CHANGE */
-
-    input.addEventListener(
-        "input",
-        function () {
-
-            if (
-                this.value.trim() !== ""
-            ) {
-
-                this.classList.add("valid");
-
-            } else {
-
-                this.classList.remove("valid");
-
-            }
-
-            calculateTotal();
-
+          if (currentIndex === inputs.length - 1) {
+            addInput(true);
+          } else {
+            inputs[currentIndex + 1].focus();
+          }
         }
-    );
+      });
 
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
 
-    /* ENTER */
+      inputList.appendChild(wrapper);
 
-    input.addEventListener(
-        "keydown",
-        function (event) {
+      if (focusInput) {
+        setTimeout(() => {
+          input.focus();
+        }, 50);
+      }
 
-            if (
-                event.key !== "Enter"
-            ) {
-
-                return;
-
-            }
-
-            event.preventDefault();
-
-
-            if (
-                this.value.trim() === ""
-            ) {
-
-                return;
-
-            }
-
-
-            const inputs =
-                inputList.querySelectorAll(
-                    "input"
-                );
-
-
-            const lastInput =
-                inputs[
-                    inputs.length - 1
-                ];
-
-
-            if (
-                this === lastInput
-            ) {
-
-                addInput(true);
-
-            } else {
-
-                const index =
-                    Array
-                        .from(inputs)
-                        .indexOf(this);
-
-
-                if (
-                    inputs[index + 1]
-                ) {
-
-                    inputs[
-                        index + 1
-                    ].focus();
-
-                }
-
-            }
-
-        }
-    );
-
-
-    if (focusInput) {
-
-        setTimeout(
-            () => input.focus(),
-            50
-        );
-
+      calculateTotal();
     }
 
+    /*
+     * =========================================================
+     * HITUNG TOTAL INPUT
+     * =========================================================
+     */
+    function calculateTotal() {
+      const inputs =
+        document.querySelectorAll(".yard-input");
 
-    updateCounter();
+      let total = 0;
 
-}
+      inputs.forEach(input => {
+        const value = parseFloat(input.value);
 
-
-/* =========================================================
-   CALCULATE TOTAL
-========================================================= */
-
-function calculateTotal() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    let sum = 0;
-
-    let filled = 0;
-
-
-    inputs.forEach(
-        input => {
-
-            const value =
-                parseFloat(
-                    input.value
-                );
-
-
-            if (
-                !isNaN(value)
-            ) {
-
-                sum += value;
-
-                filled++;
-
-            }
-
+        if (!isNaN(value)) {
+          total += value;
         }
-    );
+      });
 
-
-    total.textContent =
-        sum.toLocaleString("id-ID");
-
-
-    if (
-        filled > 0
-    ) {
-
-        result.classList.add("show");
-
-    } else {
-
-        result.classList.remove("show");
-
+      document.getElementById("result").textContent =
+        "Total Yard: " +
+        formatNumber(total);
     }
 
-}
+    /*
+     * =========================================================
+     * FORMAT ANGKA
+     * =========================================================
+     */
+    function formatNumber(number) {
+      return number.toLocaleString("id-ID", {
+        maximumFractionDigits: 2
+      });
+    }
 
+    /*
+     * =========================================================
+     * SIMPAN HISTORY
+     * =========================================================
+     */
+    function saveHistory() {
 
-/* =========================================================
-   UPDATE COUNTER
-========================================================= */
+      const inputs =
+        Array.from(document.querySelectorAll(".yard-input"));
 
-function updateCounter() {
+      const values = inputs
+        .map(input => parseFloat(input.value))
+        .filter(value => !isNaN(value));
 
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    counter.textContent =
-        `${inputs.length} Data`;
-
-}
-
-
-/* =========================================================
-   SAVE HISTORY
-========================================================= */
-
-function saveHistory() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-
-    const values = [];
-
-
-    /* AMBIL SEMUA ANGKA */
-
-    inputs.forEach(
-        input => {
-
-            if (
-                input.value.trim() !== ""
-            ) {
-
-                values.push(
-                    input.value
-                );
-
-            }
-
-        }
-    );
-
-
-    /* JIKA BELUM ADA ANGKA */
-
-    if (
-        values.length === 0
-    ) {
-
-        alert(
-            "Silakan masukkan angka terlebih dahulu."
-        );
-
+      if (values.length === 0) {
+        alert("Silakan masukkan yard terlebih dahulu.");
         return;
+      }
 
+      const total = values.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+
+      const historyBody =
+        document.getElementById("historyBody");
+
+      const row = document.createElement("tr");
+
+      /*
+       * NOMOR
+       */
+      const noCell = document.createElement("td");
+      noCell.textContent = historyBody.children.length + 1;
+
+      /*
+       * YARD EDITABLE
+       */
+      const yardCell = document.createElement("td");
+
+      const yardEdit = document.createElement("textarea");
+      yardEdit.className = "yard-edit";
+
+      yardEdit.value = values
+        .map(value => formatNumber(value))
+        .join(", ");
+
+      yardEdit.setAttribute(
+        "aria-label",
+        "Edit nilai yard"
+      );
+
+      yardEdit.addEventListener("input", function() {
+        updateHistoryRow(row);
+        autoResizeTextarea(yardEdit);
+      });
+
+      yardCell.appendChild(yardEdit);
+
+      /*
+       * TOTAL PCS
+       */
+      const pcsCell = document.createElement("td");
+      pcsCell.className = "total-cell";
+
+      /*
+       * TOTAL YARD
+       */
+      const totalCell = document.createElement("td");
+      totalCell.className = "total-cell";
+
+      /*
+       * WARNA
+       */
+      const colorCell = document.createElement("td");
+
+      const colorInput = document.createElement("input");
+      colorInput.type = "text";
+      colorInput.className = "color-input";
+      colorInput.placeholder = "Warna";
+
+      colorCell.appendChild(colorInput);
+
+      row.appendChild(noCell);
+      row.appendChild(yardCell);
+      row.appendChild(pcsCell);
+      row.appendChild(totalCell);
+      row.appendChild(colorCell);
+
+      historyBody.appendChild(row);
+
+      updateHistoryRow(row);
+      autoResizeTextarea(yardEdit);
+
+      /*
+       * Reset input utama
+       */
+      resetInputs();
     }
 
+    /*
+     * =========================================================
+     * PARSE YARD DARI HISTORY
+     *
+     * Bisa membaca:
+     * 10, 20, 30
+     * 10 20 30
+     * 10.5, 20.5
+     * =========================================================
+     */
+    function parseYardValues(text) {
 
-    /* HITUNG TOTAL */
+      if (!text || !text.trim()) {
+        return [];
+      }
 
-    let sum = 0;
+      /*
+       * Ganti beberapa karakter pemisah
+       * menjadi spasi.
+       */
+      const cleaned = text
+        .replace(/\n/g, " ")
+        .replace(/;/g, " ")
+        .replace(/\|/g, " ");
 
+      /*
+       * Cari semua angka.
+       *
+       * Mendukung:
+       * 10
+       * 10.5
+       * 10,5
+       */
+      const matches = cleaned.match(
+        /-?\d+(?:[.,]\d+)?/g
+      );
 
-    values.forEach(
-        value => {
+      if (!matches) {
+        return [];
+      }
 
-            sum +=
-                parseFloat(value);
+      return matches
+        .map(value => {
+          /*
+           * Jika angka menggunakan koma desimal,
+           * ubah menjadi titik.
+           */
+          return parseFloat(
+            value.replace(",", ".")
+          );
+        })
+        .filter(value => !isNaN(value));
+    }
 
-        }
-    );
+    /*
+     * =========================================================
+     * UPDATE SATU BARIS HISTORY
+     * =========================================================
+     */
+    function updateHistoryRow(row) {
 
+      const yardEdit =
+        row.querySelector(".yard-edit");
 
-    /* HAPUS EMPTY HISTORY */
+      const values =
+        parseYardValues(yardEdit.value);
 
-    const empty =
-        document.getElementById(
-            "emptyHistory"
+      const total =
+        values.reduce(
+          (sum, value) => sum + value,
+          0
         );
 
+      const pcsCell =
+        row.querySelectorAll("td")[2];
 
-    if (empty) {
+      const totalCell =
+        row.querySelectorAll("td")[3];
 
-        empty.remove();
+      pcsCell.textContent =
+        values.length;
 
+      totalCell.textContent =
+        formatNumber(total);
+
+      updateHistoryNumbers();
     }
 
-
-    /* FORMAT YARD */
-
-    const formattedValues =
-        "(" +
-        values.join(", ") +
-        ")";
-
-
-    /* BUAT HISTORY ROW */
-
-    const row =
-        document.createElement("tr");
-
-
-    row.innerHTML = `
-
-        <td>
-
-            <span class="history-number">
-                0
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="numbers-cell"
-            >
-                ${formattedValues}
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="pcs-cell"
-            >
-                ${values.length}
-            </span>
-
-        </td>
-
-
-        <td>
-
-            <span
-                class="total-cell"
-            >
-                ${sum.toLocaleString("id-ID")}
-            </span>
-
-        </td>
-
-
-        <td class="color-cell">
-
-            <input
-                type="text"
-                class="color-input"
-                placeholder="Input warna..."
-                autocomplete="off"
-            >
-
-        </td>
-
-    `;
-
-
-    /* TAMBAHKAN KE HISTORY */
-
-    historyBody.appendChild(row);
-
-
-    /* UPDATE NOMOR SJ */
-
-    updateHistoryNumber();
-
-
-    /* RESET INPUT */
-
-    resetInput();
-
-}
-
-
-/* =========================================================
-   UPDATE HISTORY NUMBER
-========================================================= */
-
-function updateHistoryNumber() {
-
-    const rows =
-        historyBody.querySelectorAll("tr");
-
-
-    let nomor = 1;
-
-
-    rows.forEach(row => {
-
-        const numberElement =
-            row.querySelector(".history-number");
-
-
-        if (numberElement) {
-
-            numberElement.textContent =
-                nomor;
-
-            nomor++;
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
-   RESET INPUT
-========================================================= */
-
-function resetInput() {
-
-    inputList.innerHTML =
-        "";
-
-    number = 0;
-
-
-    total.textContent =
-        "0";
-
-
-    result.classList.remove(
-        "show"
-    );
-
-
-    addInput(true);
-
-}
-
-
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
-
-function clearHistory() {
-
-    historyBody.innerHTML = `
-
-        <tr id="emptyHistory">
-
-            <td
-                colspan="5"
-                class="empty-history"
-            >
-                Belum ada history
-            </td>
-
-        </tr>
-
-    `;
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-addInput(true);
-
-</script>
+    /*
+     * =========================================================
+     * UPDATE NOMOR HISTORY
+     * =========================================================
+     */
+    function updateHistoryNumbers() {
+
+      const rows =
+        document.querySelectorAll(
+          "#historyBody tr"
+        );
+
+      rows.forEach((row, index) => {
+        row.children[0].textContent =
+          index + 1;
+      });
+    }
+
+    /*
+     * =========================================================
+     * RESET INPUT
+     * =========================================================
+     */
+    function resetInputs() {
+
+      const inputList =
+        document.getElementById("inputList");
+
+      inputList.innerHTML = "";
+
+      inputCount = 0;
+
+      /*
+       * Buat satu input kosong lagi
+       */
+      addInput(false);
+
+      calculateTotal();
+    }
+
+    /*
+     * =========================================================
+     * AUTO RESIZE TEXTAREA
+     * =========================================================
+     */
+    function autoResizeTextarea(textarea) {
+
+      textarea.style.height = "auto";
+
+      /*
+       * Pada layar biasa textarea mengikuti isi.
+       */
+      textarea.style.height =
+        textarea.scrollHeight + "px";
+    }
+
+    /*
+     * =========================================================
+     * PRINT HISTORY
+     * =========================================================
+     *
+     * CSS @media print di atas memastikan:
+     * - Header tidak dicetak
+     * - Input tidak dicetak
+     * - Tombol tidak dicetak
+     * - Total input tidak dicetak
+     * - Footer tidak dicetak
+     * - HANYA HISTORY yang dicetak
+     */
+    function printHistory() {
+
+      const rows =
+        document.querySelectorAll(
+          "#historyBody tr"
+        );
+
+      if (rows.length === 0) {
+        alert("History masih kosong.");
+        return;
+      }
+
+      /*
+       * Pastikan semua total sudah diperbarui
+       * sebelum print.
+       */
+      rows.forEach(row => {
+        updateHistoryRow(row);
+      });
+
+      /*
+       * Beri sedikit waktu agar browser
+       * menyelesaikan rendering.
+       */
+      setTimeout(() => {
+        window.print();
+      }, 100);
+    }
+
+    /*
+     * =========================================================
+     * INITIAL INPUT
+     * =========================================================
+     */
+    addInput(false);
+
+  </script>
 
 </body>
 </html>
