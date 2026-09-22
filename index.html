@@ -1162,7 +1162,15 @@ td:nth-child(6){
     .result,
     .footer,
     .clear-history,
-    .action-cell{
+    .action-cell,
+    .header .title p,
+    .header .counter{
+        display:none!important
+    }
+
+    /* Kolom AKSI tetap tampil di aplikasi,
+       tetapi tidak ikut saat PRINT HISTORY */
+    thead th:last-child{
         display:none!important
     }
 
