@@ -775,16 +775,17 @@ td:nth-child(6){
 }
 
 .print-history-button:disabled{
+    opacity:.45;
     cursor:not-allowed;
-    opacity:.55;
-    filter:grayscale(.35);
     transform:none!important;
-    box-shadow:0 4px 0 #b99a45!important;
+    filter:grayscale(.35);
+    box-shadow:0 5px 0 #d39d2c!important;
 }
 
 .print-history-button:disabled:hover{
     transform:none!important;
     filter:grayscale(.35);
+    box-shadow:0 5px 0 #d39d2c!important;
 }
 
 .empty-history{
@@ -1408,6 +1409,45 @@ td:nth-child(6){
         break-inside:avoid
     }
 }
+
+/* =========================================================
+   HISTORY - SEMUA DATA DI TENGAH + YARD JUSTIFY
+========================================================= */
+.history table th,
+.history table td{
+    text-align:center;
+    vertical-align:middle;
+}
+
+.history table td .numbers-cell{
+    display:block;
+    width:100%;
+    text-align:justify;
+    text-align-last:center;
+}
+
+.history table td .history-edit-input,
+.history table td .color-input{
+    text-align:center;
+}
+
+@media print{
+    .history table th,
+    .history table td{
+        text-align:center!important;
+        vertical-align:middle!important;
+    }
+
+    .history table td .numbers-cell{
+        text-align:justify!important;
+        text-align-last:center!important;
+    }
+
+    .history table td .color-input,
+    .history table td .history-edit-input{
+        text-align:center!important;
+    }
+}
 </style>
 </head>
 
@@ -1566,8 +1606,10 @@ td:nth-child(6){
         <div class="print-history-area">
 
             <button
+                type="button"
                 class="print-history-button"
                 onclick="printHistory()"
+                title="Selesaikan edit data terlebih dahulu sebelum mencetak"
             >
                 🖨 &nbsp; PRINT HISTORY
             </button>
@@ -2170,8 +2212,6 @@ function formatYardDisplay(values) {
 
 function editHistory(button) {
 
-    setPrintButtonDisabled(true);
-
     const row =
         button.closest("tr");
 
@@ -2189,6 +2229,13 @@ function editHistory(button) {
 
 
     row.classList.add("editing");
+
+    const printButton =
+        document.querySelector(".print-history-button");
+
+    if (printButton) {
+        printButton.disabled = true;
+    }
 
 
     let yards = [];
@@ -2602,7 +2649,15 @@ function saveEditedHistory(button) {
         "editing"
     );
 
-    setPrintButtonDisabled(false);
+    const printButton =
+        document.querySelector(".print-history-button");
+
+    if (
+        printButton &&
+        !historyBody.querySelector("tr.editing")
+    ) {
+        printButton.disabled = false;
+    }
 
 }
 
@@ -2787,6 +2842,16 @@ function deleteHistory(button) {
 
     updateHistoryNumber();
 
+    const printButton =
+        document.querySelector(".print-history-button");
+
+    if (
+        printButton &&
+        !historyBody.querySelector("tr.editing")
+    ) {
+        printButton.disabled = false;
+    }
+
 }
 
 
@@ -2853,32 +2918,6 @@ function clearHistory() {
 
 
 /* =========================================================
-   PRINT BUTTON - DISABLED SAAT EDIT DATA
-========================================================= */
-
-function setPrintButtonDisabled(disabled) {
-
-    const printButton =
-        document.querySelector(".print-history-button");
-
-    if (!printButton) {
-        return;
-    }
-
-    printButton.disabled = disabled;
-
-    if (disabled) {
-        printButton.textContent = "✎ Selesaikan Edit Terlebih Dahulu";
-        printButton.title = "Selesaikan edit data sebelum mencetak history.";
-    } else {
-        printButton.textContent = "🖨  PRINT HISTORY";
-        printButton.title = "Cetak history";
-    }
-
-}
-
-
-/* =========================================================
    PRINT HISTORY
 ========================================================= */
 
@@ -2888,8 +2927,13 @@ function printHistory() {
         historyBody.querySelector("tr.editing");
 
     if (editingRow) {
-        alert("Selesaikan edit data terlebih dahulu sebelum mencetak history.");
+
+        alert(
+            "Selesaikan edit data terlebih dahulu sebelum mencetak history."
+        );
+
         return;
+
     }
 
     window.print();
@@ -2950,7 +2994,6 @@ document.addEventListener(
 ========================================================= */
 
 addInput(false);
-setPrintButtonDisabled(false);
 
 </script>
 
