@@ -291,6 +291,33 @@ body::before{
     -moz-appearance:textfield
 }
 
+.delete-input-button{
+    width:42px;
+    height:53px;
+    flex-shrink:0;
+    border-radius:15px;
+    color:#fff;
+    background:linear-gradient(145deg,#ff8fa7,#e96582);
+    box-shadow:
+        0 5px 0 #c94e69,
+        0 8px 15px rgba(233,101,130,.18);
+    font-size:16px;
+    font-weight:1000;
+}
+
+.delete-input-button:hover{
+    box-shadow:
+        0 7px 0 #c94e69,
+        0 11px 18px rgba(233,101,130,.24);
+}
+
+.delete-input-button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+    filter:none;
+}
+
 .check{
     position:absolute;
     right:15px;
@@ -647,7 +674,8 @@ td:nth-child(6){
 }
 
 .edit-history-button,
-.save-history-button{
+.save-history-button,
+.delete-history-button{
     width:100%;
     max-width:100%;
     height:34px;
@@ -678,6 +706,17 @@ td:nth-child(6){
 
 .save-history-button:hover{
     box-shadow:0 6px 0 #469b6b
+}
+
+.delete-history-button{
+    margin-top:7px;
+    color:#fff;
+    background:#ef7189;
+    box-shadow:0 4px 0 #c64d68;
+}
+
+.delete-history-button:hover{
+    box-shadow:0 6px 0 #c64d68;
 }
 
 .color-cell{
@@ -846,6 +885,13 @@ td:nth-child(6){
         font-size:15px
     }
 
+    .delete-input-button{
+        width:38px;
+        height:48px;
+        border-radius:13px;
+        font-size:15px;
+    }
+
     .button-area{
         grid-template-columns:1fr;
         gap:10px
@@ -979,13 +1025,18 @@ td:nth-child(6){
     }
 
     .edit-history-button,
-    .save-history-button{
+    .save-history-button,
+    .delete-history-button{
         width:100%;
         min-width:0;
         height:30px;
         padding:4px 2px;
         font-size:7px;
         border-radius:7px;
+    }
+
+    .delete-history-button{
+        margin-top:5px;
     }
 
     .footer{
@@ -1027,6 +1078,12 @@ td:nth-child(6){
         width:33px
     }
 
+    .delete-input-button{
+        width:34px;
+        height:45px;
+        font-size:13px;
+    }
+
     /* EXTRA COMPACT HISTORY */
     th{
         padding:8px 2px;
@@ -1059,10 +1116,15 @@ td:nth-child(6){
     }
 
     .edit-history-button,
-    .save-history-button{
+    .save-history-button,
+    .delete-history-button{
         height:28px;
         font-size:6.5px;
         padding:3px 1px;
+    }
+
+    .delete-history-button{
+        margin-top:4px;
     }
 }
 
@@ -1580,10 +1642,21 @@ function addInput(focusInput = true) {
 
         </div>
 
+        <button
+            type="button"
+            class="delete-input-button"
+            onclick="removeInput(this)"
+            title="Hapus kolom"
+        >
+            ×
+        </button>
+
     `;
 
 
     inputList.appendChild(row);
+
+    updateInputNumbers();
 
 
     const input =
@@ -1685,6 +1758,109 @@ function addInput(focusInput = true) {
 
 
     updateCounter();
+
+}
+
+
+/* =========================================================
+   DELETE INPUT / KOLOM
+========================================================= */
+
+function removeInput(button) {
+
+    const row =
+        button.closest(".input-row");
+
+    if (!row) {
+        return;
+    }
+
+    const rows =
+        inputList.querySelectorAll(".input-row");
+
+    /*
+        Jika hanya tersisa satu kolom,
+        kolom tidak benar-benar dihapus.
+        Isinya dikosongkan agar sistem
+        tetap memiliki minimal satu input.
+    */
+    if (rows.length === 1) {
+
+        const input =
+            row.querySelector("input");
+
+        if (input) {
+
+            input.value = "";
+
+            input.classList.remove(
+                "valid"
+            );
+
+            input.focus();
+
+        }
+
+        calculateTotal();
+        updateCounter();
+
+        return;
+    }
+
+
+    row.remove();
+
+    updateInputNumbers();
+    calculateTotal();
+    updateCounter();
+
+}
+
+
+/* =========================================================
+   UPDATE NOMOR INPUT
+========================================================= */
+
+function updateInputNumbers() {
+
+    const rows =
+        inputList.querySelectorAll(
+            ".input-row"
+        );
+
+
+    rows.forEach(
+        (row, index) => {
+
+            const numberElement =
+                row.querySelector(
+                    ".number"
+                );
+
+
+            if (numberElement) {
+
+                numberElement.textContent =
+                    index + 1;
+
+            }
+
+
+            const deleteButton =
+                row.querySelector(
+                    ".delete-input-button"
+                );
+
+
+            if (deleteButton) {
+
+                deleteButton.disabled =
+                    rows.length === 1;
+
+            }
+
+        }
+    );
 
 }
 
@@ -1898,6 +2074,14 @@ function saveHistory() {
                 onclick="editHistory(this)"
             >
                 ✎ Edit
+            </button>
+
+            <button
+                type="button"
+                class="delete-history-button"
+                onclick="deleteHistory(this)"
+            >
+                🗑 Hapus
             </button>
 
         </td>
@@ -2129,8 +2313,10 @@ function editHistory(button) {
     button.className =
         "save-history-button";
 
+
     button.innerHTML =
         "✓ Save";
+
 
     button.onclick =
         function () {
@@ -2384,8 +2570,10 @@ function saveEditedHistory(button) {
     button.className =
         "edit-history-button";
 
+
     button.innerHTML =
         "✎ Edit";
+
 
     button.onclick =
         function () {
@@ -2430,8 +2618,8 @@ function formatNumber(value) {
     return new Intl.NumberFormat(
         "id-ID",
         {
-            maximumFractionDigits: 20,
-            useGrouping: true
+            maximumFractionDigits:20,
+            useGrouping:true
         }
     ).format(numberValue);
 
@@ -2514,6 +2702,73 @@ function updateHistoryNumber() {
 
         }
     );
+
+}
+
+
+/* =========================================================
+   DELETE HISTORY 1 PER 1
+========================================================= */
+
+function deleteHistory(button) {
+
+    const row =
+        button.closest("tr");
+
+
+    if (!row) {
+        return;
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Apakah yakin ingin menghapus history ini?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    row.remove();
+
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+
+    if (rows.length === 0) {
+
+        const empty =
+            document.createElement("tr");
+
+
+        empty.id =
+            "emptyHistory";
+
+
+        empty.innerHTML = `
+
+            <td
+                colspan="6"
+                class="empty-history"
+            >
+                Belum ada history
+            </td>
+
+        `;
+
+
+        historyBody.appendChild(empty);
+
+    }
+
+
+    updateHistoryNumber();
 
 }
 
