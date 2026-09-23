@@ -797,12 +797,19 @@ td:nth-child(6){
 }
 
 .footer{
-    margin-top:21px;
-    padding-top:18px;
-    border-top:3px dotted #d6edf5;
-    text-align:center;
-    color:#8296a7;
-    font-size:10px
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin-top:14px;
+    padding:10px 14px;
+    border:2px dashed #cfe8f3;
+    border-radius:14px;
+    background:linear-gradient(145deg,#f5fcff,#edf9fd);
+    color:#71889a;
+    font-size:10px;
+    font-weight:800;
+    box-shadow:0 3px 0 #d5e9f1;
 }
 
 .enter-key{
@@ -1054,7 +1061,10 @@ td:nth-child(6){
     }
 
     .footer{
-        font-size:9px
+        margin-top:12px;
+        padding:9px 10px;
+        font-size:8px;
+        gap:5px;
     }
 }
 
@@ -1503,6 +1513,18 @@ td:nth-child(6){
 
     </div>
 
+    <div class="footer">
+
+        <span class="enter-key">
+            Enter
+        </span>
+
+        <span>
+            Tekan Enter untuk menambah kolom berikutnya
+        </span>
+
+    </div>
+
     <div class="result" id="result">
 
         <div class="result-label">
@@ -1618,17 +1640,6 @@ td:nth-child(6){
 
     </div>
 
-    <div class="footer">
-
-        Tekan
-
-        <span class="enter-key">
-            Enter
-        </span>
-
-        untuk menambah kolom berikutnya
-
-    </div>
 
 </div>
 
