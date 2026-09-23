@@ -1631,7 +1631,6 @@ td:nth-child(6){
                 type="button"
                 class="print-history-button"
                 onclick="printHistory()"
-                title="Selesaikan edit data terlebih dahulu sebelum mencetak"
             >
                 🖨 &nbsp; PRINT HISTORY
             </button>
@@ -2940,7 +2939,7 @@ function printHistory() {
     if (editingRow) {
 
         alert(
-            "Selesaikan edit data terlebih dahulu sebelum mencetak history."
+            "Selesaikan edit data terlebih dahulu"
         );
 
         return;
