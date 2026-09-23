@@ -774,6 +774,19 @@ td:nth-child(6){
         0 18px 30px rgba(255,200,87,.28)
 }
 
+.print-history-button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+    filter:grayscale(.35);
+    transform:none!important;
+    box-shadow:0 4px 0 #b99a45!important;
+}
+
+.print-history-button:disabled:hover{
+    transform:none!important;
+    filter:grayscale(.35);
+}
+
 .empty-history{
     padding:33px!important;
     text-align:center;
@@ -2157,6 +2170,8 @@ function formatYardDisplay(values) {
 
 function editHistory(button) {
 
+    setPrintButtonDisabled(true);
+
     const row =
         button.closest("tr");
 
@@ -2587,6 +2602,8 @@ function saveEditedHistory(button) {
         "editing"
     );
 
+    setPrintButtonDisabled(false);
+
 }
 
 
@@ -2836,10 +2853,44 @@ function clearHistory() {
 
 
 /* =========================================================
+   PRINT BUTTON - DISABLED SAAT EDIT DATA
+========================================================= */
+
+function setPrintButtonDisabled(disabled) {
+
+    const printButton =
+        document.querySelector(".print-history-button");
+
+    if (!printButton) {
+        return;
+    }
+
+    printButton.disabled = disabled;
+
+    if (disabled) {
+        printButton.textContent = "✎ Selesaikan Edit Terlebih Dahulu";
+        printButton.title = "Selesaikan edit data sebelum mencetak history.";
+    } else {
+        printButton.textContent = "🖨  PRINT HISTORY";
+        printButton.title = "Cetak history";
+    }
+
+}
+
+
+/* =========================================================
    PRINT HISTORY
 ========================================================= */
 
 function printHistory() {
+
+    const editingRow =
+        historyBody.querySelector("tr.editing");
+
+    if (editingRow) {
+        alert("Selesaikan edit data terlebih dahulu sebelum mencetak history.");
+        return;
+    }
 
     window.print();
 
@@ -2899,6 +2950,7 @@ document.addEventListener(
 ========================================================= */
 
 addInput(false);
+setPrintButtonDisabled(false);
 
 </script>
 
