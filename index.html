@@ -83,7 +83,7 @@ body::before{
 
 .header{
     display:flex;
-    justify-content:flex-start;
+    justify-content:space-between;
     align-items:center;
     gap:15px;
     margin-bottom:25px;
@@ -116,10 +116,6 @@ body::before{
     position:relative;
 }
 
-.icon::after{
-    display:none;
-}
-
 .title h1{
     font-size:21px;
     font-weight:1000;
@@ -133,6 +129,88 @@ body::before{
     font-size:11px;
     font-weight:800;
 }
+
+
+/* =========================================================
+   DATA COUNTER - TEMA BARU
+========================================================= */
+
+.data-counter{
+    position:relative;
+    flex-shrink:0;
+    min-width:100px;
+    padding:10px 14px;
+    border-radius:18px;
+    background:linear-gradient(145deg,#ffffff,#eef8fc);
+    border:3px solid #d9eef7;
+    box-shadow:
+        0 5px 0 #9fc9da,
+        0 9px 18px rgba(49,135,189,.14);
+    text-align:center;
+    overflow:hidden;
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        background .2s,
+        border-color .2s;
+}
+
+.data-counter::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        #58b9ee,
+        #72d79b,
+        #ffd75a
+    );
+}
+
+.data-counter-label{
+    display:block;
+    margin-top:2px;
+    color:#7893a5;
+    font-size:8px;
+    font-weight:1000;
+    text-transform:uppercase;
+    letter-spacing:1.3px;
+}
+
+.data-counter-value{
+    display:block;
+    margin-top:3px;
+    color:#4d7e99;
+    font-size:22px;
+    line-height:1;
+    font-weight:1000;
+    transition:.2s;
+}
+
+.data-counter.active{
+    background:linear-gradient(145deg,#f0fff7,#dcf7e8);
+    border-color:#bfe8cf;
+    box-shadow:
+        0 5px 0 #83bd9d,
+        0 10px 20px rgba(74,168,111,.17);
+    transform:translateY(-1px);
+}
+
+.data-counter.active .data-counter-label{
+    color:#5f8f72;
+}
+
+.data-counter.active .data-counter-value{
+    color:#3fa36b;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
 
 .input-list{
     max-height:325px;
@@ -775,6 +853,11 @@ td:nth-child(6){
     font-weight:1000;
 }
 
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media(max-width:700px){
 
     body{
@@ -804,7 +887,7 @@ td:nth-child(6){
     }
 
     .header{
-        align-items:flex-start;
+        align-items:center;
         margin-bottom:20px
     }
 
@@ -825,6 +908,20 @@ td:nth-child(6){
 
     .title p{
         font-size:9px
+    }
+
+    .data-counter{
+        min-width:64px;
+        padding:7px 8px;
+        border-radius:13px;
+    }
+
+    .data-counter-label{
+        font-size:7px;
+    }
+
+    .data-counter-value{
+        font-size:17px;
     }
 
     .input-list{
@@ -1034,6 +1131,19 @@ td:nth-child(6){
         font-size:8px
     }
 
+    .data-counter{
+        min-width:55px;
+        padding:6px 5px;
+    }
+
+    .data-counter-label{
+        font-size:6px;
+    }
+
+    .data-counter-value{
+        font-size:15px;
+    }
+
     .number{
         width:33px
     }
@@ -1086,6 +1196,11 @@ td:nth-child(6){
         margin-top:4px;
     }
 }
+
+
+/* =========================================================
+   PRINT
+========================================================= */
 
 @media print{
 
@@ -1162,6 +1277,10 @@ td:nth-child(6){
 
     .title p{
         color:#555!important
+    }
+
+    .data-counter{
+        display:none!important
     }
 
     .input-list,
@@ -1364,6 +1483,7 @@ td:nth-child(6){
 }
 
 @media print{
+
     .history table th,
     .history table td{
         text-align:center!important;
@@ -1410,9 +1530,35 @@ td:nth-child(6){
 
         </div>
 
+
+        <!-- DATA COUNTER -->
+
+        <div
+            class="data-counter"
+            id="dataCounter"
+        >
+
+            <span class="data-counter-label">
+                Data
+            </span>
+
+            <span
+                class="data-counter-value"
+                id="dataCount"
+            >
+                0
+            </span>
+
+        </div>
+
     </div>
 
-    <div class="input-list" id="inputList"></div>
+
+    <div
+        class="input-list"
+        id="inputList"
+    ></div>
+
 
     <div class="button-area">
 
@@ -1434,6 +1580,7 @@ td:nth-child(6){
 
     </div>
 
+
     <div class="footer">
 
         <span class="enter-key">
@@ -1446,7 +1593,11 @@ td:nth-child(6){
 
     </div>
 
-    <div class="result" id="result">
+
+    <div
+        class="result"
+        id="result"
+    >
 
         <div class="result-label">
 
@@ -1465,6 +1616,7 @@ td:nth-child(6){
         </strong>
 
     </div>
+
 
     <div class="history">
 
@@ -1491,6 +1643,7 @@ td:nth-child(6){
             </button>
 
         </div>
+
 
         <div class="table-wrapper">
 
@@ -1528,6 +1681,7 @@ td:nth-child(6){
 
                 </thead>
 
+
                 <tbody id="historyBody">
 
                     <tr id="emptyHistory">
@@ -1547,6 +1701,7 @@ td:nth-child(6){
 
         </div>
 
+
         <div class="print-history-area">
 
             <button
@@ -1563,6 +1718,7 @@ td:nth-child(6){
 
 </div>
 
+
 <script>
 
 const inputList =
@@ -1577,41 +1733,69 @@ const total =
 const historyBody =
     document.getElementById("historyBody");
 
+const dataCount =
+    document.getElementById("dataCount");
+
+const dataCounter =
+    document.getElementById("dataCounter");
+
 let number = 0;
 
 
 /* =========================================================
+   UPDATE JUMLAH DATA
+========================================================= */
+
+function updateDataCounter(){
+
+    const inputs =
+        inputList.querySelectorAll("input");
+
+    let count = 0;
+
+    inputs.forEach(
+        input => {
+
+            if(
+                input.value.trim() !== ""
+            ){
+
+                count++;
+
+            }
+
+        }
+    );
+
+    dataCount.textContent =
+        count;
+
+    if(count > 0){
+
+        dataCounter.classList.add("active");
+
+    }else{
+
+        dataCounter.classList.remove("active");
+
+    }
+
+}
+
+
+/* =========================================================
    VALIDASI INPUT YARD
-   HANYA ANGKA DAN DESIMAL
 ========================================================= */
 
 function sanitizeYardInput(input){
 
     let value = input.value;
 
-    /*
-        Hanya mengizinkan:
-        0-9
-        satu titik sebagai desimal
-
-        Contoh yang diperbolehkan:
-        10
-        10.5
-        25.75
-
-        Huruf seperti:
-        e
-        E
-        +
-        -
-        dan karakter lainnya akan dihapus.
-    */
-
-    value = value.replace(/[^0-9.]/g,"");
-
-    /*
-        Hanya boleh ada satu titik desimal.
-    */
+    value =
+        value.replace(
+            /[^0-9.]/g,
+            ""
+        );
 
     const firstDot =
         value.indexOf(".");
@@ -1619,14 +1803,18 @@ function sanitizeYardInput(input){
     if(firstDot !== -1){
 
         value =
-            value.substring(0,firstDot + 1) +
+            value.substring(
+                0,
+                firstDot + 1
+            ) +
             value
                 .substring(firstDot + 1)
                 .replace(/\./g,"");
 
     }
 
-    input.value = value;
+    input.value =
+        value;
 
 }
 
@@ -1687,10 +1875,6 @@ function addInput(focusInput = true){
     const input =
         row.querySelector("input");
 
-
-    /* =====================================================
-       BLOKIR HURUF E, E+, E-, DAN KARAKTER NON ANGKA
-    ===================================================== */
 
     input.addEventListener(
         "keydown",
@@ -1838,6 +2022,7 @@ function addInput(focusInput = true){
 function allowYardKey(event){
 
     const allowedKeys = [
+
         "Backspace",
         "Delete",
         "Tab",
@@ -1849,6 +2034,7 @@ function allowYardKey(event){
         "ArrowDown",
         "Home",
         "End"
+
     ];
 
     if(
@@ -1859,10 +2045,6 @@ function allowYardKey(event){
 
     }
 
-    /*
-        Izinkan angka 0-9
-    */
-
     if(
         /^[0-9]$/.test(event.key)
     ){
@@ -1870,11 +2052,6 @@ function allowYardKey(event){
         return true;
 
     }
-
-    /*
-        Izinkan titik untuk desimal,
-        tetapi hanya satu titik.
-    */
 
     if(
         event.key === "."
@@ -1893,17 +2070,6 @@ function allowYardKey(event){
         return true;
 
     }
-
-    /*
-        Blokir semua karakter lain,
-        termasuk:
-        e
-        E
-        +
-        -
-        huruf
-        simbol
-    */
 
     event.preventDefault();
 
@@ -2083,6 +2249,8 @@ function calculateTotal(){
         result.classList.remove("show");
 
     }
+
+    updateDataCounter();
 
 }
 
@@ -2412,12 +2580,6 @@ function editHistory(button){
         );
 
 
-    /*
-        Pada Edit History:
-        hanya angka, spasi, titik, koma, dan titik koma
-        yang digunakan sebagai pemisah.
-    */
-
     yardInput.addEventListener(
         "keydown",
         function(event){
@@ -2487,11 +2649,6 @@ function editHistory(button){
     yardInput.addEventListener(
         "input",
         function(){
-
-            /*
-                Hanya angka, spasi, koma, titik koma
-                dan titik desimal yang diperbolehkan.
-            */
 
             this.value =
                 this.value.replace(
@@ -2837,6 +2994,8 @@ function resetInput(){
 
     calculateTotal();
 
+    updateDataCounter();
+
 }
 
 
@@ -3086,6 +3245,8 @@ function printHistory(){
 ========================================================= */
 
 addInput(false);
+
+updateDataCounter();
 
 </script>
 
