@@ -112,10 +112,7 @@ body::before{
     box-shadow:
         0 7px 0 var(--orange-dark),
         0 12px 20px rgba(255,136,72,.25);
-
-    /* LOGO SNP SEKARANG RATA */
     transform:none;
-
     position:relative;
 }
 
@@ -1763,7 +1760,9 @@ td:nth-child(6){
             <button
                 type="button"
                 class="print-history-button"
+                id="printHistoryButton"
                 onclick="printHistory()"
+                disabled
             >
                 &nbsp; PRINT HISTORY
             </button>
@@ -1773,6 +1772,7 @@ td:nth-child(6){
                 class="export-excel-button"
                 id="exportExcelButton"
                 onclick="exportHistoryToExcel()"
+                disabled
             >
                 &nbsp; EXPORT EXCEL
             </button>
@@ -1806,6 +1806,9 @@ const dataCounter =
 
 const exportExcelButton =
     document.getElementById("exportExcelButton");
+
+const printHistoryButton =
+    document.getElementById("printHistoryButton");
 
 let number = 0;
 
@@ -1852,6 +1855,42 @@ function updateDataCounter(){
 
 
 /* =========================================================
+   UPDATE STATUS PRINT
+========================================================= */
+
+function updatePrintButton(){
+
+    if(!printHistoryButton){
+        return;
+    }
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    const editingRow =
+        historyBody.querySelector(
+            "tr.editing"
+        );
+
+    if(
+        rows.length === 0 ||
+        editingRow
+    ){
+
+        printHistoryButton.disabled = true;
+
+    }else{
+
+        printHistoryButton.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================================
    UPDATE STATUS EXPORT EXCEL
 ========================================================= */
 
@@ -1883,6 +1922,19 @@ function updateExportButton(){
         exportExcelButton.disabled = false;
 
     }
+
+}
+
+
+/* =========================================================
+   UPDATE STATUS TOMBOL HISTORY
+========================================================= */
+
+function updateHistoryButtons(){
+
+    updatePrintButton();
+
+    updateExportButton();
 
 }
 
@@ -2505,7 +2557,7 @@ function saveHistory(){
 
     updateHistoryNumber();
 
-    updateExportButton();
+    updateHistoryButtons();
 
     resetInput();
 
@@ -2582,18 +2634,7 @@ function editHistory(button){
 
     row.classList.add("editing");
 
-    const printButton =
-        document.querySelector(
-            ".print-history-button"
-        );
-
-    if(printButton){
-
-        printButton.disabled = true;
-
-    }
-
-    updateExportButton();
+    updateHistoryButtons();
 
     let yards = [];
 
@@ -2987,20 +3028,9 @@ function saveEditedHistory(button){
 
     `;
 
-    const printButton =
-        document.querySelector(
-            ".print-history-button"
-        );
-
-    if(printButton){
-
-        printButton.disabled = false;
-
-    }
-
     updateHistoryNumber();
 
-    updateExportButton();
+    updateHistoryButtons();
 
 }
 
@@ -3248,23 +3278,7 @@ function deleteHistory(button){
 
     updateHistoryNumber();
 
-    const printButton =
-        document.querySelector(
-            ".print-history-button"
-        );
-
-    if(
-        printButton &&
-        !historyBody.querySelector(
-            "tr.editing"
-        )
-    ){
-
-        printButton.disabled = false;
-
-    }
-
-    updateExportButton();
+    updateHistoryButtons();
 
 }
 
@@ -3323,7 +3337,7 @@ function clearHistory(){
 
     historyBody.appendChild(empty);
 
-    updateExportButton();
+    updateHistoryButtons();
 
 }
 
@@ -3355,10 +3369,6 @@ function printHistory(){
         );
 
     if(rows.length === 0){
-
-        alert(
-            "Belum ada data history untuk dicetak."
-        );
 
         return;
 
@@ -3406,20 +3416,6 @@ function exportHistoryToExcel(){
 
     }
 
-
-    /*
-        Membuat file Excel-compatible .xls.
-
-        Kolom yang digunakan:
-        1. No
-        2. YARD
-        3. Total PCS
-        4. Total Yard
-        5. Warna
-
-        Kolom EDIT DATA sengaja tidak dimasukkan
-        karena tidak tampil pada hasil print.
-    */
 
     let excelRows = "";
 
@@ -3717,7 +3713,7 @@ addInput(false);
 
 updateDataCounter();
 
-updateExportButton();
+updateHistoryButtons();
 
 </script>
 
