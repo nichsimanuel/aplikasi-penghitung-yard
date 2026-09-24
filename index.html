@@ -81,8 +81,6 @@ body::before{
     backdrop-filter:blur(10px);
 }
 
-/* Dekorasi samping/koin dihapus */
-
 .header{
     display:flex;
     justify-content:flex-start;
@@ -135,8 +133,6 @@ body::before{
     font-size:11px;
     font-weight:800;
 }
-
-/* Dashboard/counter kecil di kanan header dihapus */
 
 .input-list{
     max-height:325px;
@@ -292,10 +288,6 @@ body::before{
     transform:translateY(-50%) scale(1) rotate(0)
 }
 
-/* =========================================================
-   TOMBOL RESET DAN SIMPAN
-========================================================= */
-
 .button-area{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -448,10 +440,6 @@ button:active{
 .clear-history:hover{
     box-shadow:0 6px 0 #e8a1af
 }
-
-/* =========================================================
-   HISTORY - FULL WIDTH TANPA GESER
-========================================================= */
 
 .table-wrapper{
     width:100%;
@@ -674,7 +662,7 @@ td:nth-child(6){
 }
 
 .delete-history-button:hover{
-    box-shadow:0 6px 0 #c64d68;
+    box-shadow:0 6px 0 #c64d68
 }
 
 .color-cell{
@@ -1437,6 +1425,7 @@ td:nth-child(6){
         </button>
 
         <button
+            type="button"
             class="save-button"
             onclick="saveHistory()"
         >
@@ -1494,6 +1483,7 @@ td:nth-child(6){
             </div>
 
             <button
+                type="button"
                 class="clear-history"
                 onclick="clearHistory()"
             >
@@ -1589,7 +1579,63 @@ const historyBody =
 
 let number = 0;
 
-function addInput(focusInput = true) {
+
+/* =========================================================
+   VALIDASI INPUT YARD
+   HANYA ANGKA DAN DESIMAL
+========================================================= */
+
+function sanitizeYardInput(input){
+
+    let value = input.value;
+
+    /*
+        Hanya mengizinkan:
+        0-9
+        satu titik sebagai desimal
+
+        Contoh yang diperbolehkan:
+        10
+        10.5
+        25.75
+
+        Huruf seperti:
+        e
+        E
+        +
+        -
+        dan karakter lainnya akan dihapus.
+    */
+
+    value = value.replace(/[^0-9.]/g,"");
+
+    /*
+        Hanya boleh ada satu titik desimal.
+    */
+
+    const firstDot =
+        value.indexOf(".");
+
+    if(firstDot !== -1){
+
+        value =
+            value.substring(0,firstDot + 1) +
+            value
+                .substring(firstDot + 1)
+                .replace(/\./g,"");
+
+    }
+
+    input.value = value;
+
+}
+
+
+/* =========================================================
+   TAMBAH INPUT
+========================================================= */
+
+function addInput(focusInput = true){
 
     number++;
 
@@ -1612,6 +1658,9 @@ function addInput(focusInput = true) {
                 step="any"
                 placeholder="Input Yard"
                 autocomplete="off"
+                inputmode="decimal"
+                onkeydown="return allowYardKey(event)"
+                oninput="handleYardInput(this)"
             >
 
             <span class="check">
@@ -1638,17 +1687,96 @@ function addInput(focusInput = true) {
     const input =
         row.querySelector("input");
 
+
+    /* =====================================================
+       BLOKIR HURUF E, E+, E-, DAN KARAKTER NON ANGKA
+    ===================================================== */
+
+    input.addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "e" ||
+                event.key === "E" ||
+                event.key === "+" ||
+                event.key === "-"
+            ){
+
+                event.preventDefault();
+
+                return false;
+
+            }
+
+            if(
+                event.key === "Enter"
+            ){
+
+                event.preventDefault();
+
+                if(
+                    this.value.trim() === ""
+                ){
+
+                    return;
+
+                }
+
+                const inputs =
+                    inputList.querySelectorAll(
+                        "input"
+                    );
+
+                const lastInput =
+                    inputs[
+                        inputs.length - 1
+                    ];
+
+                if(
+                    this === lastInput
+                ){
+
+                    addInput(true);
+
+                }else{
+
+                    const index =
+                        Array
+                            .from(inputs)
+                            .indexOf(this);
+
+                    if(
+                        inputs[index + 1]
+                    ){
+
+                        inputs[
+                            index + 1
+                        ].focus();
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
     input.addEventListener(
         "input",
-        function () {
+        function(){
 
-            if (
+            sanitizeYardInput(this);
+
+            if(
                 this.value.trim() !== ""
-            ) {
+            ){
 
                 this.classList.add("valid");
 
-            } else {
+            }else{
 
                 this.classList.remove("valid");
 
@@ -1659,63 +1787,39 @@ function addInput(focusInput = true) {
         }
     );
 
+
     input.addEventListener(
-        "keydown",
-        function (event) {
+        "paste",
+        function(){
 
-            if (
-                event.key !== "Enter"
-            ) {
-                return;
-            }
+            setTimeout(
+                () => {
 
-            event.preventDefault();
+                    sanitizeYardInput(this);
 
-            if (
-                this.value.trim() === ""
-            ) {
-                return;
-            }
+                    if(
+                        this.value.trim() !== ""
+                    ){
 
-            const inputs =
-                inputList.querySelectorAll(
-                    "input"
-                );
+                        this.classList.add("valid");
 
-            const lastInput =
-                inputs[
-                    inputs.length - 1
-                ];
+                    }else{
 
-            if (
-                this === lastInput
-            ) {
+                        this.classList.remove("valid");
 
-                addInput(true);
+                    }
 
-            } else {
+                    calculateTotal();
 
-                const index =
-                    Array
-                        .from(inputs)
-                        .indexOf(this);
-
-                if (
-                    inputs[index + 1]
-                ) {
-
-                    inputs[
-                        index + 1
-                    ].focus();
-
-                }
-
-            }
+                },
+                0
+            );
 
         }
     );
 
-    if (focusInput) {
+
+    if(focusInput){
 
         setTimeout(
             () => input.focus(),
@@ -1726,24 +1830,139 @@ function addInput(focusInput = true) {
 
 }
 
-function removeInput(button) {
+
+/* =========================================================
+   BLOKIR KEYBOARD NON ANGKA
+========================================================= */
+
+function allowYardKey(event){
+
+    const allowedKeys = [
+        "Backspace",
+        "Delete",
+        "Tab",
+        "Escape",
+        "Enter",
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+        "Home",
+        "End"
+    ];
+
+    if(
+        allowedKeys.includes(event.key)
+    ){
+
+        return true;
+
+    }
+
+    /*
+        Izinkan angka 0-9
+    */
+
+    if(
+        /^[0-9]$/.test(event.key)
+    ){
+
+        return true;
+
+    }
+
+    /*
+        Izinkan titik untuk desimal,
+        tetapi hanya satu titik.
+    */
+
+    if(
+        event.key === "."
+    ){
+
+        if(
+            event.target.value.includes(".")
+        ){
+
+            event.preventDefault();
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
+    /*
+        Blokir semua karakter lain,
+        termasuk:
+        e
+        E
+        +
+        -
+        huruf
+        simbol
+    */
+
+    event.preventDefault();
+
+    return false;
+
+}
+
+
+/* =========================================================
+   HANDLE INPUT YARD
+========================================================= */
+
+function handleYardInput(input){
+
+    sanitizeYardInput(input);
+
+    if(
+        input.value.trim() !== ""
+    ){
+
+        input.classList.add("valid");
+
+    }else{
+
+        input.classList.remove("valid");
+
+    }
+
+    calculateTotal();
+
+}
+
+
+/* =========================================================
+   HAPUS INPUT
+========================================================= */
+
+function removeInput(button){
 
     const row =
         button.closest(".input-row");
 
-    if (!row) {
+    if(!row){
         return;
     }
 
     const rows =
-        inputList.querySelectorAll(".input-row");
+        inputList.querySelectorAll(
+            ".input-row"
+        );
 
-    if (rows.length === 1) {
+    if(
+        rows.length === 1
+    ){
 
         const input =
             row.querySelector("input");
 
-        if (input) {
+        if(input){
 
             input.value = "";
 
@@ -1758,16 +1977,23 @@ function removeInput(button) {
         calculateTotal();
 
         return;
+
     }
 
     row.remove();
 
     updateInputNumbers();
+
     calculateTotal();
 
 }
 
-function updateInputNumbers() {
+
+/* =========================================================
+   UPDATE NOMOR INPUT
+========================================================= */
+
+function updateInputNumbers(){
 
     const rows =
         inputList.querySelectorAll(
@@ -1775,14 +2001,14 @@ function updateInputNumbers() {
         );
 
     rows.forEach(
-        (row, index) => {
+        (row,index) => {
 
             const numberElement =
                 row.querySelector(
                     ".number"
                 );
 
-            if (numberElement) {
+            if(numberElement){
 
                 numberElement.textContent =
                     index + 1;
@@ -1794,7 +2020,7 @@ function updateInputNumbers() {
                     ".delete-input-button"
                 );
 
-            if (deleteButton) {
+            if(deleteButton){
 
                 deleteButton.disabled =
                     rows.length === 1;
@@ -1806,7 +2032,12 @@ function updateInputNumbers() {
 
 }
 
-function calculateTotal() {
+
+/* =========================================================
+   HITUNG TOTAL
+========================================================= */
+
+function calculateTotal(){
 
     const inputs =
         inputList.querySelectorAll(
@@ -1825,9 +2056,9 @@ function calculateTotal() {
                     input.value
                 );
 
-            if (
+            if(
                 !isNaN(value)
-            ) {
+            ){
 
                 sum += value;
 
@@ -1841,13 +2072,13 @@ function calculateTotal() {
     total.textContent =
         formatNumber(sum);
 
-    if (
+    if(
         filled > 0
-    ) {
+    ){
 
         result.classList.add("show");
 
-    } else {
+    }else{
 
         result.classList.remove("show");
 
@@ -1855,7 +2086,12 @@ function calculateTotal() {
 
 }
 
-function saveHistory() {
+
+/* =========================================================
+   SIMPAN HISTORY
+========================================================= */
+
+function saveHistory(){
 
     const inputs =
         inputList.querySelectorAll(
@@ -1867,24 +2103,33 @@ function saveHistory() {
     inputs.forEach(
         input => {
 
-            if (
-                input.value.trim() !== ""
-            ) {
+            sanitizeYardInput(input);
 
-                values.push(
+            if(
+                input.value.trim() !== ""
+            ){
+
+                const value =
                     parseFloat(
                         input.value
-                    )
-                );
+                    );
+
+                if(
+                    Number.isFinite(value)
+                ){
+
+                    values.push(value);
+
+                }
 
             }
 
         }
     );
 
-    if (
+    if(
         values.length === 0
-    ) {
+    ){
 
         alert(
             "Silakan masukkan angka terlebih dahulu."
@@ -1905,8 +2150,10 @@ function saveHistory() {
             "emptyHistory"
         );
 
-    if (empty) {
+    if(empty){
+
         empty.remove();
+
     }
 
     const row =
@@ -1990,7 +2237,12 @@ function saveHistory() {
 
 }
 
-function calculateYardTotal(values) {
+
+/* =========================================================
+   HITUNG TOTAL YARD
+========================================================= */
+
+function calculateYardTotal(values){
 
     let totalValue = 0;
 
@@ -2000,9 +2252,9 @@ function calculateYardTotal(values) {
             const numberValue =
                 Number(value);
 
-            if (
+            if(
                 !isNaN(numberValue)
-            ) {
+            ){
 
                 totalValue +=
                     numberValue;
@@ -2016,7 +2268,12 @@ function calculateYardTotal(values) {
 
 }
 
-function formatYardDisplay(values) {
+
+/* =========================================================
+   FORMAT YARD
+========================================================= */
+
+function formatYardDisplay(values){
 
     return "(" +
         values
@@ -2029,18 +2286,23 @@ function formatYardDisplay(values) {
 
 }
 
-function editHistory(button) {
+
+/* =========================================================
+   EDIT HISTORY
+========================================================= */
+
+function editHistory(button){
 
     const row =
         button.closest("tr");
 
-    if (!row) {
+    if(!row){
         return;
     }
 
-    if (
+    if(
         row.classList.contains("editing")
-    ) {
+    ){
         return;
     }
 
@@ -2051,28 +2313,30 @@ function editHistory(button) {
             ".print-history-button"
         );
 
-    if (printButton) {
+    if(printButton){
+
         printButton.disabled = true;
+
     }
 
     let yards = [];
 
-    try {
+    try{
 
         yards =
             JSON.parse(
                 row.dataset.yards || "[]"
             );
 
-    } catch (error) {
+    }catch(error){
 
         yards = [];
 
     }
 
-    if (
+    if(
         yards.length === 0
-    ) {
+    ){
 
         const yardText =
             row.querySelector(
@@ -2102,6 +2366,7 @@ function editHistory(button) {
             )}"
             autocomplete="off"
             spellcheck="false"
+            inputmode="decimal"
         >
 
     `;
@@ -2146,24 +2411,20 @@ function editHistory(button) {
             ".yard-edit-input"
         );
 
-    const syncHistoryFields = function () {
-        updateConnectedHistory(row);
-    };
 
-    yardInput.addEventListener("input", syncHistoryFields);
-    yardInput.addEventListener("change", syncHistoryFields);
-    yardInput.addEventListener("keyup", syncHistoryFields);
-    yardInput.addEventListener("paste", function () {
-        setTimeout(syncHistoryFields, 0);
-    });
+    /*
+        Pada Edit History:
+        hanya angka, spasi, titik, koma, dan titik koma
+        yang digunakan sebagai pemisah.
+    */
 
     yardInput.addEventListener(
         "keydown",
-        function(event) {
+        function(event){
 
-            if (
+            if(
                 event.key === "Enter"
-            ) {
+            ){
 
                 event.preventDefault();
 
@@ -2173,10 +2434,99 @@ function editHistory(button) {
                     )
                 );
 
+                return;
+
             }
+
+            const allowedKeys = [
+                "Backspace",
+                "Delete",
+                "Tab",
+                "Escape",
+                "ArrowLeft",
+                "ArrowRight",
+                "ArrowUp",
+                "ArrowDown",
+                "Home",
+                "End",
+                " "
+            ];
+
+            if(
+                allowedKeys.includes(event.key)
+            ){
+
+                return;
+
+            }
+
+            if(
+                /^[0-9]$/.test(event.key)
+            ){
+
+                return;
+
+            }
+
+            if(
+                event.key === "." ||
+                event.key === "," ||
+                event.key === ";"
+            ){
+
+                return;
+
+            }
+
+            event.preventDefault();
 
         }
     );
+
+
+    yardInput.addEventListener(
+        "input",
+        function(){
+
+            /*
+                Hanya angka, spasi, koma, titik koma
+                dan titik desimal yang diperbolehkan.
+            */
+
+            this.value =
+                this.value.replace(
+                    /[^0-9.,;\s]/g,
+                    ""
+                );
+
+            updateConnectedHistory(row);
+
+        }
+    );
+
+
+    yardInput.addEventListener(
+        "paste",
+        function(){
+
+            setTimeout(
+                () => {
+
+                    this.value =
+                        this.value.replace(
+                            /[^0-9.,;\s]/g,
+                            ""
+                        );
+
+                    updateConnectedHistory(row);
+
+                },
+                0
+            );
+
+        }
+    );
+
 
     button.className =
         "save-history-button";
@@ -2185,11 +2535,12 @@ function editHistory(button) {
         "✓ Save";
 
     button.onclick =
-        function () {
+        function(){
 
             saveEditedHistory(this);
 
         };
+
 
     setTimeout(
         () => {
@@ -2206,48 +2557,14 @@ function editHistory(button) {
 
 }
 
-function updateConnectedHistory(row) {
 
-    if (!row) {
-        return;
-    }
+/* =========================================================
+   UPDATE FIELD TERHUBUNG
+========================================================= */
 
-    const yardInput =
-        row.querySelector(".yard-edit-input");
+function updateConnectedHistory(row){
 
-    const pcsInput =
-        row.querySelector(".pcs-edit-input");
-
-    const totalYardInput =
-        row.querySelector(".total-yard-edit-input");
-
-    if (!yardInput || !pcsInput || !totalYardInput) {
-        return;
-    }
-
-    // Ambil ulang isi YARD setiap kali pengguna mengetik.
-    // PCS = jumlah angka YARD.
-    // Total Yard = penjumlahan seluruh angka YARD.
-    const values = parseYardText(yardInput.value);
-
-    const totalPCS = values.length;
-    const totalYard = calculateYardTotal(values);
-
-    // Update nilai input secara langsung.
-    pcsInput.value = String(totalPCS);
-    totalYardInput.value = formatNumber(totalYard);
-
-    // Pastikan atribut value juga ikut diperbarui.
-    pcsInput.setAttribute("value", String(totalPCS));
-    totalYardInput.setAttribute("value", formatNumber(totalYard));
-}
-
-function saveEditedHistory(button) {
-
-    const row =
-        button.closest("tr");
-
-    if (!row) {
+    if(!row){
         return;
     }
 
@@ -2256,7 +2573,21 @@ function saveEditedHistory(button) {
             ".yard-edit-input"
         );
 
-    if (!yardInput) {
+    const pcsInput =
+        row.querySelector(
+            ".pcs-edit-input"
+        );
+
+    const totalYardInput =
+        row.querySelector(
+            ".total-yard-edit-input"
+        );
+
+    if(
+        !yardInput ||
+        !pcsInput ||
+        !totalYardInput
+    ){
         return;
     }
 
@@ -2265,9 +2596,61 @@ function saveEditedHistory(button) {
             yardInput.value
         );
 
-    if (
+    const totalPCS =
+        values.length;
+
+    const totalYard =
+        calculateYardTotal(values);
+
+    pcsInput.value =
+        String(totalPCS);
+
+    totalYardInput.value =
+        formatNumber(totalYard);
+
+    pcsInput.setAttribute(
+        "value",
+        String(totalPCS)
+    );
+
+    totalYardInput.setAttribute(
+        "value",
+        formatNumber(totalYard)
+    );
+
+}
+
+
+/* =========================================================
+   SAVE EDIT HISTORY
+========================================================= */
+
+function saveEditedHistory(button){
+
+    const row =
+        button.closest("tr");
+
+    if(!row){
+        return;
+    }
+
+    const yardInput =
+        row.querySelector(
+            ".yard-edit-input"
+        );
+
+    if(!yardInput){
+        return;
+    }
+
+    const values =
+        parseYardText(
+            yardInput.value
+        );
+
+    if(
         values.length === 0
-    ) {
+    ){
 
         alert(
             "Masukkan minimal satu angka yard."
@@ -2344,60 +2727,84 @@ function saveEditedHistory(button) {
             ".print-history-button"
         );
 
-    if (printButton) {
+    if(printButton){
+
         printButton.disabled = false;
+
     }
 
     updateHistoryNumber();
 
 }
 
-function parseYardText(text) {
 
-    if (text === null || text === undefined) {
+/* =========================================================
+   PARSE YARD EDIT
+========================================================= */
+
+function parseYardText(text){
+
+    if(
+        text === null ||
+        text === undefined
+    ){
+
         return [];
+
     }
 
-    const cleanText = String(text)
-        .replace(/[()]/g, "")
-        .trim();
+    const cleanText =
+        String(text)
+            .replace(/[()]/g,"")
+            .trim();
 
-    if (!cleanText) {
+    if(!cleanText){
+
         return [];
+
     }
 
-    /*
-       Input YARD pada Edit History cukup dipisahkan
-       dengan spasi.
-
-       Contoh:
-       12 15 20 18.5 25
-
-       Koma dan baris baru tetap diterima agar data
-       lama tidak rusak.
-    */
     return cleanText
         .split(/[\s,;]+/)
-        .map(item => parseFloat(item.trim()))
-        .filter(value => Number.isFinite(value));
+        .map(
+            item =>
+                parseFloat(
+                    item.trim()
+                )
+        )
+        .filter(
+            value =>
+                Number.isFinite(value)
+        );
+
 }
 
-function escapeHtmlAttribute(value) {
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeHtmlAttribute(value){
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
 
 }
 
-function formatNumber(number) {
 
-    if (
+/* =========================================================
+   FORMAT ANGKA
+========================================================= */
+
+function formatNumber(number){
+
+    if(
         Number.isInteger(number)
-    ) {
+    ){
 
         return number.toLocaleString(
             "id-ID"
@@ -2415,7 +2822,12 @@ function formatNumber(number) {
 
 }
 
-function resetInput() {
+
+/* =========================================================
+   RESET INPUT
+========================================================= */
+
+function resetInput(){
 
     inputList.innerHTML = "";
 
@@ -2427,7 +2839,12 @@ function resetInput() {
 
 }
 
-function resetInputData() {
+
+/* =========================================================
+   RESET DATA
+========================================================= */
+
+function resetInputData(){
 
     const inputs =
         inputList.querySelectorAll(
@@ -2439,9 +2856,9 @@ function resetInputData() {
     inputs.forEach(
         input => {
 
-            if (
+            if(
                 input.value.trim() !== ""
-            ) {
+            ){
 
                 hasData = true;
 
@@ -2450,7 +2867,7 @@ function resetInputData() {
         }
     );
 
-    if (!hasData) {
+    if(!hasData){
 
         resetInput();
 
@@ -2463,15 +2880,22 @@ function resetInputData() {
             "Apakah yakin ingin mereset semua data yang di input?"
         );
 
-    if (!confirmReset) {
+    if(!confirmReset){
+
         return;
+
     }
 
     resetInput();
 
 }
 
-function updateHistoryNumber() {
+
+/* =========================================================
+   NOMOR HISTORY
+========================================================= */
+
+function updateHistoryNumber(){
 
     const rows =
         historyBody.querySelectorAll(
@@ -2479,14 +2903,14 @@ function updateHistoryNumber() {
         );
 
     rows.forEach(
-        (row, index) => {
+        (row,index) => {
 
             const numberElement =
                 row.querySelector(
                     ".history-number"
                 );
 
-            if (numberElement) {
+            if(numberElement){
 
                 numberElement.textContent =
                     index + 1;
@@ -2498,12 +2922,17 @@ function updateHistoryNumber() {
 
 }
 
-function deleteHistory(button) {
+
+/* =========================================================
+   HAPUS HISTORY
+========================================================= */
+
+function deleteHistory(button){
 
     const row =
         button.closest("tr");
 
-    if (!row) {
+    if(!row){
         return;
     }
 
@@ -2512,7 +2941,7 @@ function deleteHistory(button) {
             "Apakah yakin ingin menghapus history ini?"
         );
 
-    if (!confirmDelete) {
+    if(!confirmDelete){
         return;
     }
 
@@ -2523,7 +2952,9 @@ function deleteHistory(button) {
             "tr:not(#emptyHistory)"
         );
 
-    if (rows.length === 0) {
+    if(
+        rows.length === 0
+    ){
 
         const empty =
             document.createElement("tr");
@@ -2553,27 +2984,34 @@ function deleteHistory(button) {
             ".print-history-button"
         );
 
-    if (
+    if(
         printButton &&
         !historyBody.querySelector(
             "tr.editing"
         )
-    ) {
+    ){
+
         printButton.disabled = false;
+
     }
 
 }
 
-function clearHistory() {
+
+/* =========================================================
+   HAPUS SEMUA HISTORY
+========================================================= */
+
+function clearHistory(){
 
     const rows =
         historyBody.querySelectorAll(
             "tr:not(#emptyHistory)"
         );
 
-    if (
+    if(
         rows.length === 0
-    ) {
+    ){
 
         return;
 
@@ -2584,12 +3022,15 @@ function clearHistory() {
             "Apakah yakin ingin menghapus semua history?"
         );
 
-    if (!confirmClear) {
+    if(!confirmClear){
+
         return;
+
     }
 
     rows.forEach(
-        row => row.remove()
+        row =>
+            row.remove()
     );
 
     const empty =
@@ -2613,14 +3054,19 @@ function clearHistory() {
 
 }
 
-function printHistory() {
+
+/* =========================================================
+   PRINT HISTORY
+========================================================= */
+
+function printHistory(){
 
     const editingRow =
         historyBody.querySelector(
             "tr.editing"
         );
 
-    if (editingRow) {
+    if(editingRow){
 
         alert(
             "Selesaikan edit data terlebih dahulu"
@@ -2634,41 +3080,10 @@ function printHistory() {
 
 }
 
-document.addEventListener(
-    "keydown",
-    function(event) {
 
-        if (
-            event.key !== "Enter"
-        ) {
-            return;
-        }
-
-        const active =
-            document.activeElement;
-
-        if (
-            !active ||
-            active.tagName !== "INPUT"
-        ) {
-            return;
-        }
-
-    }
-);
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key !== "Escape"
-        ) {
-            return;
-        }
-
-    }
-);
+/* =========================================================
+   INIT
+========================================================= */
 
 addInput(false);
 
