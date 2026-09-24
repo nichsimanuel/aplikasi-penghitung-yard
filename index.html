@@ -81,41 +81,11 @@ body::before{
     backdrop-filter:blur(10px);
 }
 
-.container::before,
-.container::after{
-    content:"";
-    position:absolute;
-    z-index:-1;
-    pointer-events:none;
-}
-
-.container::before{
-    width:85px;
-    height:30px;
-    left:-28px;
-    top:75px;
-    background:#ff9eb8;
-    border:4px solid #fff;
-    border-radius:50%;
-    transform:rotate(-18deg);
-    box-shadow:0 5px 0 #d9708d;
-}
-
-.container::after{
-    width:68px;
-    height:25px;
-    right:-23px;
-    top:135px;
-    background:#9b8cff;
-    border:4px solid #fff;
-    border-radius:50%;
-    transform:rotate(16deg);
-    box-shadow:0 5px 0 #7667cf;
-}
+/* Dekorasi samping/koin dihapus */
 
 .header{
     display:flex;
-    justify-content:space-between;
+    justify-content:flex-start;
     align-items:center;
     gap:15px;
     margin-bottom:25px;
@@ -166,30 +136,7 @@ body::before{
     font-weight:800;
 }
 
-.counter{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    padding:10px 14px;
-    border-radius:20px;
-    background:#e8f8ff;
-    border:3px solid #b5e4f8;
-    color:#39749a;
-    font-size:11px;
-    font-weight:1000;
-    white-space:nowrap;
-    box-shadow:0 5px 0 #8dc1d9;
-}
-
-.counter::before{
-    content:"";
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:var(--green);
-    border:2px solid #fff;
-    box-shadow:0 2px 0 var(--green-dark);
-}
+/* Dashboard/counter kecil di kanan header dihapus */
 
 .input-list{
     max-height:325px;
@@ -347,7 +294,6 @@ body::before{
 
 /* =========================================================
    TOMBOL RESET DAN SIMPAN
-   RESET DI KIRI - SIMPAN DI KANAN
 ========================================================= */
 
 .button-area{
@@ -893,11 +839,6 @@ td:nth-child(6){
         font-size:9px
     }
 
-    .counter{
-        padding:7px 9px;
-        font-size:9px
-    }
-
     .input-list{
         max-height:300px
     }
@@ -926,7 +867,6 @@ td:nth-child(6){
         font-size:15px;
     }
 
-    /* Tetap 2 tombol: Reset kiri, Simpan kanan */
     .button-area{
         grid-template-columns:1fr 1fr;
         gap:10px
@@ -1106,11 +1046,6 @@ td:nth-child(6){
         font-size:8px
     }
 
-    .counter{
-        font-size:8px;
-        padding:6px 8px
-    }
-
     .number{
         width:33px
     }
@@ -1241,21 +1176,13 @@ td:nth-child(6){
         color:#555!important
     }
 
-    .counter{
-        color:#111!important;
-        background:#f2f2f2!important;
-        border:1px solid #bbb!important;
-        box-shadow:none!important
-    }
-
     .input-list,
     .button-area,
     .result,
     .footer,
     .clear-history,
     .action-cell,
-    .header .title p,
-    .header .counter{
+    .header .title p{
         display:none!important
     }
 
@@ -1495,15 +1422,10 @@ td:nth-child(6){
 
         </div>
 
-        <div class="counter" id="counter">
-            1 Data
-        </div>
-
     </div>
 
     <div class="input-list" id="inputList"></div>
 
-    <!-- RESET DI KIRI, SIMPAN DI KANAN -->
     <div class="button-area">
 
         <button
@@ -1653,15 +1575,8 @@ td:nth-child(6){
 
 <script>
 
-/* =========================================================
-   ELEMENT
-========================================================= */
-
 const inputList =
     document.getElementById("inputList");
-
-const counter =
-    document.getElementById("counter");
 
 const result =
     document.getElementById("result");
@@ -1672,18 +1587,7 @@ const total =
 const historyBody =
     document.getElementById("historyBody");
 
-
-/* =========================================================
-   VARIABLE
-========================================================= */
-
 let number = 0;
-
-
-/* =========================================================
-   ADD INPUT
-   INPUT BARU TETAP DITAMBAHKAN DENGAN ENTER
-========================================================= */
 
 function addInput(focusInput = true) {
 
@@ -1820,14 +1724,7 @@ function addInput(focusInput = true) {
 
     }
 
-    updateCounter();
-
 }
-
-
-/* =========================================================
-   DELETE INPUT / KOLOM
-========================================================= */
 
 function removeInput(button) {
 
@@ -1859,7 +1756,6 @@ function removeInput(button) {
         }
 
         calculateTotal();
-        updateCounter();
 
         return;
     }
@@ -1868,14 +1764,8 @@ function removeInput(button) {
 
     updateInputNumbers();
     calculateTotal();
-    updateCounter();
 
 }
-
-
-/* =========================================================
-   UPDATE NOMOR INPUT
-========================================================= */
 
 function updateInputNumbers() {
 
@@ -1915,11 +1805,6 @@ function updateInputNumbers() {
     );
 
 }
-
-
-/* =========================================================
-   CALCULATE TOTAL
-========================================================= */
 
 function calculateTotal() {
 
@@ -1969,28 +1854,6 @@ function calculateTotal() {
     }
 
 }
-
-
-/* =========================================================
-   COUNTER
-========================================================= */
-
-function updateCounter() {
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-    counter.textContent =
-        `${inputs.length} Data`;
-
-}
-
-
-/* =========================================================
-   SAVE HISTORY
-========================================================= */
 
 function saveHistory() {
 
@@ -2127,11 +1990,6 @@ function saveHistory() {
 
 }
 
-
-/* =========================================================
-   HITUNG TOTAL YARD
-========================================================= */
-
 function calculateYardTotal(values) {
 
     let totalValue = 0;
@@ -2158,11 +2016,6 @@ function calculateYardTotal(values) {
 
 }
 
-
-/* =========================================================
-   FORMAT YARD
-========================================================= */
-
 function formatYardDisplay(values) {
 
     return "(" +
@@ -2175,11 +2028,6 @@ function formatYardDisplay(values) {
         ")";
 
 }
-
-
-/* =========================================================
-   EDIT HISTORY
-========================================================= */
 
 function editHistory(button) {
 
@@ -2199,7 +2047,9 @@ function editHistory(button) {
     row.classList.add("editing");
 
     const printButton =
-        document.querySelector(".print-history-button");
+        document.querySelector(
+            ".print-history-button"
+        );
 
     if (printButton) {
         printButton.disabled = true;
@@ -2248,7 +2098,7 @@ function editHistory(button) {
             type="text"
             class="history-edit-input yard-edit-input"
             value="${escapeHtmlAttribute(
-                yards.join(", ")
+                yards.join(" ")
             )}"
             autocomplete="off"
             spellcheck="false"
@@ -2296,14 +2146,16 @@ function editHistory(button) {
             ".yard-edit-input"
         );
 
-    yardInput.addEventListener(
-        "input",
-        function () {
+    const syncHistoryFields = function () {
+        updateConnectedHistory(row);
+    };
 
-            updateConnectedHistory(row);
-
-        }
-    );
+    yardInput.addEventListener("input", syncHistoryFields);
+    yardInput.addEventListener("change", syncHistoryFields);
+    yardInput.addEventListener("keyup", syncHistoryFields);
+    yardInput.addEventListener("paste", function () {
+        setTimeout(syncHistoryFields, 0);
+    });
 
     yardInput.addEventListener(
         "keydown",
@@ -2354,11 +2206,6 @@ function editHistory(button) {
 
 }
 
-
-/* =========================================================
-   UPDATE YARD -> PCS + TOTAL YARD
-========================================================= */
-
 function updateConnectedHistory(row) {
 
     if (!row) {
@@ -2366,51 +2213,34 @@ function updateConnectedHistory(row) {
     }
 
     const yardInput =
-        row.querySelector(
-            ".yard-edit-input"
-        );
+        row.querySelector(".yard-edit-input");
 
     const pcsInput =
-        row.querySelector(
-            ".pcs-edit-input"
-        );
+        row.querySelector(".pcs-edit-input");
 
     const totalYardInput =
-        row.querySelector(
-            ".total-yard-edit-input"
-        );
+        row.querySelector(".total-yard-edit-input");
 
-    if (
-        !yardInput ||
-        !pcsInput ||
-        !totalYardInput
-    ) {
+    if (!yardInput || !pcsInput || !totalYardInput) {
         return;
     }
 
-    const values =
-        parseYardText(
-            yardInput.value
-        );
+    // Ambil ulang isi YARD setiap kali pengguna mengetik.
+    // PCS = jumlah angka YARD.
+    // Total Yard = penjumlahan seluruh angka YARD.
+    const values = parseYardText(yardInput.value);
 
-    const totalPCS =
-        values.length;
+    const totalPCS = values.length;
+    const totalYard = calculateYardTotal(values);
 
-    const totalYard =
-        calculateYardTotal(values);
+    // Update nilai input secara langsung.
+    pcsInput.value = String(totalPCS);
+    totalYardInput.value = formatNumber(totalYard);
 
-    pcsInput.value =
-        totalPCS;
-
-    totalYardInput.value =
-        formatNumber(totalYard);
-
+    // Pastikan atribut value juga ikut diperbarui.
+    pcsInput.setAttribute("value", String(totalPCS));
+    totalYardInput.setAttribute("value", formatNumber(totalYard));
 }
-
-
-/* =========================================================
-   SAVE EDITED HISTORY
-========================================================= */
 
 function saveEditedHistory(button) {
 
@@ -2484,18 +2314,30 @@ function saveEditedHistory(button) {
 
     row.classList.remove("editing");
 
-    button.className =
-        "edit-history-button";
+    const actionCell =
+        row.querySelector(
+            ".action-cell"
+        );
 
-    button.innerHTML =
-        "✎ Edit";
+    actionCell.innerHTML = `
 
-    button.onclick =
-        function () {
+        <button
+            type="button"
+            class="edit-history-button"
+            onclick="editHistory(this)"
+        >
+            ✎ Edit
+        </button>
 
-            editHistory(this);
+        <button
+            type="button"
+            class="delete-history-button"
+            onclick="deleteHistory(this)"
+        >
+            🗑 Hapus
+        </button>
 
-        };
+    `;
 
     const printButton =
         document.querySelector(
@@ -2506,52 +2348,64 @@ function saveEditedHistory(button) {
         printButton.disabled = false;
     }
 
+    updateHistoryNumber();
+
 }
-
-
-/* =========================================================
-   PARSE YARD
-========================================================= */
 
 function parseYardText(text) {
 
-    if (!text) {
+    if (text === null || text === undefined) {
         return [];
     }
 
-    return text
+    const cleanText = String(text)
         .replace(/[()]/g, "")
-        .split(/[,\s]+/)
-        .map(
-            value =>
-                parseFloat(
-                    value.trim()
-                )
-        )
-        .filter(
-            value =>
-                !isNaN(value)
-        );
+        .trim();
+
+    if (!cleanText) {
+        return [];
+    }
+
+    /*
+       Input YARD pada Edit History cukup dipisahkan
+       dengan spasi.
+
+       Contoh:
+       12 15 20 18.5 25
+
+       Koma dan baris baru tetap diterima agar data
+       lama tidak rusak.
+    */
+    return cleanText
+        .split(/[\s,;]+/)
+        .map(item => parseFloat(item.trim()))
+        .filter(value => Number.isFinite(value));
+}
+
+function escapeHtmlAttribute(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
 }
 
-
-/* =========================================================
-   FORMAT NUMBER
-========================================================= */
-
-function formatNumber(value) {
-
-    const numberValue =
-        Number(value);
+function formatNumber(number) {
 
     if (
-        !isFinite(numberValue)
+        Number.isInteger(number)
     ) {
-        return "0";
+
+        return number.toLocaleString(
+            "id-ID"
+        );
+
     }
 
-    return numberValue
+    return Number(number)
         .toLocaleString(
             "id-ID",
             {
@@ -2560,26 +2414,6 @@ function formatNumber(value) {
         );
 
 }
-
-
-/* =========================================================
-   ESCAPE ATTRIBUTE
-========================================================= */
-
-function escapeHtmlAttribute(value) {
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/"/g,"&quot;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;");
-
-}
-
-
-/* =========================================================
-   RESET INPUT
-========================================================= */
 
 function resetInput() {
 
@@ -2591,14 +2425,7 @@ function resetInput() {
 
     calculateTotal();
 
-    updateCounter();
-
 }
-
-
-/* =========================================================
-   RESET INPUT DATA
-========================================================= */
 
 function resetInputData() {
 
@@ -2644,11 +2471,6 @@ function resetInputData() {
 
 }
 
-
-/* =========================================================
-   UPDATE NOMOR HISTORY
-========================================================= */
-
 function updateHistoryNumber() {
 
     const rows =
@@ -2675,11 +2497,6 @@ function updateHistoryNumber() {
     );
 
 }
-
-
-/* =========================================================
-   DELETE HISTORY 1 PER 1
-========================================================= */
 
 function deleteHistory(button) {
 
@@ -2747,11 +2564,6 @@ function deleteHistory(button) {
 
 }
 
-
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
-
 function clearHistory() {
 
     const rows =
@@ -2801,11 +2613,6 @@ function clearHistory() {
 
 }
 
-
-/* =========================================================
-   PRINT HISTORY
-========================================================= */
-
 function printHistory() {
 
     const editingRow =
@@ -2826,11 +2633,6 @@ function printHistory() {
     window.print();
 
 }
-
-
-/* =========================================================
-   ENTER GLOBAL
-========================================================= */
 
 document.addEventListener(
     "keydown",
@@ -2855,11 +2657,6 @@ document.addEventListener(
     }
 );
 
-
-/* =========================================================
-   ESCAPE CANCEL EDIT
-========================================================= */
-
 document.addEventListener(
     "keydown",
     function(event) {
@@ -2872,11 +2669,6 @@ document.addEventListener(
 
     }
 );
-
-
-/* =========================================================
-   INITIAL INPUT
-========================================================= */
 
 addInput(false);
 
