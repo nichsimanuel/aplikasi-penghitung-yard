@@ -1,3859 +1,3901 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PT SION NIAGA PERKASA</title>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif
-}
-
-:root{
-    --ink:#26344d;
-    --muted:#71839a;
-    --white:#fff;
-    --blue:#58b9ee;
-    --blue-dark:#3187bd;
-    --sky:#e8f8ff;
-    --yellow:#ffd75a;
-    --yellow-dark:#d49d24;
-    --orange:#ff9b4a;
-    --orange-dark:#dc7130;
-    --pink:#ff91ad;
-    --pink-dark:#d96887;
-    --green:#72d79b;
-    --green-dark:#4aa86f;
-    --purple:#a996ff;
-    --shadow:rgba(38,52,77,.20)
-}
-
-html{
-    scroll-behavior:smooth
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:24px;
-    color:var(--ink);
-    overflow-x:hidden;
-    position:relative;
-    background:
-        radial-gradient(circle at 7% 12%,#fff 0 34px,transparent 35px),
-        radial-gradient(circle at 92% 13%,#fff7bd 0 27px,transparent 28px),
-        radial-gradient(circle at 9% 88%,#d9f8e7 0 42px,transparent 43px),
-        linear-gradient(135deg,#8edbff 0%,#e9faff 47%,#fff0bb 100%);
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-        radial-gradient(circle at 18% 20%,rgba(255,255,255,.7) 0 4px,transparent 5px),
-        radial-gradient(circle at 82% 35%,rgba(255,255,255,.65) 0 5px,transparent 6px),
-        radial-gradient(circle at 15% 70%,rgba(255,255,255,.6) 0 3px,transparent 4px),
-        radial-gradient(circle at 88% 78%,rgba(255,255,255,.7) 0 4px,transparent 5px);
-}
-
-.container{
-    width:780px;
-    max-width:100%;
-    position:relative;
-    padding:29px;
-    border-radius:36px;
-    background:rgba(255,255,255,.95);
-    border:4px solid #fff;
-    box-shadow:
-        0 11px 0 #78a9c0,
-        0 28px 55px var(--shadow),
-        inset 0 0 0 3px #d7f2fb;
-    backdrop-filter:blur(10px);
-}
-
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.title{
-    display:flex;
-    align-items:center;
-    gap:14px;
-}
-
-.icon{
-    width:62px;
-    height:62px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-    border-radius:20px;
-    color:#fff;
-    font-size:15px;
-    font-weight:1000;
-    letter-spacing:.5px;
-    background:linear-gradient(145deg,#ffbd61,#ff8848);
-    border:4px solid #fff;
-    box-shadow:
-        0 7px 0 var(--orange-dark),
-        0 12px 20px rgba(255,136,72,.25);
-    transform:none;
-    position:relative;
-}
-
-.title h1{
-    font-size:21px;
-    font-weight:1000;
-    color:var(--ink);
-    letter-spacing:.2px;
-}
-
-.title p{
-    margin-top:5px;
-    color:var(--muted);
-    font-size:11px;
-    font-weight:800;
-}
-
-
-/* =========================================================
-   DATA COUNTER
-========================================================= */
-
-.data-counter{
-    position:relative;
-    flex-shrink:0;
-    min-width:100px;
-    padding:10px 14px;
-    border-radius:18px;
-    background:linear-gradient(145deg,#ffffff,#eef8fc);
-    border:3px solid #d9eef7;
-    box-shadow:
-        0 5px 0 #9fc9da,
-        0 9px 18px rgba(49,135,189,.14);
-    text-align:center;
-    overflow:hidden;
-    transition:
-        transform .2s,
-        box-shadow .2s,
-        background .2s,
-        border-color .2s;
-}
-
-.data-counter::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:4px;
-    background:linear-gradient(
-        90deg,
-        #58b9ee,
-        #72d79b,
-        #ffd75a
-    );
-}
-
-.data-counter-label{
-    display:block;
-    margin-top:2px;
-    color:#7893a5;
-    font-size:8px;
-    font-weight:1000;
-    text-transform:uppercase;
-    letter-spacing:1.3px;
-}
-
-.data-counter-value{
-    display:block;
-    margin-top:3px;
-    color:#4d7e99;
-    font-size:22px;
-    line-height:1;
-    font-weight:1000;
-    transition:.2s;
-}
-
-.data-counter.active{
-    background:linear-gradient(145deg,#f0fff7,#dcf7e8);
-    border-color:#bfe8cf;
-    box-shadow:
-        0 5px 0 #83bd9d,
-        0 10px 20px rgba(74,168,111,.17);
-    transform:translateY(-1px);
-}
-
-.data-counter.active .data-counter-label{
-    color:#5f8f72;
-}
-
-.data-counter.active .data-counter-value{
-    color:#3fa36b;
-}
-
-
-/* =========================================================
-   INPUT
-========================================================= */
-
-.input-list{
-    max-height:325px;
-    overflow-y:auto;
-    padding:6px 7px 6px 3px;
-    scrollbar-width:thin;
-    scrollbar-color:#78c7ec transparent;
-}
-
-.input-list::-webkit-scrollbar{
-    width:8px
-}
-
-.input-list::-webkit-scrollbar-thumb{
-    background:#78c7ec;
-    border-radius:20px;
-    border:2px solid #e8f8ff
-}
-
-.input-row{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:14px;
-    animation:inputAppear .3s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes inputAppear{
-    from{
-        opacity:0;
-        transform:translateY(15px) scale(.97) rotate(-1deg)
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1) rotate(0)
-    }
-}
-
-.number{
-    width:45px;
-    height:53px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-    border-radius:16px;
-    background:#e1f6ff;
-    border:3px solid #fff;
-    color:#39749a;
-    font-size:12px;
-    font-weight:1000;
-    box-shadow:0 5px 0 #8dc1d9;
-    transform:rotate(-2deg);
-}
-
-.input-wrapper{
-    position:relative;
-    flex:1
-}
-
-.input-wrapper input{
-    width:100%;
-    height:53px;
-    border:3px solid #c7eaf8;
-    border-radius:18px;
-    background:#fff;
-    color:var(--ink);
-    padding:0 52px 0 18px;
-    font-size:16px;
-    font-weight:800;
-    outline:none;
-    transition:.2s;
-    box-shadow:0 5px 0 #b7d5e1;
-}
-
-.input-wrapper input:hover{
-    border-color:#9fd9f2
-}
-
-.input-wrapper input:focus{
-    border-color:#ffc857;
-    background:#fffdf1;
-    box-shadow:
-        0 5px 0 #d8a943,
-        0 0 0 5px rgba(255,200,87,.16);
-}
-
-.input-wrapper input::placeholder{
-    color:#a2b1be
-}
-
-.input-wrapper input::-webkit-inner-spin-button,
-.input-wrapper input::-webkit-outer-spin-button{
-    -webkit-appearance:none;
-    margin:0
-}
-
-.input-wrapper input[type=number]{
-    -moz-appearance:textfield
-}
-
-.delete-input-button{
-    width:42px;
-    height:53px;
-    flex-shrink:0;
-    border-radius:15px;
-    color:#fff;
-    background:linear-gradient(145deg,#ff8fa7,#e96582);
-    box-shadow:
-        0 5px 0 #c94e69,
-        0 8px 15px rgba(233,101,130,.18);
-    font-size:16px;
-    font-weight:1000;
-}
-
-.delete-input-button:hover{
-    box-shadow:
-        0 7px 0 #c94e69,
-        0 11px 18px rgba(233,101,130,.24);
-}
-
-.delete-input-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none;
-    filter:none;
-}
-
-.check{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%) scale(.5) rotate(-15deg);
-    width:25px;
-    height:25px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:var(--green);
-    border:3px solid #fff;
-    color:#fff;
-    font-size:12px;
-    font-weight:1000;
-    opacity:0;
-    transition:.22s;
-    box-shadow:0 3px 0 var(--green-dark);
-}
-
-.input-wrapper input.valid + .check{
-    opacity:1;
-    transform:translateY(-50%) scale(1) rotate(0)
-}
-
-.button-area{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:13px;
-    margin-top:13px
-}
-
-button{
-    height:53px;
-    border:none;
-    border-radius:17px;
-    cursor:pointer;
-    font-size:12px;
-    font-weight:1000;
-    transition:
-        transform .18s,
-        box-shadow .18s,
-        filter .18s;
-}
-
-button:hover{
-    transform:translateY(-4px) rotate(-.4deg);
-    filter:brightness(1.04)
-}
-
-button:active{
-    transform:translateY(2px) scale(.98)
-}
-
-.save-button{
-    color:#704c00;
-    background:linear-gradient(145deg,#ffed93,#ffc857);
-    box-shadow:
-        0 7px 0 #d39d2c,
-        0 11px 19px rgba(255,200,87,.25);
-}
-
-.save-button:hover{
-    box-shadow:
-        0 10px 0 #d39d2c,
-        0 17px 26px rgba(255,200,87,.3)
-}
-
-.reset-button{
-    color:#7b4d00;
-    background:linear-gradient(145deg,#ffd6d6,#ff9fb0);
-    box-shadow:
-        0 7px 0 #d86f82,
-        0 11px 19px rgba(216,111,130,.22);
-}
-
-.reset-button:hover{
-    box-shadow:
-        0 10px 0 #d86f82,
-        0 17px 26px rgba(216,111,130,.28);
-}
-
-/* =========================================================
-   LOCK BUTTON
-========================================================= */
-
-.save-button:disabled,
-.reset-button:disabled,
-.clear-history:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none!important;
-    filter:grayscale(.35);
-}
-
-.save-button:disabled{
-    box-shadow:0 5px 0 #d39d2c!important;
-}
-
-.reset-button:disabled{
-    box-shadow:0 5px 0 #d86f82!important;
-}
-
-.clear-history:disabled{
-    box-shadow:0 4px 0 #e8a1af!important;
-}
-
-.save-button:disabled:hover,
-.reset-button:disabled:hover,
-.clear-history:disabled:hover{
-    transform:none!important;
-    filter:grayscale(.35);
-}
-
-.yard-header{
-    font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif;
-    font-weight:1000;
-    letter-spacing:1.2px;
-    font-size:10px;
-}
-
-.result{
-    display:none;
-    margin-top:18px;
-    padding:20px 22px;
-    border-radius:21px;
-    background:#f2fcff;
-    border:3px solid #bce8f8;
-    box-shadow:
-        0 7px 0 #9cc8dc,
-        0 13px 23px rgba(37,50,74,.1);
-}
-
-.result.show{
-    display:flex;
-    justify-content:space-between;
-    align-items:center
-}
-
-.result-label{
-    display:flex;
-    flex-direction:column;
-    gap:4px
-}
-
-.result-label span{
-    color:#56819a;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    font-weight:1000
-}
-
-.result-label small{
-    color:#8aa0b1;
-    font-size:10px
-}
-
-.result strong{
-    color:#f09a27;
-    font-size:30px;
-    font-weight:1000;
-    text-shadow:0 2px 0 #ffe0a1
-}
-
-.history{
-    margin-top:30px;
-    padding-top:24px;
-    border-top:3px dashed #cfeaf5;
-    font-weight:700
-}
-
-.history-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:15px
-}
-
-.history-title h2{
-    font-size:16px;
-    font-weight:1000;
-    color:var(--ink)
-}
-
-.history-title span{
-    display:block;
-    margin-top:4px;
-    color:#8193a6;
-    font-size:10px;
-    font-weight:800
-}
-
-.clear-history{
-    height:auto;
-    padding:8px 12px;
-    border-radius:11px;
-    color:#a45261;
-    background:#fff0f3;
-    border:2px solid #ffc4cf;
-    box-shadow:0 4px 0 #e8a1af;
-    font-size:10px;
-    font-weight:1000;
-}
-
-.clear-history:hover{
-    box-shadow:0 6px 0 #e8a1af
-}
-
-.table-wrapper{
-    width:100%;
-    max-width:100%;
-    overflow-x:hidden;
-    overflow-y:visible;
-    border-radius:21px;
-    border:3px solid #cceaf6;
-    background:#fff;
-    box-shadow:
-        0 7px 0 #9fc9da,
-        0 13px 23px rgba(37,50,74,.12);
-}
-
-table{
-    width:100%;
-    max-width:100%;
-    min-width:0;
-    table-layout:fixed;
-    border-collapse:collapse;
-}
-
-thead{
-    background:linear-gradient(145deg,#e3f7ff,#c6ebfa)
-}
-
-th{
-    padding:12px 7px;
-    text-align:center;
-    color:#47728d;
-    font-size:9px;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-    font-weight:1000;
-    overflow-wrap:anywhere;
-    word-break:break-word;
-}
-
-td{
-    padding:12px 7px;
-    border-top:2px dashed #e0eff5;
-    color:#5c7084;
-    font-size:11px;
-    font-weight:800;
-    vertical-align:middle;
-    overflow-wrap:anywhere;
-    word-break:break-word;
-}
-
-th:nth-child(1),
-td:nth-child(1){
-    width:7%;
-    text-align:center;
-}
-
-th:nth-child(2),
-td:nth-child(2){
-    width:35%;
-}
-
-th:nth-child(3),
-td:nth-child(3){
-    width:13%;
-    text-align:center;
-}
-
-th:nth-child(4),
-td:nth-child(4){
-    width:15%;
-    text-align:center;
-}
-
-th:nth-child(5),
-td:nth-child(5){
-    width:17%;
-}
-
-th:nth-child(6),
-td:nth-child(6){
-    width:13%;
-    text-align:center;
-}
-
-.history-number{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:5px 8px;
-    min-width:28px;
-    max-width:100%;
-    border-radius:10px;
-    color:#fff;
-    background:#69b8e5;
-    box-shadow:0 3px 0 #438db6;
-    font-size:10px;
-    font-weight:1000;
-}
-
-.numbers-cell{
-    display:block;
-    width:100%;
-    max-width:100%;
-    color:#425a70;
-    font-family:"Consolas","Courier New",monospace;
-    font-size:11px;
-    font-weight:800;
-    line-height:1.5;
-    white-space:normal;
-    overflow-wrap:anywhere;
-    word-break:break-word;
-}
-
-.pcs-cell{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:30px;
-    max-width:100%;
-    padding:5px 7px;
-    border-radius:9px;
-    background:#e5f8ed;
-    color:#42a56e;
-    border:2px solid #bde8ce;
-    font-weight:1000;
-}
-
-.total-cell{
-    color:#e89a25;
-    font-weight:1000;
-    font-size:12px;
-    overflow-wrap:anywhere;
-    word-break:break-word;
-}
-
-.history-edit-input{
-    display:block;
-    width:100%;
-    max-width:100%;
-    min-width:0;
-    height:34px;
-    padding:5px 6px;
-    border-radius:9px;
-    border:2px solid #69b8e5;
-    outline:none;
-    background:#f7fdff;
-    color:var(--ink);
-    font-size:11px;
-    font-family:"Consolas","Courier New",monospace;
-    font-weight:800;
-    box-shadow:0 0 0 3px rgba(105,184,229,.1);
-}
-
-.history-edit-input:focus{
-    border-color:#ffc857;
-    box-shadow:0 0 0 3px rgba(255,200,87,.16)
-}
-
-.history-edit-input::-webkit-inner-spin-button,
-.history-edit-input::-webkit-outer-spin-button{
-    -webkit-appearance:none;
-    margin:0
-}
-
-.history-edit-input[type=number]{
-    -moz-appearance:textfield
-}
-
-.connected-field{
-    opacity:.82;
-    cursor:not-allowed;
-    border-color:#8bd1a9
-}
-
-.action-cell{
-    min-width:0;
-    width:100%;
-    text-align:center
-}
-
-.edit-history-button,
-.save-history-button,
-.delete-history-button{
-    width:100%;
-    max-width:100%;
-    height:34px;
-    min-width:0;
-    padding:6px 5px;
-    border-radius:10px;
-    font-size:10px;
-    font-weight:1000;
-    white-space:normal;
-    line-height:1.1;
-}
-
-.edit-history-button{
-    color:#fff;
-    background:#6bb7df;
-    box-shadow:0 4px 0 #438db6
-}
-
-.edit-history-button:hover{
-    box-shadow:0 6px 0 #438db6
-}
-
-.save-history-button{
-    color:#fff;
-    background:#67c88f;
-    box-shadow:0 4px 0 #469b6b
-}
-
-.save-history-button:hover{
-    box-shadow:0 6px 0 #469b6b
-}
-
-.delete-history-button{
-    margin-top:7px;
-    color:#fff;
-    background:#ef7189;
-    box-shadow:0 4px 0 #c64d68;
-}
-
-.delete-history-button:hover{
-    box-shadow:0 6px 0 #c64d68
-}
-
-.color-cell{
-    min-width:0;
-    width:100%;
-}
-
-.color-input{
-    display:block;
-    width:100%;
-    max-width:100%;
-    min-width:0;
-    height:34px;
-    padding:0 7px;
-    border-radius:10px;
-    border:2px solid #cce8f2;
-    background:#fbfeff;
-    color:var(--ink);
-    font-size:11px;
-    outline:none;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
-    font-weight:800;
-}
-
-.color-input::placeholder{
-    color:#91a5b4
-}
-
-.color-input:focus{
-    border-color:#ffc857;
-    box-shadow:0 0 0 3px rgba(255,200,87,.12)
-}
-
-
-/* =========================================================
-   PRINT
-========================================================= */
-
-.print-history-area{
-    margin-top:19px;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:11px;
-}
-
-.print-history-button{
-    width:100%;
-    height:59px;
-    border-radius:17px;
-    color:#ffffff;
-    background:#111111;
-    box-shadow:
-        0 7px 0 #000000,
-        0 12px 20px rgba(0,0,0,.22);
-    position:relative;
-    font-size:13px;
-    font-weight:1000;
-}
-
-.print-history-button:hover{
-    box-shadow:
-        0 9px 0 #000000,
-        0 14px 22px rgba(0,0,0,.28);
-}
-
-.print-history-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none!important;
-    filter:grayscale(.35);
-    box-shadow:0 5px 0 #000000!important;
-}
-
-.print-history-button:disabled:hover{
-    transform:none!important;
-    filter:grayscale(.35);
-    box-shadow:0 5px 0 #000000!important;
-}
-
-
-/* =========================================================
-   EXPORT EXCEL
-========================================================= */
-
-.export-excel-button{
-    width:100%;
-    height:55px;
-    border-radius:17px;
-    color:#ffffff;
-    background:linear-gradient(
-        145deg,
-        #49c77a,
-        #249b58
-    );
-    box-shadow:
-        0 7px 0 #197541,
-        0 12px 20px rgba(36,155,88,.22);
-    font-size:13px;
-    font-weight:1000;
-}
-
-.export-excel-button:hover{
-    box-shadow:
-        0 10px 0 #197541,
-        0 16px 24px rgba(36,155,88,.28);
-}
-
-.export-excel-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none!important;
-    filter:grayscale(.35);
-    box-shadow:0 5px 0 #197541!important;
-}
-
-.empty-history{
-    padding:33px!important;
-    text-align:center;
-    color:#93a6b4;
-    font-size:11px;
-    font-weight:800
-}
-
-.footer{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-    margin-top:14px;
-    padding:10px 14px;
-    border:2px dashed #cfe8f3;
-    border-radius:14px;
-    background:linear-gradient(145deg,#f5fcff,#edf9fd);
-    color:#71889a;
-    font-size:10px;
-    font-weight:800;
-    box-shadow:0 3px 0 #d5e9f1;
-}
-
-.enter-key{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:40px;
-    padding:4px 8px;
-    margin:0 4px;
-    border-radius:7px;
-    background:#eaf7fc;
-    box-shadow:0 3px 0 #b8d9e5;
-    color:#56748a;
-    font-family:"Consolas",monospace;
-    font-size:9px;
-    font-weight:1000;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-    body{
-        padding:15px;
-        align-items:flex-start;
-        padding-top:20px
-    }
-
-    .container{
-        padding:22px;
-        border-radius:29px
-    }
-
-}
-
-@media(max-width:600px){
-
-    body{
-        padding:9px;
-        padding-top:12px
-    }
-
-    .container{
-        width:100%;
-        padding:17px;
-        border-radius:25px
-    }
-
-    .header{
-        align-items:center;
-        margin-bottom:20px
-    }
-
-    .icon{
-        width:46px;
-        height:46px;
-        border-radius:14px;
-        font-size:12px
-    }
-
-    .title{
-        gap:11px
-    }
-
-    .title h1{
-        font-size:16px
-    }
-
-    .title p{
-        font-size:9px
-    }
-
-    .data-counter{
-        min-width:64px;
-        padding:7px 8px;
-        border-radius:13px;
-    }
-
-    .data-counter-label{
-        font-size:7px;
-    }
-
-    .data-counter-value{
-        font-size:17px;
-    }
-
-    .input-list{
-        max-height:300px
-    }
-
-    .input-row{
-        gap:8px;
-        margin-bottom:10px
-    }
-
-    .number{
-        width:36px;
-        height:48px
-    }
-
-    .input-wrapper input{
-        height:48px;
-        border-radius:14px;
-        padding-left:14px;
-        font-size:15px
-    }
-
-    .delete-input-button{
-        width:38px;
-        height:48px;
-        border-radius:13px;
-        font-size:15px;
-    }
-
-    .button-area{
-        grid-template-columns:1fr 1fr;
-        gap:10px
-    }
-
-    button{
-        height:50px
-    }
-
-    .print-history-button{
-        height:56px
-    }
-
-    .export-excel-button{
-        height:53px;
-    }
-
-    .result{
-        padding:17px;
-        border-radius:17px
-    }
-
-    .result strong{
-        font-size:25px
-    }
-
-    .history{
-        margin-top:24px;
-        padding-top:20px
-    }
-
-    .history-header{
-        align-items:flex-start
-    }
-
-    .clear-history{
-        padding:7px 9px
-    }
-
-    .table-wrapper{
-        overflow-x:hidden;
-        width:100%;
-        max-width:100%;
-    }
-
-    table{
-        width:100%;
-        min-width:0;
-        table-layout:fixed;
-    }
-
-    th{
-        padding:9px 3px;
-        font-size:7px;
-        letter-spacing:0;
-    }
-
-    td{
-        padding:9px 3px;
-        font-size:9px;
-    }
-
-    th:nth-child(1),
-    td:nth-child(1){
-        width:7%;
-    }
-
-    th:nth-child(2),
-    td:nth-child(2){
-        width:31%;
-    }
-
-    th:nth-child(3),
-    td:nth-child(3){
-        width:13%;
-    }
-
-    th:nth-child(4),
-    td:nth-child(4){
-        width:15%;
-    }
-
-    th:nth-child(5),
-    td:nth-child(5){
-        width:20%;
-    }
-
-    th:nth-child(6),
-    td:nth-child(6){
-        width:14%;
-    }
-
-    .history-number{
-        min-width:22px;
-        padding:4px 5px;
-        font-size:8px;
-        border-radius:7px;
-    }
-
-    .numbers-cell{
-        font-size:8px;
-        line-height:1.45;
-        overflow-wrap:anywhere;
-        word-break:break-word;
-    }
-
-    .pcs-cell{
-        min-width:22px;
-        padding:4px 4px;
-        font-size:8px;
-        border-radius:7px;
-    }
-
-    .total-cell{
-        font-size:9px;
-    }
-
-    .color-input{
-        width:100%;
-        max-width:100%;
-        min-width:0;
-        height:30px;
-        padding:0 4px;
-        font-size:8px;
-    }
-
-    .history-edit-input{
-        width:100%;
-        max-width:100%;
-        min-width:0;
-        height:30px;
-        padding:4px;
-        font-size:8px;
-    }
-
-    .edit-history-button,
-    .save-history-button,
-    .delete-history-button{
-        width:100%;
-        min-width:0;
-        height:30px;
-        padding:4px 2px;
-        font-size:7px;
-        border-radius:7px;
-    }
-
-    .delete-history-button{
-        margin-top:5px;
-    }
-
-    .footer{
-        margin-top:12px;
-        padding:9px 10px;
-        font-size:8px;
-        gap:5px;
-    }
-}
-
-@media(max-width:380px){
-
-    .container{
-        padding:14px;
-        border-radius:22px
-    }
-
-    .title{
-        gap:8px
-    }
-
-    .icon{
-        width:39px;
-        height:39px;
-        font-size:10px
-    }
-
-    .title h1{
-        font-size:14px
-    }
-
-    .title p{
-        font-size:8px
-    }
-
-    .data-counter{
-        min-width:55px;
-        padding:6px 5px;
-    }
-
-    .data-counter-label{
-        font-size:6px;
-    }
-
-    .data-counter-value{
-        font-size:15px;
-    }
-
-    .number{
-        width:33px
-    }
-
-    .delete-input-button{
-        width:34px;
-        height:45px;
-        font-size:13px;
-    }
-
-    th{
-        padding:8px 2px;
-        font-size:6.5px;
-    }
-
-    td{
-        padding:8px 2px;
-        font-size:8px;
-    }
-
-    .numbers-cell{
-        font-size:7px;
-    }
-
-    .pcs-cell{
-        font-size:7px;
-        padding:3px 3px;
-    }
-
-    .total-cell{
-        font-size:8px;
-    }
-
-    .color-input,
-    .history-edit-input{
-        height:28px;
-        font-size:7px;
-        padding:2px 3px;
-    }
-
-    .edit-history-button,
-    .save-history-button,
-    .delete-history-button{
-        height:28px;
-        font-size:6.5px;
-        padding:3px 1px;
-    }
-
-    .delete-history-button{
-        margin-top:4px;
-    }
-
-    .export-excel-button{
-        height:50px;
-        font-size:11px;
-    }
-}
-
-
-/* =========================================================
-   HISTORY ALIGNMENT
-========================================================= */
-
-.history table th,
-.history table td{
-    text-align:center;
-    vertical-align:middle;
-}
-
-.history table td .numbers-cell{
-    display:block;
-    width:100%;
-    text-align:justify;
-    text-align-last:center;
-}
-
-.history table td .history-edit-input,
-.history table td .color-input{
-    text-align:center;
-}
-
-
-/* =========================================================
-   PRINT
-========================================================= */
-
-@media print{
-
-    @page{
-        size:A4 landscape;
-        margin:12mm
-    }
-
-    *{
-        -webkit-print-color-adjust:exact!important;
-        print-color-adjust:exact!important
-    }
-
-    html,
-    body{
-        width:100%;
-        min-height:auto;
-        margin:0;
-        padding:0;
-        background:#fff!important;
-        color:#111!important;
-        overflow:visible!important
-    }
-
-    body{
-        display:block;
-        font-family:Arial,Helvetica,sans-serif;
-        perspective:none
-    }
-
-    body::before{
-        display:none!important
-    }
-
-    .container{
-        width:100%!important;
-        max-width:none!important;
-        padding:0!important;
-        margin:0!important;
-        border:none!important;
-        border-radius:0!important;
-        background:#fff!important;
-        box-shadow:none!important;
-        transform:none!important;
-        backdrop-filter:none!important
-    }
-
-    .container::before,
-    .container::after{
-        display:none!important
-    }
-
-    .header{
-        margin-bottom:12px!important;
-        padding-bottom:8px;
-        border-bottom:2px solid #222
-    }
-
-    .icon{
-        width:42px!important;
-        height:42px!important;
-        border-radius:8px!important;
-        color:#111!important;
-        background:#eee!important;
-        border:1px solid #aaa!important;
-        box-shadow:none!important;
-        transform:none!important
-    }
-
-    .title h1{
-        color:#111!important;
-        font-size:18px!important
-    }
-
-    .title p{
-        color:#555!important
-    }
-
-    .data-counter{
-        display:none!important
-    }
-
-    .input-list,
-    .button-area,
-    .result,
-    .footer,
-    .clear-history,
-    .action-cell,
-    .print-history-area,
-    .header .title p{
-        display:none!important
-    }
-
-    thead th:last-child{
-        display:none!important
-    }
-
-    .history{
-        margin-top:10px!important;
-        padding-top:0!important;
-        border-top:none!important
-    }
-
-    .history-header{
-        margin-bottom:8px!important
-    }
-
-    .history-title h2{
-        color:#111!important;
-        font-size:16px!important
-    }
-
-    .history-title span{
-        color:#555!important
-    }
-
-    .table-wrapper{
-        width:100%!important;
-        overflow:visible!important;
-        border:1px solid #222!important;
-        border-radius:0!important;
-        background:#fff!important;
-        box-shadow:none!important
-    }
-
-    table{
-        width:100%!important;
-        min-width:0!important;
-        table-layout:fixed!important;
-        border-collapse:collapse!important;
-        color:#111!important
-    }
-
-    thead{
-        display:table-header-group
-    }
-
-    th,
-    td{
-        border:1px solid #444!important;
-        color:#111!important;
-        background:#fff!important;
-        vertical-align:middle!important;
-        padding:7px 8px!important;
-        font-size:10px!important;
-        line-height:1.35!important
-    }
-
-    th{
-        background:#e9e9e9!important;
-        font-size:10px!important;
-        font-weight:900!important;
-        text-align:center!important
-    }
-
-    th:nth-child(1),
-    td:nth-child(1){
-        width:7%;
-        text-align:center
-    }
-
-    th:nth-child(2),
-    td:nth-child(2){
-        width:48%;
-        text-align:center!important
-    }
-
-    th:nth-child(3),
-    td:nth-child(3){
-        width:12%;
-        text-align:center
-    }
-
-    th:nth-child(4),
-    td:nth-child(4){
-        width:15%;
-        text-align:center
-    }
-
-    th:nth-child(5),
-    td:nth-child(5){
-        width:18%;
-        text-align:center
-    }
-
-    .history-number,
-    .pcs-cell{
-        display:inline-flex;
-        color:#111!important;
-        background:#fff!important;
-        border:none!important;
-        box-shadow:none!important;
-        padding:0!important;
-        min-width:0!important;
-        border-radius:0!important;
-        font-size:10px!important
-    }
-
-    .numbers-cell{
-        display:block!important;
-        width:100%!important;
-        color:#111!important;
-        font-family:Arial,Helvetica,sans-serif!important;
-        font-size:10px!important;
-        font-weight:700!important;
-        text-align:justify!important;
-        text-align-last:center!important;
-        white-space:normal!important;
-        overflow-wrap:anywhere!important;
-        word-break:break-word!important;
-        line-height:1.55!important;
-        padding:0 8px!important
-    }
-
-    .total-cell{
-        color:#111!important;
-        font-size:10px!important;
-        font-weight:900!important
-    }
-
-    .color-cell{
-        min-width:0!important;
-        text-align:center!important
-    }
-
-    .color-input{
-        display:block!important;
-        width:100%!important;
-        height:auto!important;
-        padding:0!important;
-        margin:0 auto!important;
-        border:none!important;
-        border-radius:0!important;
-        background:transparent!important;
-        box-shadow:none!important;
-        color:#111!important;
-        text-align:center!important;
-        font-size:10px!important;
-        font-family:Arial,Helvetica,sans-serif!important;
-        font-weight:700!important;
-        outline:none!important
-    }
-
-    .color-input::placeholder{
-        color:#111!important;
-        opacity:1!important;
-        text-align:center!important
-    }
-
-    .empty-history{
-        padding:15px!important;
-        color:#555!important
-    }
-
-    tr{
-        page-break-inside:avoid;
-        break-inside:avoid
-    }
-}
-
-@media print{
-
-    .history table th,
-    .history table td{
-        text-align:center!important;
-        vertical-align:middle!important;
-    }
-
-    .history table td .numbers-cell{
-        text-align:justify!important;
-        text-align-last:center!important;
-    }
-
-    .history table td .color-input,
-    .history table td .history-edit-input{
-        text-align:center!important;
-    }
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="header">
-
-        <div class="title">
-
-            <div class="icon">
-                SNP
-            </div>
-
-            <div>
-
-                <h1>
-                    PT SION NIAGA PERKASA
-                </h1>
-
-                <p>
-                    Silahkan input yard sesuai dengan yang diberikan mandor.
-                </p>
-
-            </div>
-
-        </div>
-
-        <div
-            class="data-counter"
-            id="dataCounter"
-        >
-
-            <span class="data-counter-label">
-                Data
-            </span>
-
-            <span
-                class="data-counter-value"
-                id="dataCount"
-            >
-                0
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="input-list"
-        id="inputList"
-    ></div>
-
-
-    <div class="button-area">
-
-        <button
-            type="button"
-            class="reset-button"
-            onclick="resetInputData()"
-            disabled
-        >
-            Reset Data
-        </button>
-
-        <button
-            type="button"
-            class="save-button"
-            onclick="saveHistory()"
-            disabled
-        >
-            Simpan ke History
-        </button>
-
-    </div>
-
-
-    <div class="footer">
-
-        <span class="enter-key">
-            Enter
-        </span>
-
-        <span>
-            Tekan Enter untuk menambah kolom berikutnya
-        </span>
-
-    </div>
-
-
-    <div
-        class="result"
-        id="result"
-    >
-
-        <div class="result-label">
-
-            <span>
-                Total Yard
-            </span>
-
-            <small>
-                Jumlah seluruh angka
-            </small>
-
-        </div>
-
-        <strong id="total">
-            0
-        </strong>
-
-    </div>
-
-
-    <div class="history">
-
-        <div class="history-header">
-
-            <div class="history-title">
-
-                <h2>
-                    History
-                </h2>
-
-                <span>
-                    Riwayat Input Yard
-                </span>
-
-            </div>
-
-            <button
-                type="button"
-                class="clear-history"
-                onclick="clearHistory()"
-                disabled
-            >
-                Hapus History
-            </button>
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            No
-                        </th>
-
-                        <th class="yard-header">
-                            YARD
-                        </th>
-
-                        <th>
-                            Total PCS
-                        </th>
-
-                        <th>
-                            Total Yard
-                        </th>
-
-                        <th>
-                            Warna
-                        </th>
-
-                        <th>
-                            EDIT DATA
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="historyBody">
-
-                    <tr id="emptyHistory">
-
-                        <td
-                            colspan="6"
-                            class="empty-history"
-                        >
-                            Belum ada history
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-        <div class="print-history-area">
-
-            <button
-                type="button"
-                class="export-excel-button"
-                id="exportExcelButton"
-                onclick="exportHistoryToExcel()"
-                disabled
-            >
-                &nbsp; EXPORT EXCEL
-            </button>
-
-            <button
-                type="button"
-                class="print-history-button"
-                id="printHistoryButton"
-                onclick="printHistory()"
-                disabled
-            >
-                &nbsp; PRINT HISTORY
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<script>
-
-const inputList =
-    document.getElementById("inputList");
-
-const result =
-    document.getElementById("result");
-
-const total =
-    document.getElementById("total");
-
-const historyBody =
-    document.getElementById("historyBody");
-
-const dataCount =
-    document.getElementById("dataCount");
-
-const dataCounter =
-    document.getElementById("dataCounter");
-
-const exportExcelButton =
-    document.getElementById("exportExcelButton");
-
-const printHistoryButton =
-    document.getElementById("printHistoryButton");
-
-const resetButton =
-    document.querySelector(".reset-button");
-
-const saveButton =
-    document.querySelector(".save-button");
-
-const clearHistoryButton =
-    document.querySelector(".clear-history");
-
-let number = 0;
-
-
-/* =========================================================
-   UPDATE JUMLAH DATA
-========================================================= */
-
-function updateDataCounter(){
-
-    const inputs =
-        inputList.querySelectorAll("input");
-
-    let count = 0;
-
-    inputs.forEach(
-        input => {
-
-            if(
-                input.value.trim() !== ""
-            ){
-
-                count++;
-
-            }
-
-        }
-    );
-
-    dataCount.textContent =
-        count;
-
-    if(count > 0){
-
-        dataCounter.classList.add("active");
-
-    }else{
-
-        dataCounter.classList.remove("active");
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE STATUS PRINT
-========================================================= */
-
-function updatePrintButton(){
-
-    if(!printHistoryButton){
-        return;
-    }
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    const editingRow =
-        historyBody.querySelector(
-            "tr.editing"
-        );
-
-    if(
-        rows.length === 0 ||
-        editingRow
-    ){
-
-        printHistoryButton.disabled = true;
-
-    }else{
-
-        printHistoryButton.disabled = false;
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE STATUS EXPORT EXCEL
-========================================================= */
-
-function updateExportButton(){
-
-    if(!exportExcelButton){
-        return;
-    }
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    const editingRow =
-        historyBody.querySelector(
-            "tr.editing"
-        );
-
-    if(
-        rows.length === 0 ||
-        editingRow
-    ){
-
-        exportExcelButton.disabled = true;
-
-    }else{
-
-        exportExcelButton.disabled = false;
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE STATUS TOMBOL AKSI
-========================================================= */
-
-function updateActionButtons(){
-
-    if(resetButton){
-
-        const inputs =
-            inputList.querySelectorAll("input");
-
-        let hasInputData = false;
-
-        inputs.forEach(
-            input => {
-
-                if(
-                    input.value.trim() !== ""
-                ){
-
-                    hasInputData = true;
-
-                }
-
-            }
-        );
-
-        resetButton.disabled =
-            !hasInputData;
-
-    }
-
-    if(saveButton){
-
-        const inputs =
-            inputList.querySelectorAll("input");
-
-        let hasInputData = false;
-
-        inputs.forEach(
-            input => {
-
-                if(
-                    input.value.trim() !== ""
-                ){
-
-                    hasInputData = true;
-
-                }
-
-            }
-        );
-
-        saveButton.disabled =
-            !hasInputData;
-
-    }
-
-    if(clearHistoryButton){
-
-        const rows =
-            historyBody.querySelectorAll(
-                "tr:not(#emptyHistory)"
-            );
-
-        clearHistoryButton.disabled =
-            rows.length === 0;
-
-    }
-
-}
-
-
-function updateHistoryButtons(){
-
-    updateActionButtons();
-
-    updatePrintButton();
-
-    updateExportButton();
-
-}
-
-
-/* =========================================================
-   VALIDASI INPUT YARD
-========================================================= */
-
-function sanitizeYardInput(input){
-
-    let value = input.value;
-
-    value =
-        value.replace(
-            /[^0-9.]/g,
-            ""
-        );
-
-    const firstDot =
-        value.indexOf(".");
-
-    if(firstDot !== -1){
-
-        value =
-            value.substring(
-                0,
-                firstDot + 1
-            ) +
-            value
-                .substring(firstDot + 1)
-                .replace(/\./g,"");
-
-    }
-
-    input.value =
-        value;
-
-}
-
-
-/* =========================================================
-   TAMBAH INPUT
-========================================================= */
-
-function addInput(focusInput = true){
-
-    number++;
-
-    const row =
-        document.createElement("div");
-
-    row.className =
-        "input-row";
-
-    row.innerHTML = `
-
-        <div class="number">
-            ${number}
-        </div>
-
-        <div class="input-wrapper">
-
-            <input
-                type="number"
-                step="any"
-                placeholder="Input Yard"
-                autocomplete="off"
-                inputmode="decimal"
-                onkeydown="return allowYardKey(event)"
-                oninput="handleYardInput(this)"
-            >
-
-            <span class="check">
-                ✓
-            </span>
-
-        </div>
-
-        <button
-            type="button"
-            class="delete-input-button"
-            onclick="removeInput(this)"
-            title="Hapus kolom"
-        >
-            ×
-        </button>
-
-    `;
-
-    inputList.appendChild(row);
-
-    updateInputNumbers();
-
-    const input =
-        row.querySelector("input");
-
-
-    input.addEventListener(
-        "keydown",
-        function(event){
-
-            if(
-                event.key === "e" ||
-                event.key === "E" ||
-                event.key === "+" ||
-                event.key === "-"
-            ){
-
-                event.preventDefault();
-
-                return false;
-
-            }
-
-            if(
-                event.key === "Enter"
-            ){
-
-                event.preventDefault();
-
-                if(
-                    this.value.trim() === ""
-                ){
-
-                    return;
-
-                }
-
-                const inputs =
-                    inputList.querySelectorAll(
-                        "input"
-                    );
-
-                const lastInput =
-                    inputs[
-                        inputs.length - 1
-                    ];
-
-                if(
-                    this === lastInput
-                ){
-
-                    addInput(true);
-
-                }else{
-
-                    const index =
-                        Array
-                            .from(inputs)
-                            .indexOf(this);
-
-                    if(
-                        inputs[index + 1]
-                    ){
-
-                        inputs[
-                            index + 1
-                        ].focus();
-
-                    }
-
-                }
-
-            }
-
-        }
-    );
-
-
-    input.addEventListener(
-        "input",
-        function(){
-
-            sanitizeYardInput(this);
-
-            if(
-                this.value.trim() !== ""
-            ){
-
-                this.classList.add("valid");
-
-            }else{
-
-                this.classList.remove("valid");
-
-            }
-
-            calculateTotal();
-
-        }
-    );
-
-
-    input.addEventListener(
-        "paste",
-        function(){
-
-            setTimeout(
-                () => {
-
-                    sanitizeYardInput(this);
-
-                    if(
-                        this.value.trim() !== ""
-                    ){
-
-                        this.classList.add("valid");
-
-                    }else{
-
-                        this.classList.remove("valid");
-
-                    }
-
-                    calculateTotal();
-
-                },
-                0
-            );
-
-        }
-    );
-
-
-    if(focusInput){
-
-        setTimeout(
-            () => input.focus(),
-            50
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   BLOKIR KEYBOARD NON ANGKA
-========================================================= */
-
-function allowYardKey(event){
-
-    const allowedKeys = [
-
-        "Backspace",
-        "Delete",
-        "Tab",
-        "Escape",
-        "Enter",
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowUp",
-        "ArrowDown",
-        "Home",
-        "End"
-
-    ];
-
-    if(
-        allowedKeys.includes(event.key)
-    ){
-
-        return true;
-
-    }
-
-    if(
-        /^[0-9]$/.test(event.key)
-    ){
-
-        return true;
-
-    }
-
-    if(
-        event.key === "."
-    ){
-
-        if(
-            event.target.value.includes(".")
-        ){
-
-            event.preventDefault();
-
-            return false;
-
-        }
-
-        return true;
-
-    }
-
-    event.preventDefault();
-
-    return false;
-
-}
-
-
-/* =========================================================
-   HANDLE INPUT YARD
-========================================================= */
-
-function handleYardInput(input){
-
-    sanitizeYardInput(input);
-
-    if(
-        input.value.trim() !== ""
-    ){
-
-        input.classList.add("valid");
-
-    }else{
-
-        input.classList.remove("valid");
-
-    }
-
-    calculateTotal();
-
-}
-
-
-/* =========================================================
-   HAPUS INPUT
-========================================================= */
-
-function removeInput(button){
-
-    const row =
-        button.closest(".input-row");
-
-    if(!row){
-        return;
-    }
-
-    const rows =
-        inputList.querySelectorAll(
-            ".input-row"
-        );
-
-    if(
-        rows.length === 1
-    ){
-
-        const input =
-            row.querySelector("input");
-
-        if(input){
-
-            input.value = "";
-
-            input.classList.remove(
-                "valid"
-            );
-
-            input.focus();
-
-        }
-
-        calculateTotal();
-
-        return;
-
-    }
-
-    row.remove();
-
-    updateInputNumbers();
-
-    calculateTotal();
-
-}
-
-
-/* =========================================================
-   UPDATE NOMOR INPUT
-========================================================= */
-
-function updateInputNumbers(){
-
-    const rows =
-        inputList.querySelectorAll(
-            ".input-row"
-        );
-
-    rows.forEach(
-        (row,index) => {
-
-            const numberElement =
-                row.querySelector(
-                    ".number"
-                );
-
-            if(numberElement){
-
-                numberElement.textContent =
-                    index + 1;
-
-            }
-
-            const deleteButton =
-                row.querySelector(
-                    ".delete-input-button"
-                );
-
-            if(deleteButton){
-
-                deleteButton.disabled =
-                    rows.length === 1;
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   HITUNG TOTAL
-========================================================= */
-
-function calculateTotal(){
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-    let sum = 0;
-
-    let filled = 0;
-
-    inputs.forEach(
-        input => {
-
-            const value =
-                parseFloat(
-                    input.value
-                );
-
-            if(
-                !isNaN(value)
-            ){
-
-                sum += value;
-
-                filled++;
-
-            }
-
-        }
-    );
-
-    total.textContent =
-        formatNumber(sum);
-
-    if(
-        filled > 0
-    ){
-
-        result.classList.add("show");
-
-    }else{
-
-        result.classList.remove("show");
-
-    }
-
-    updateDataCounter();
-
-    updateActionButtons();
-
-}
-
-
-/* =========================================================
-   SIMPAN HISTORY
-========================================================= */
-
-function saveHistory(){
-
-    if(saveButton && saveButton.disabled){
-
-        return;
-
-    }
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-    const values = [];
-
-    inputs.forEach(
-        input => {
-
-            sanitizeYardInput(input);
-
-            if(
-                input.value.trim() !== ""
-            ){
-
-                const value =
-                    parseFloat(
-                        input.value
-                    );
-
-                if(
-                    Number.isFinite(value)
-                ){
-
-                    values.push(value);
-
-                }
-
-            }
-
-        }
-    );
-
-    if(
-        values.length === 0
-    ){
-
-        alert(
-            "Silakan masukkan angka terlebih dahulu."
-        );
-
-        return;
-
-    }
-
-    const totalYard =
-        calculateYardTotal(values);
-
-    const totalPCS =
-        values.length;
-
-    const empty =
-        document.getElementById(
-            "emptyHistory"
-        );
-
-    if(empty){
-
-        empty.remove();
-
-    }
-
-    const row =
-        document.createElement("tr");
-
-    row.dataset.yards =
-        JSON.stringify(values);
-
-    row.innerHTML = `
-
-        <td>
-
-            <span class="history-number">
-                0
-            </span>
-
-        </td>
-
-        <td>
-
-            <span class="numbers-cell">
-                ${formatYardDisplay(values)}
-            </span>
-
-        </td>
-
-        <td>
-
-            <span class="pcs-cell">
-                ${formatNumber(totalPCS)}
-            </span>
-
-        </td>
-
-        <td>
-
-            <span class="total-cell">
-                ${formatNumber(totalYard)}
-            </span>
-
-        </td>
-
-        <td class="color-cell">
-
-            <input
-                type="text"
-                class="color-input"
-                placeholder="Input warna"
-                autocomplete="off"
-            >
-
-        </td>
-
-        <td class="action-cell">
-
-            <button
-                type="button"
-                class="edit-history-button"
-                onclick="editHistory(this)"
-            >
-                ✎ Edit
-            </button>
-
-            <button
-                type="button"
-                class="delete-history-button"
-                onclick="deleteHistory(this)"
-            >
-                🗑 Hapus
-            </button>
-
-        </td>
-
-    `;
-
-    historyBody.appendChild(row);
-
-    updateHistoryNumber();
-
-    updateHistoryButtons();
-
-    resetInput();
-
-}
-
-
-/* =========================================================
-   HITUNG TOTAL YARD
-========================================================= */
-
-function calculateYardTotal(values){
-
-    let totalValue = 0;
-
-    values.forEach(
-        value => {
-
-            const numberValue =
-                Number(value);
-
-            if(
-                !isNaN(numberValue)
-            ){
-
-                totalValue +=
-                    numberValue;
-
-            }
-
-        }
-    );
-
-    return totalValue;
-
-}
-
-
-/* =========================================================
-   FORMAT YARD
-========================================================= */
-
-function formatYardDisplay(values){
-
-    return "(" +
-        values
-            .map(
-                value =>
-                    formatNumber(value)
-            )
-            .join(", ") +
-        ")";
-
-}
-
-
-/* =========================================================
-   EDIT HISTORY
-========================================================= */
-
-function editHistory(button){
-
-    const row =
-        button.closest("tr");
-
-    if(!row){
-        return;
-    }
-
-    if(
-        row.classList.contains("editing")
-    ){
-        return;
-    }
-
-    row.classList.add("editing");
-
-    updateHistoryButtons();
-
-    let yards = [];
-
-    try{
-
-        yards =
-            JSON.parse(
-                row.dataset.yards || "[]"
-            );
-
-    }catch(error){
-
-        yards = [];
-
-    }
-
-    if(
-        yards.length === 0
-    ){
-
-        const yardText =
-            row.querySelector(
-                ".numbers-cell"
-            ).textContent
-                .replace(/^\(/, "")
-                .replace(/\)$/, "")
-                .trim();
-
-        yards =
-            parseYardText(yardText);
-
-    }
-
-    const yardCell =
-        row.querySelector(
-            ".numbers-cell"
-        );
-
-    yardCell.innerHTML = `
-
-        <input
-            type="text"
-            class="history-edit-input yard-edit-input"
-            value="${escapeHtmlAttribute(
-                yards.join(" ")
-            )}"
-            autocomplete="off"
-            spellcheck="false"
-            inputmode="decimal"
-        >
-
-    `;
-
-    const pcsCell =
-        row.querySelector(
-            ".pcs-cell"
-        );
-
-    pcsCell.innerHTML = `
-
-        <input
-            type="number"
-            class="history-edit-input pcs-edit-input connected-field"
-            value="${yards.length}"
-            readonly
-            title="Total PCS otomatis mengikuti jumlah YARD"
-        >
-
-    `;
-
-    const totalCell =
-        row.querySelector(
-            ".total-cell"
-        );
-
-    totalCell.innerHTML = `
-
-        <input
-            type="number"
-            step="any"
-            class="history-edit-input total-yard-edit-input connected-field"
-            value="${calculateYardTotal(yards)}"
-            readonly
-            title="Total Yard otomatis mengikuti jumlah YARD"
-        >
-
-    `;
-
-    const yardInput =
-        row.querySelector(
-            ".yard-edit-input"
-        );
-
-
-    yardInput.addEventListener(
-        "keydown",
-        function(event){
-
-            if(
-                event.key === "Enter"
-            ){
-
-                event.preventDefault();
-
-                saveEditedHistory(
-                    row.querySelector(
-                        ".save-history-button"
-                    )
-                );
-
-                return;
-
-            }
-
-            const allowedKeys = [
-                "Backspace",
-                "Delete",
-                "Tab",
-                "Escape",
-                "ArrowLeft",
-                "ArrowRight",
-                "ArrowUp",
-                "ArrowDown",
-                "Home",
-                "End",
-                " "
-            ];
-
-            if(
-                allowedKeys.includes(event.key)
-            ){
-
-                return;
-
-            }
-
-            if(
-                /^[0-9]$/.test(event.key)
-            ){
-
-                return;
-
-            }
-
-            if(
-                event.key === "." ||
-                event.key === "," ||
-                event.key === ";"
-            ){
-
-                return;
-
-            }
-
-            event.preventDefault();
-
-        }
-    );
-
-
-    yardInput.addEventListener(
-        "input",
-        function(){
-
-            this.value =
-                this.value.replace(
-                    /[^0-9.,;\s]/g,
-                    ""
-                );
-
-            updateConnectedHistory(row);
-
-        }
-    );
-
-
-    yardInput.addEventListener(
-        "paste",
-        function(){
-
-            setTimeout(
-                () => {
-
-                    this.value =
-                        this.value.replace(
-                            /[^0-9.,;\s]/g,
-                            ""
-                        );
-
-                    updateConnectedHistory(row);
-
-                },
-                0
-            );
-
-        }
-    );
-
-
-    button.className =
-        "save-history-button";
-
-    button.innerHTML =
-        "✓ Save";
-
-    button.onclick =
-        function(){
-
-            saveEditedHistory(this);
-
-        };
-
-
-    setTimeout(
-        () => {
-
-            yardInput.focus();
-
-            yardInput.select();
-
-        },
-        50
-    );
-
-    updateConnectedHistory(row);
-
-}
-
-
-/* =========================================================
-   UPDATE FIELD TERHUBUNG
-========================================================= */
-
-function updateConnectedHistory(row){
-
-    if(!row){
-        return;
-    }
-
-    const yardInput =
-        row.querySelector(
-            ".yard-edit-input"
-        );
-
-    const pcsInput =
-        row.querySelector(
-            ".pcs-edit-input"
-        );
-
-    const totalYardInput =
-        row.querySelector(
-            ".total-yard-edit-input"
-        );
-
-    if(
-        !yardInput ||
-        !pcsInput ||
-        !totalYardInput
-    ){
-        return;
-    }
-
-    const values =
-        parseYardText(
-            yardInput.value
-        );
-
-    const totalPCS =
-        values.length;
-
-    const totalYard =
-        calculateYardTotal(values);
-
-    pcsInput.value =
-        String(totalPCS);
-
-    totalYardInput.value =
-        formatNumber(totalYard);
-
-    pcsInput.setAttribute(
-        "value",
-        String(totalPCS)
-    );
-
-    totalYardInput.setAttribute(
-        "value",
-        formatNumber(totalYard)
-    );
-
-}
-
-
-/* =========================================================
-   SAVE EDIT HISTORY
-========================================================= */
-
-function saveEditedHistory(button){
-
-    const row =
-        button.closest("tr");
-
-    if(!row){
-        return;
-    }
-
-    const yardInput =
-        row.querySelector(
-            ".yard-edit-input"
-        );
-
-    if(!yardInput){
-        return;
-    }
-
-    const values =
-        parseYardText(
-            yardInput.value
-        );
-
-    if(
-        values.length === 0
-    ){
-
-        alert(
-            "Masukkan minimal satu angka yard."
-        );
-
-        yardInput.focus();
-
-        return;
-
-    }
-
-    const totalYard =
-        calculateYardTotal(values);
-
-    const totalPCS =
-        values.length;
-
-    row.dataset.yards =
-        JSON.stringify(values);
-
-    const yardCell =
-        row.querySelector(
-            ".numbers-cell"
-        );
-
-    yardCell.innerHTML =
-        formatYardDisplay(values);
-
-    const pcsCell =
-        row.querySelector(
-            ".pcs-cell"
-        );
-
-    pcsCell.innerHTML =
-        formatNumber(totalPCS);
-
-    const totalCell =
-        row.querySelector(
-            ".total-cell"
-        );
-
-    totalCell.innerHTML =
-        formatNumber(totalYard);
-
-    row.classList.remove("editing");
-
-    const actionCell =
-        row.querySelector(
-            ".action-cell"
-        );
-
-    actionCell.innerHTML = `
-
-        <button
-            type="button"
-            class="edit-history-button"
-            onclick="editHistory(this)"
-        >
-            ✎ Edit
-        </button>
-
-        <button
-            type="button"
-            class="delete-history-button"
-            onclick="deleteHistory(this)"
-        >
-            🗑 Hapus
-        </button>
-
-    `;
-
-    updateHistoryNumber();
-
-    updateHistoryButtons();
-
-}
-
-
-/* =========================================================
-   PARSE YARD EDIT
-========================================================= */
-
-function parseYardText(text){
-
-    if(
-        text === null ||
-        text === undefined
-    ){
-
-        return [];
-
-    }
-
-    const cleanText =
-        String(text)
-            .replace(/[()]/g,"")
-            .trim();
-
-    if(!cleanText){
-
-        return [];
-
-    }
-
-    return cleanText
-        .split(/[\s,;]+/)
-        .map(
-            item =>
-                parseFloat(
-                    item.trim()
-                )
-        )
-        .filter(
-            value =>
-                Number.isFinite(value)
-        );
-
-}
-
-
-/* =========================================================
-   ESCAPE ATTRIBUTE
-========================================================= */
-
-function escapeHtmlAttribute(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;");
-
-}
-
-
-/* =========================================================
-   FORMAT ANGKA
-========================================================= */
-
-function formatNumber(number){
-
-    if(
-        Number.isInteger(number)
-    ){
-
-        return number.toLocaleString(
-            "id-ID"
-        );
-
-    }
-
-    return Number(number)
-        .toLocaleString(
-            "id-ID",
-            {
-                maximumFractionDigits:10
-            }
-        );
-
-}
-
-
-/* =========================================================
-   RESET INPUT
-========================================================= */
-
-function resetInput(){
-
-    inputList.innerHTML = "";
-
-    number = 0;
-
-    addInput(false);
-
-    calculateTotal();
-
-    updateDataCounter();
-
-    updateActionButtons();
-
-}
-
-
-/* =========================================================
-   RESET DATA
-========================================================= */
-
-function resetInputData(){
-
-    if(resetButton && resetButton.disabled){
-
-        return;
-
-    }
-
-    const inputs =
-        inputList.querySelectorAll(
-            "input"
-        );
-
-    let hasData = false;
-
-    inputs.forEach(
-        input => {
-
-            if(
-                input.value.trim() !== ""
-            ){
-
-                hasData = true;
-
-            }
-
-        }
-    );
-
-    if(!hasData){
-
-        resetInput();
-
-        return;
-
-    }
-
-    const confirmReset =
-        confirm(
-            "Apakah yakin ingin mereset semua data yang di input?"
-        );
-
-    if(!confirmReset){
-
-        return;
-
-    }
-
-    resetInput();
-
-}
-
-
-/* =========================================================
-   NOMOR HISTORY
-========================================================= */
-
-function updateHistoryNumber(){
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    rows.forEach(
-        (row,index) => {
-
-            const numberElement =
-                row.querySelector(
-                    ".history-number"
-                );
-
-            if(numberElement){
-
-                numberElement.textContent =
-                    index + 1;
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   HAPUS HISTORY
-========================================================= */
-
-function deleteHistory(button){
-
-    const row =
-        button.closest("tr");
-
-    if(!row){
-        return;
-    }
-
-    const confirmDelete =
-        confirm(
-            "Apakah yakin ingin menghapus history ini?"
-        );
-
-    if(!confirmDelete){
-        return;
-    }
-
-    row.remove();
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    if(
-        rows.length === 0
-    ){
-
-        const empty =
-            document.createElement("tr");
-
-        empty.id =
-            "emptyHistory";
-
-        empty.innerHTML = `
-
-            <td
-                colspan="6"
-                class="empty-history"
-            >
-                Belum ada history
-            </td>
-
-        `;
-
-        historyBody.appendChild(empty);
-
-    }
-
-    updateHistoryNumber();
-
-    updateHistoryButtons();
-
-}
-
-
-/* =========================================================
-   HAPUS SEMUA HISTORY
-========================================================= */
-
-function clearHistory(){
-
-    if(clearHistoryButton && clearHistoryButton.disabled){
-
-        return;
-
-    }
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    if(
-        rows.length === 0
-    ){
-
-        return;
-
-    }
-
-    const confirmClear =
-        confirm(
-            "Apakah yakin ingin menghapus semua history?"
-        );
-
-    if(!confirmClear){
-
-        return;
-
-    }
-
-    rows.forEach(
-        row =>
-            row.remove()
-    );
-
-    const empty =
-        document.createElement("tr");
-
-    empty.id =
-        "emptyHistory";
-
-    empty.innerHTML = `
-
-        <td
-            colspan="6"
-            class="empty-history"
-        >
-            Belum ada history
-        </td>
-
-    `;
-
-    historyBody.appendChild(empty);
-
-    updateHistoryButtons();
-
-}
-
-
-/* =========================================================
-   PRINT HISTORY
-========================================================= */
-
-function printHistory(){
-
-    const editingRow =
-        historyBody.querySelector(
-            "tr.editing"
-        );
-
-    if(editingRow){
-
-        alert(
-            "Selesaikan edit data terlebih dahulu"
-        );
-
-        return;
-
-    }
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    if(rows.length === 0){
-
-        return;
-
-    }
-
-    window.print();
-
-}
-
-
-/* =========================================================
-   EXPORT HISTORY KE EXCEL
-   DATA YANG DIEKSPOR SAMA DENGAN DATA PRINT
-========================================================= */
-
-function exportHistoryToExcel(){
-
-    const editingRow =
-        historyBody.querySelector(
-            "tr.editing"
-        );
-
-    if(editingRow){
-
-        alert(
-            "Selesaikan edit data terlebih dahulu sebelum export Excel."
-        );
-
-        return;
-
-    }
-
-    const rows =
-        historyBody.querySelectorAll(
-            "tr:not(#emptyHistory)"
-        );
-
-    if(rows.length === 0){
-
-        alert(
-            "Belum ada data history untuk diekspor."
-        );
-
-        return;
-
-    }
-
-
-    let excelRows = "";
-
-    rows.forEach(
-        (row,index) => {
-
-            const no =
-                index + 1;
-
-            const yardElement =
-                row.querySelector(
-                    ".numbers-cell"
-                );
-
-            const pcsElement =
-                row.querySelector(
-                    ".pcs-cell"
-                );
-
-            const totalElement =
-                row.querySelector(
-                    ".total-cell"
-                );
-
-            const colorInput =
-                row.querySelector(
-                    ".color-input"
-                );
-
-
-            const yard =
-                yardElement
-                    ? yardElement.textContent.trim()
-                    : "";
-
-            const pcs =
-                pcsElement
-                    ? pcsElement.textContent.trim()
-                    : "";
-
-            const totalYard =
-                totalElement
-                    ? totalElement.textContent.trim()
-                    : "";
-
-            const warna =
-                colorInput
-                    ? colorInput.value.trim()
-                    : "";
-
-
-            excelRows += `
-
-                <tr>
-
-                    <td style="text-align:center;">
-                        ${escapeExcel(no)}
-                    </td>
-
-                    <td style="text-align:center;">
-                        ${escapeExcel(yard)}
-                    </td>
-
-                    <td style="text-align:center;">
-                        ${escapeExcel(pcs)}
-                    </td>
-
-                    <td style="text-align:center;">
-                        ${escapeExcel(totalYard)}
-                    </td>
-
-                    <td style="text-align:center;">
-                        ${escapeExcel(warna)}
-                    </td>
-
-                </tr>
-
-            `;
-
-        }
-    );
-
-
-    const excelHTML = `
-
-        <html>
-
-        <head>
-
-            <meta charset="UTF-8">
-
-            <style>
-
-                body{
-                    font-family:Arial,Helvetica,sans-serif;
-                }
-
-                h2{
-                    text-align:center;
-                    font-size:18px;
-                    margin-bottom:5px;
-                }
-
-                p{
-                    text-align:center;
-                    font-size:11px;
-                    color:#555;
-                    margin-bottom:18px;
-                }
-
-                table{
-                    border-collapse:collapse;
-                    width:100%;
-                }
-
-                th{
-                    background:#e9e9e9;
-                    color:#111;
-                    border:1px solid #444;
-                    padding:8px;
-                    text-align:center;
-                    font-weight:bold;
-                }
-
-                td{
-                    border:1px solid #444;
-                    padding:8px;
-                    color:#111;
-                    text-align:center;
-                    vertical-align:middle;
-                }
-
-            </style>
-
-        </head>
-
-        <body>
-
-            <h2>
-                PT SION NIAGA PERKASA
-            </h2>
-
-            <p>
-                RIWAYAT INPUT YARD
-            </p>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            No
-                        </th>
-
-                        <th>
-                            YARD
-                        </th>
-
-                        <th>
-                            Total PCS
-                        </th>
-
-                        <th>
-                            Total Yard
-                        </th>
-
-                        <th>
-                            Warna
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    ${excelRows}
-
-                </tbody>
-
-            </table>
-
-        </body>
-
-        </html>
-
-    `;
-
-
-    const blob =
-        new Blob(
-            [
-                "\ufeff",
-                excelHTML
-            ],
-            {
-                type:
-                    "application/vnd.ms-excel;charset=utf-8;"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement("a");
-
-    link.href =
-        url;
-
-    const now =
-        new Date();
-
-    const year =
-        now.getFullYear();
-
-    const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(2,"0");
-
-    const day =
-        String(
-            now.getDate()
-        ).padStart(2,"0");
-
-    const hours =
-        String(
-            now.getHours()
-        ).padStart(2,"0");
-
-    const minutes =
-        String(
-            now.getMinutes()
-        ).padStart(2,"0");
-
-    const seconds =
-        String(
-            now.getSeconds()
-        ).padStart(2,"0");
-
-
-    link.download =
-        `History_Yard_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.xls`;
-
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-
-
-    setTimeout(
-        () => {
-
-            URL.revokeObjectURL(
-                url
-            );
-
-        },
-        1000
-    );
-
-}
-
-
-/* =========================================================
-   ESCAPE DATA EXCEL
-========================================================= */
-
-function escapeExcel(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-addInput(false);
-
-updateDataCounter();
-
-updateActionButtons();
-
-updateHistoryButtons();
-
-</script>
-
-</body>
+<!DOCTYPE html> 
+<html lang="id"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 
+<title>PT SION NIAGA PERKASA</title> 
+ 
+<style> 
+ 
+*{ 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif 
+} 
+ 
+:root{ 
+    --ink:#26344d; 
+    --muted:#71839a; 
+    --white:#fff; 
+    --blue:#58b9ee; 
+    --blue-dark:#3187bd; 
+    --sky:#e8f8ff; 
+    --yellow:#ffd75a; 
+    --yellow-dark:#d49d24; 
+    --orange:#ff9b4a; 
+    --orange-dark:#dc7130; 
+    --pink:#ff91ad; 
+    --pink-dark:#d96887; 
+    --green:#72d79b; 
+    --green-dark:#4aa86f; 
+    --purple:#a996ff; 
+    --shadow:rgba(38,52,77,.20) 
+} 
+ 
+html{ 
+    scroll-behavior:smooth 
+} 
+ 
+body{ 
+    min-height:100vh; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    padding:24px; 
+    color:var(--ink); 
+    overflow-x:hidden; 
+    position:relative; 
+    background: 
+        radial-gradient(circle at 7% 12%,#fff 0 34px,transparent 35px), 
+        radial-gradient(circle at 92% 13%,#fff7bd 0 27px,transparent 28px), 
+        radial-gradient(circle at 9% 88%,#d9f8e7 0 42px,transparent 43px), 
+        linear-gradient(135deg,#8edbff 0%,#e9faff 47%,#fff0bb 100%); 
+} 
+ 
+body::before{ 
+    content:""; 
+    position:fixed; 
+    inset:0; 
+    pointer-events:none; 
+    background: 
+        radial-gradient(circle at 18% 20%,rgba(255,255,255,.7) 0 4px,transparent 5px), 
+        radial-gradient(circle at 82% 35%,rgba(255,255,255,.65) 0 5px,transparent 6px), 
+        radial-gradient(circle at 15% 70%,rgba(255,255,255,.6) 0 3px,transparent 4px), 
+        radial-gradient(circle at 88% 78%,rgba(255,255,255,.7) 0 4px,transparent 5px); 
+} 
+ 
+.container{ 
+    width:780px; 
+    max-width:100%; 
+    position:relative; 
+    padding:29px; 
+    border-radius:36px; 
+    background:rgba(255,255,255,.95); 
+    border:4px solid #fff; 
+    box-shadow: 
+        0 11px 0 #78a9c0, 
+        0 28px 55px var(--shadow), 
+        inset 0 0 0 3px #d7f2fb; 
+    backdrop-filter:blur(10px); 
+} 
+ 
+.header{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    gap:15px; 
+    margin-bottom:25px; 
+} 
+ 
+.title{ 
+    display:flex; 
+    align-items:center; 
+    gap:14px; 
+} 
+ 
+.icon{ 
+    width:62px; 
+    height:62px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    flex-shrink:0; 
+    border-radius:20px; 
+    color:#fff; 
+    font-size:15px; 
+    font-weight:1000; 
+    letter-spacing:.5px; 
+    background:linear-gradient(145deg,#ffbd61,#ff8848); 
+    border:4px solid #fff; 
+    box-shadow: 
+        0 7px 0 var(--orange-dark), 
+        0 12px 20px rgba(255,136,72,.25); 
+    transform:none; 
+    position:relative; 
+} 
+ 
+.title h1{ 
+    font-size:21px; 
+    font-weight:1000; 
+    color:var(--ink); 
+    letter-spacing:.2px; 
+} 
+ 
+.title p{ 
+    margin-top:5px; 
+    color:var(--muted); 
+    font-size:11px; 
+    font-weight:800; 
+} 
+ 
+.data-counter{ 
+    position:relative; 
+    flex-shrink:0; 
+    min-width:100px; 
+    padding:10px 14px; 
+    border-radius:18px; 
+    background:linear-gradient(145deg,#ffffff,#eef8fc); 
+    border:3px solid #d9eef7; 
+    box-shadow: 
+        0 5px 0 #9fc9da, 
+        0 9px 18px rgba(49,135,189,.14); 
+    text-align:center; 
+    overflow:hidden; 
+    transition: 
+        transform .2s, 
+        box-shadow .2s, 
+        background .2s, 
+        border-color .2s; 
+} 
+ 
+.data-counter::before{ 
+    content:""; 
+    position:absolute; 
+    top:0; 
+    left:0; 
+    right:0; 
+    height:4px; 
+    background:linear-gradient( 
+        90deg, 
+        #58b9ee, 
+        #72d79b, 
+        #ffd75a 
+    ); 
+} 
+ 
+.data-counter-label{ 
+    display:block; 
+    margin-top:2px; 
+    color:#7893a5; 
+    font-size:8px; 
+    font-weight:1000; 
+    text-transform:uppercase; 
+    letter-spacing:1.3px; 
+} 
+ 
+.data-counter-value{ 
+    display:block; 
+    margin-top:3px; 
+    color:#4d7e99; 
+    font-size:22px; 
+    line-height:1; 
+    font-weight:1000; 
+    transition:.2s; 
+} 
+ 
+.data-counter.active{ 
+    background:linear-gradient(145deg,#f0fff7,#dcf7e8); 
+    border-color:#bfe8cf; 
+    box-shadow: 
+        0 5px 0 #83bd9d, 
+        0 10px 20px rgba(74,168,111,.17); 
+    transform:translateY(-1px); 
+} 
+ 
+.data-counter.active .data-counter-label{ 
+    color:#5f8f72; 
+} 
+ 
+.data-counter.active .data-counter-value{ 
+    color:#3fa36b; 
+} 
+ 
+.input-list{ 
+    max-height:325px; 
+    overflow-y:auto; 
+    padding:6px 7px 6px 3px; 
+    scrollbar-width:thin; 
+    scrollbar-color:#78c7ec transparent; 
+} 
+ 
+.input-list::-webkit-scrollbar{ 
+    width:8px 
+} 
+ 
+.input-list::-webkit-scrollbar-thumb{ 
+    background:#78c7ec; 
+    border-radius:20px; 
+    border:2px solid #e8f8ff 
+} 
+ 
+.input-row{ 
+    display:flex; 
+    align-items:center; 
+    gap:12px; 
+    margin-bottom:14px; 
+    animation:inputAppear .3s cubic-bezier(.2,.8,.2,1); 
+} 
+ 
+@keyframes inputAppear{ 
+    from{ 
+        opacity:0; 
+        transform:translateY(15px) scale(.97) rotate(-1deg) 
+    } 
+ 
+    to{ 
+        opacity:1; 
+        transform:translateY(0) scale(1) rotate(0) 
+    } 
+} 
+ 
+.number{ 
+    width:45px; 
+    height:53px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    flex-shrink:0; 
+    border-radius:16px; 
+    background:#e1f6ff; 
+    border:3px solid #fff; 
+    color:#39749a; 
+    font-size:12px; 
+    font-weight:1000; 
+    box-shadow:0 5px 0 #8dc1d9; 
+    transform:rotate(-2deg); 
+} 
+ 
+.input-wrapper{ 
+    position:relative; 
+    flex:1 
+} 
+ 
+.input-wrapper input{ 
+    width:100%; 
+    height:53px; 
+    border:3px solid #c7eaf8; 
+    border-radius:18px; 
+    background:#fff; 
+    color:var(--ink); 
+    padding:0 52px 0 18px; 
+    font-size:16px; 
+    font-weight:800; 
+    outline:none; 
+    transition:.2s; 
+    box-shadow:0 5px 0 #b7d5e1; 
+} 
+ 
+.input-wrapper input:hover{ 
+    border-color:#9fd9f2 
+} 
+ 
+.input-wrapper input:focus{ 
+    border-color:#ffc857; 
+    background:#fffdf1; 
+    box-shadow: 
+        0 5px 0 #d8a943, 
+        0 0 0 5px rgba(255,200,87,.16); 
+} 
+ 
+.input-wrapper input::placeholder{ 
+    color:#a2b1be 
+} 
+ 
+.input-wrapper input::-webkit-inner-spin-button, 
+.input-wrapper input::-webkit-outer-spin-button{ 
+    -webkit-appearance:none; 
+    margin:0 
+} 
+ 
+.input-wrapper input[type=number]{ 
+    -moz-appearance:textfield 
+} 
+ 
+.delete-input-button{ 
+    width:42px; 
+    height:53px; 
+    flex-shrink:0; 
+    border-radius:15px; 
+    color:#fff; 
+    background:linear-gradient(145deg,#ff8fa7,#e96582); 
+    box-shadow: 
+        0 5px 0 #c94e69, 
+        0 8px 15px rgba(233,101,130,.18); 
+    font-size:16px; 
+    font-weight:1000; 
+} 
+ 
+.delete-input-button:hover{ 
+    box-shadow: 
+        0 7px 0 #c94e69, 
+        0 11px 18px rgba(233,101,130,.24); 
+} 
+ 
+.delete-input-button:disabled{ 
+    opacity:.45; 
+    cursor:not-allowed; 
+    transform:none; 
+    filter:none; 
+} 
+ 
+.check{ 
+    position:absolute; 
+    right:15px; 
+    top:50%; 
+    transform:translateY(-50%) scale(.5) rotate(-15deg); 
+    width:25px; 
+    height:25px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    border-radius:50%; 
+    background:var(--green); 
+    border:3px solid #fff; 
+    color:#fff; 
+    font-size:12px; 
+    font-weight:1000; 
+    opacity:0; 
+    transition:.22s; 
+    box-shadow:0 3px 0 var(--green-dark); 
+} 
+ 
+.input-wrapper input.valid + .check{ 
+    opacity:1; 
+    transform:translateY(-50%) scale(1) rotate(0) 
+} 
+ 
+.button-area{ 
+    display:grid; 
+    grid-template-columns:1fr 1fr; 
+    gap:13px; 
+    margin-top:13px 
+} 
+ 
+button{ 
+    height:53px; 
+    border:none; 
+    border-radius:17px; 
+    cursor:pointer; 
+    font-size:12px; 
+    font-weight:1000; 
+    transition: 
+        transform .18s, 
+        box-shadow .18s, 
+        filter .18s; 
+} 
+ 
+button:hover{ 
+    transform:translateY(-4px) rotate(-.4deg); 
+    filter:brightness(1.04) 
+} 
+ 
+button:active{ 
+    transform:translateY(2px) scale(.98) 
+} 
+ 
+.save-button{ 
+    color:#704c00; 
+    background:linear-gradient(145deg,#ffed93,#ffc857); 
+    box-shadow: 
+        0 7px 0 #d39d2c, 
+        0 11px 19px rgba(255,200,87,.25); 
+} 
+ 
+.save-button:hover{ 
+    box-shadow: 
+        0 10px 0 #d39d2c, 
+        0 17px 26px rgba(255,200,87,.3) 
+} 
+ 
+.reset-button{ 
+    color:#7b4d00; 
+    background:linear-gradient(145deg,#ffd6d6,#ff9fb0); 
+    box-shadow: 
+        0 7px 0 #d86f82, 
+        0 11px 19px rgba(216,111,130,.22); 
+} 
+ 
+.reset-button:hover{ 
+    box-shadow: 
+        0 10px 0 #d86f82, 
+        0 17px 26px rgba(216,111,130,.28); 
+} 
+ 
+.save-button:disabled, 
+.reset-button:disabled, 
+.clear-history:disabled{ 
+    opacity:.45; 
+    cursor:not-allowed; 
+    transform:none!important; 
+    filter:grayscale(.35); 
+} 
+ 
+.save-button:disabled{ 
+    box-shadow:0 5px 0 #d39d2c!important; 
+} 
+ 
+.reset-button:disabled{ 
+    box-shadow:0 5px 0 #d86f82!important; 
+} 
+ 
+.clear-history:disabled{ 
+    box-shadow:0 4px 0 #e8a1af!important; 
+} 
+ 
+.save-button:disabled:hover, 
+.reset-button:disabled:hover, 
+.clear-history:disabled:hover{ 
+    transform:none!important; 
+    filter:grayscale(.35); 
+} 
+ 
+.yard-header{ 
+    font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif; 
+    font-weight:1000; 
+    letter-spacing:1.2px; 
+    font-size:10px; 
+} 
+ 
+.result{ 
+    display:none; 
+    margin-top:18px; 
+    padding:20px 22px; 
+    border-radius:21px; 
+    background:#f2fcff; 
+    border:3px solid #bce8f8; 
+    box-shadow: 
+        0 7px 0 #9cc8dc, 
+        0 13px 23px rgba(37,50,74,.1); 
+} 
+ 
+.result.show{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center 
+} 
+ 
+.result-label{ 
+    display:flex; 
+    flex-direction:column; 
+    gap:4px 
+} 
+ 
+.result-label span{ 
+    color:#56819a; 
+    font-size:10px; 
+    text-transform:uppercase; 
+    letter-spacing:1.5px; 
+    font-weight:1000 
+} 
+ 
+.result-label small{ 
+    color:#8aa0b1; 
+    font-size:10px 
+} 
+ 
+.result strong{ 
+    color:#f09a27; 
+    font-size:30px; 
+    font-weight:1000; 
+    text-shadow:0 2px 0 #ffe0a1 
+} 
+ 
+.history{ 
+    margin-top:30px; 
+    padding-top:24px; 
+    border-top:3px dashed #cfeaf5; 
+    font-weight:700 
+} 
+ 
+.history-header{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    gap:15px; 
+    margin-bottom:15px 
+} 
+ 
+.history-title h2{ 
+    font-size:16px; 
+    font-weight:1000; 
+    color:var(--ink) 
+} 
+ 
+.history-title span{ 
+    display:block; 
+    margin-top:4px; 
+    color:#8193a6; 
+    font-size:10px; 
+    font-weight:800 
+} 
+ 
+.clear-history{ 
+    height:auto; 
+    padding:8px 12px; 
+    border-radius:11px; 
+    color:#a45261; 
+    background:#fff0f3; 
+    border:2px solid #ffc4cf; 
+    box-shadow:0 4px 0 #e8a1af; 
+    font-size:10px; 
+    font-weight:1000; 
+} 
+ 
+.clear-history:hover{ 
+    box-shadow:0 6px 0 #e8a1af 
+} 
+ 
+.table-wrapper{ 
+    width:100%; 
+    max-width:100%; 
+    overflow-x:hidden; 
+    overflow-y:visible; 
+    border-radius:21px; 
+    border:3px solid #cceaf6; 
+    background:#fff; 
+    box-shadow: 
+        0 7px 0 #9fc9da, 
+        0 13px 23px rgba(37,50,74,.12); 
+} 
+ 
+table{ 
+    width:100%; 
+    max-width:100%; 
+    min-width:0; 
+    table-layout:fixed; 
+    border-collapse:collapse; 
+} 
+ 
+thead{ 
+    background:linear-gradient(145deg,#e3f7ff,#c6ebfa) 
+} 
+ 
+th{ 
+    padding:12px 7px; 
+    text-align:center; 
+    color:#47728d; 
+    font-size:9px; 
+    text-transform:uppercase; 
+    letter-spacing:.5px; 
+    font-weight:1000; 
+    overflow-wrap:anywhere; 
+    word-break:break-word; 
+} 
+ 
+td{ 
+    padding:12px 7px; 
+    border-top:2px dashed #e0eff5; 
+    color:#5c7084; 
+    font-size:11px; 
+    font-weight:800; 
+    vertical-align:middle; 
+    overflow-wrap:anywhere; 
+    word-break:break-word; 
+} 
+ 
+th:nth-child(1), 
+td:nth-child(1){ 
+    width:7%; 
+    text-align:center; 
+} 
+ 
+th:nth-child(2), 
+td:nth-child(2){ 
+    width:35%; 
+} 
+ 
+th:nth-child(3), 
+td:nth-child(3){ 
+    width:13%; 
+    text-align:center; 
+} 
+ 
+th:nth-child(4), 
+td:nth-child(4){ 
+    width:15%; 
+    text-align:center; 
+} 
+ 
+th:nth-child(5), 
+td:nth-child(5){ 
+    width:17%; 
+} 
+ 
+th:nth-child(6), 
+td:nth-child(6){ 
+    width:13%; 
+    text-align:center; 
+} 
+ 
+.history-number{ 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center; 
+    padding:5px 8px; 
+    min-width:28px; 
+    max-width:100%; 
+    border-radius:10px; 
+    color:#fff; 
+    background:#69b8e5; 
+    box-shadow:0 3px 0 #438db6; 
+    font-size:10px; 
+    font-weight:1000; 
+} 
+ 
+.numbers-cell{ 
+    display:block; 
+    width:100%; 
+    max-width:100%; 
+    color:#425a70; 
+    font-family:"Consolas","Courier New",monospace; 
+    font-size:11px; 
+    font-weight:800; 
+    line-height:1.5; 
+    white-space:normal; 
+    overflow-wrap:anywhere; 
+    word-break:break-word; 
+} 
+ 
+.pcs-cell{ 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center; 
+    min-width:30px; 
+    max-width:100%; 
+    padding:5px 7px; 
+    border-radius:9px; 
+    background:#e5f8ed; 
+    color:#42a56e; 
+    border:2px solid #bde8ce; 
+    font-weight:1000; 
+} 
+ 
+.total-cell{ 
+    color:#e89a25; 
+    font-weight:1000; 
+    font-size:12px; 
+    overflow-wrap:anywhere; 
+    word-break:break-word; 
+} 
+ 
+.history-edit-input{ 
+    display:block; 
+    width:100%; 
+    max-width:100%; 
+    min-width:0; 
+    height:34px; 
+    padding:5px 6px; 
+    border-radius:9px; 
+    border:2px solid #69b8e5; 
+    outline:none; 
+    background:#f7fdff; 
+    color:var(--ink); 
+    font-size:11px; 
+    font-family:"Consolas","Courier New",monospace; 
+    font-weight:800; 
+    box-shadow:0 0 0 3px rgba(105,184,229,.1); 
+} 
+ 
+.history-edit-input:focus{ 
+    border-color:#ffc857; 
+    box-shadow:0 0 0 3px rgba(255,200,87,.16) 
+} 
+ 
+.history-edit-input::-webkit-inner-spin-button, 
+.history-edit-input::-webkit-outer-spin-button{ 
+    -webkit-appearance:none; 
+    margin:0 
+} 
+ 
+.history-edit-input[type=number]{ 
+    -moz-appearance:textfield 
+} 
+ 
+.connected-field{ 
+    opacity:.82; 
+    cursor:not-allowed; 
+    border-color:#8bd1a9 
+} 
+ 
+.action-cell{ 
+    min-width:0; 
+    width:100%; 
+    text-align:center 
+} 
+ 
+.edit-history-button, 
+.save-history-button, 
+.delete-history-button{ 
+    width:100%; 
+    max-width:100%; 
+    height:34px; 
+    min-width:0; 
+    padding:6px 5px; 
+    border-radius:10px; 
+    font-size:10px; 
+    font-weight:1000; 
+    white-space:normal; 
+    line-height:1.1; 
+} 
+ 
+.edit-history-button{ 
+    color:#fff; 
+    background:#6bb7df; 
+    box-shadow:0 4px 0 #438db6 
+} 
+ 
+.edit-history-button:hover{ 
+    box-shadow:0 6px 0 #438db6 
+} 
+ 
+.save-history-button{ 
+    color:#fff; 
+    background:#67c88f; 
+    box-shadow:0 4px 0 #469b6b 
+} 
+ 
+.save-history-button:hover{ 
+    box-shadow:0 6px 0 #469b6b 
+} 
+ 
+.delete-history-button{ 
+    margin-top:7px; 
+    color:#fff; 
+    background:#ef7189; 
+    box-shadow:0 4px 0 #c64d68; 
+} 
+ 
+.delete-history-button:hover{ 
+    box-shadow:0 6px 0 #c64d68 
+} 
+ 
+.color-cell{ 
+    min-width:0; 
+    width:100%; 
+} 
+ 
+.color-input{ 
+    display:block; 
+    width:100%; 
+    max-width:100%; 
+    min-width:0; 
+    height:34px; 
+    padding:0 7px; 
+    border-radius:10px; 
+    border:2px solid #cce8f2; 
+    background:#fbfeff; 
+    color:var(--ink); 
+    font-size:11px; 
+    outline:none; 
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.7); 
+    font-weight:800; 
+} 
+ 
+.color-input::placeholder{ 
+    color:#91a5b4 
+} 
+ 
+.color-input:focus{ 
+    border-color:#ffc857; 
+    box-shadow:0 0 0 3px rgba(255,200,87,.12) 
+} 
+ 
+.print-history-area{ 
+    margin-top:19px; 
+    width:100%; 
+    display:flex; 
+    flex-direction:column; 
+    gap:11px; 
+} 
+ 
+.print-history-button{ 
+    width:100%; 
+    height:59px; 
+    border-radius:17px; 
+    color:#ffffff; 
+    background:#111111; 
+    box-shadow: 
+        0 7px 0 #000000, 
+        0 12px 20px rgba(0,0,0,.22); 
+    position:relative; 
+    font-size:13px; 
+    font-weight:1000; 
+} 
+ 
+.print-history-button:hover{ 
+    box-shadow: 
+        0 9px 0 #000000, 
+        0 14px 22px rgba(0,0,0,.28); 
+} 
+ 
+.print-history-button:disabled{ 
+    opacity:.45; 
+    cursor:not-allowed; 
+    transform:none!important; 
+    filter:grayscale(.35); 
+    box-shadow:0 5px 0 #000000!important; 
+} 
+ 
+.print-history-button:disabled:hover{ 
+    transform:none!important; 
+    filter:grayscale(.35); 
+    box-shadow:0 5px 0 #000000!important; 
+} 
+ 
+.export-excel-button{ 
+    width:100%; 
+    height:55px; 
+    border-radius:17px; 
+    color:#ffffff; 
+    background:linear-gradient( 
+        145deg, 
+        #49c77a, 
+        #249b58 
+    ); 
+    box-shadow: 
+        0 7px 0 #197541, 
+        0 12px 20px rgba(36,155,88,.22); 
+    font-size:13px; 
+    font-weight:1000; 
+} 
+ 
+.export-excel-button:hover{ 
+    box-shadow: 
+        0 10px 0 #197541, 
+        0 16px 24px rgba(36,155,88,.28); 
+} 
+ 
+.export-excel-button:disabled{ 
+    opacity:.45; 
+    cursor:not-allowed; 
+    transform:none!important; 
+    filter:grayscale(.35); 
+    box-shadow:0 5px 0 #197541!important; 
+} 
+ 
+.empty-history{ 
+    padding:33px!important; 
+    text-align:center; 
+    color:#93a6b4; 
+    font-size:11px; 
+    font-weight:800 
+} 
+ 
+.footer{ 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    gap:7px; 
+    margin-top:14px; 
+    padding:10px 14px; 
+    border:2px dashed #cfe8f3; 
+    border-radius:14px; 
+    background:linear-gradient(145deg,#f5fcff,#edf9fd); 
+    color:#71889a; 
+    font-size:10px; 
+    font-weight:800; 
+    box-shadow:0 3px 0 #d5e9f1; 
+} 
+ 
+.enter-key{ 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center; 
+    min-width:40px; 
+    padding:4px 8px; 
+    margin:0 4px; 
+    border-radius:7px; 
+    background:#eaf7fc; 
+    box-shadow:0 3px 0 #b8d9e5; 
+    color:#56748a; 
+    font-family:"Consolas",monospace; 
+    font-size:9px; 
+    font-weight:1000; 
+} 
+ 
+@media(max-width:700px){ 
+ 
+    body{ 
+        padding:15px; 
+        align-items:flex-start; 
+        padding-top:20px 
+    } 
+ 
+    .container{ 
+        padding:22px; 
+        border-radius:29px 
+    } 
+ 
+} 
+ 
+@media(max-width:600px){ 
+ 
+    body{ 
+        padding:9px; 
+        padding-top:12px 
+    } 
+ 
+    .container{ 
+        width:100%; 
+        padding:17px; 
+        border-radius:25px 
+    } 
+ 
+    .header{ 
+        align-items:center; 
+        margin-bottom:20px 
+    } 
+ 
+    .icon{ 
+        width:46px; 
+        height:46px; 
+        border-radius:14px; 
+        font-size:12px 
+    } 
+ 
+    .title{ 
+        gap:11px 
+    } 
+ 
+    .title h1{ 
+        font-size:16px 
+    } 
+ 
+    .title p{ 
+        font-size:9px 
+    } 
+ 
+    .data-counter{ 
+        min-width:64px; 
+        padding:7px 8px; 
+        border-radius:13px; 
+    } 
+ 
+    .data-counter-label{ 
+        font-size:7px; 
+    } 
+ 
+    .data-counter-value{ 
+        font-size:17px; 
+    } 
+ 
+    .input-list{ 
+        max-height:300px 
+    } 
+ 
+    .input-row{ 
+        gap:8px; 
+        margin-bottom:10px 
+    } 
+ 
+    .number{ 
+        width:36px; 
+        height:48px 
+    } 
+ 
+    .input-wrapper input{ 
+        height:48px; 
+        border-radius:14px; 
+        padding-left:14px; 
+        font-size:15px 
+    } 
+ 
+    .delete-input-button{ 
+        width:38px; 
+        height:48px; 
+        border-radius:13px; 
+        font-size:15px; 
+    } 
+ 
+    .button-area{ 
+        grid-template-columns:1fr 1fr; 
+        gap:10px 
+    } 
+ 
+    button{ 
+        height:50px 
+    } 
+ 
+    .print-history-button{ 
+        height:56px 
+    } 
+ 
+    .export-excel-button{ 
+        height:53px; 
+    } 
+ 
+    .result{ 
+        padding:17px; 
+        border-radius:17px 
+    } 
+ 
+    .result strong{ 
+        font-size:25px 
+    } 
+ 
+    .history{ 
+        margin-top:24px; 
+        padding-top:20px 
+    } 
+ 
+    .history-header{ 
+        align-items:flex-start 
+    } 
+ 
+    .clear-history{ 
+        padding:7px 9px 
+    } 
+ 
+    .table-wrapper{ 
+        overflow-x:hidden; 
+        width:100%; 
+        max-width:100%; 
+    } 
+ 
+    table{ 
+        width:100%; 
+        min-width:0; 
+        table-layout:fixed; 
+    } 
+ 
+    th{ 
+        padding:9px 3px; 
+        font-size:7px; 
+        letter-spacing:0; 
+    } 
+ 
+    td{ 
+        padding:9px 3px; 
+        font-size:9px; 
+    } 
+ 
+    th:nth-child(1), 
+    td:nth-child(1){ 
+        width:7%; 
+    } 
+ 
+    th:nth-child(2), 
+    td:nth-child(2){ 
+        width:31%; 
+    } 
+ 
+    th:nth-child(3), 
+    td:nth-child(3){ 
+        width:13%; 
+    } 
+ 
+    th:nth-child(4), 
+    td:nth-child(4){ 
+        width:15%; 
+    } 
+ 
+    th:nth-child(5), 
+    td:nth-child(5){ 
+        width:20%; 
+    } 
+ 
+    th:nth-child(6), 
+    td:nth-child(6){ 
+        width:14%; 
+    } 
+ 
+    .history-number{ 
+        min-width:22px; 
+        padding:4px 5px; 
+        font-size:8px; 
+        border-radius:7px; 
+    } 
+ 
+    .numbers-cell{ 
+        font-size:8px; 
+        line-height:1.45; 
+        overflow-wrap:anywhere; 
+        word-break:break-word; 
+    } 
+ 
+    .pcs-cell{ 
+        min-width:22px; 
+        padding:4px 4px; 
+        font-size:8px; 
+        border-radius:7px; 
+    } 
+ 
+    .total-cell{ 
+        font-size:9px; 
+    } 
+ 
+    .color-input{ 
+        width:100%; 
+        max-width:100%; 
+        min-width:0; 
+        height:30px; 
+        padding:0 4px; 
+        font-size:8px; 
+    } 
+ 
+    .history-edit-input{ 
+        width:100%; 
+        max-width:100%; 
+        min-width:0; 
+        height:30px; 
+        padding:4px; 
+        font-size:8px; 
+    } 
+ 
+    .edit-history-button, 
+    .save-history-button, 
+    .delete-history-button{ 
+        width:100%; 
+        min-width:0; 
+        height:30px; 
+        padding:4px 2px; 
+        font-size:7px; 
+        border-radius:7px; 
+    } 
+ 
+    .delete-history-button{ 
+        margin-top:5px; 
+    } 
+ 
+    .footer{ 
+        margin-top:12px; 
+        padding:9px 10px; 
+        font-size:8px; 
+        gap:5px; 
+    } 
+} 
+ 
+@media(max-width:380px){ 
+ 
+    .container{ 
+        padding:14px; 
+        border-radius:22px 
+    } 
+ 
+    .title{ 
+        gap:8px 
+    } 
+ 
+    .icon{ 
+        width:39px; 
+        height:39px; 
+        font-size:10px 
+    } 
+ 
+    .title h1{ 
+        font-size:14px 
+    } 
+ 
+    .title p{ 
+        font-size:8px 
+    } 
+ 
+    .data-counter{ 
+        min-width:55px; 
+        padding:6px 5px; 
+    } 
+ 
+    .data-counter-label{ 
+        font-size:6px; 
+    } 
+ 
+    .data-counter-value{ 
+        font-size:15px; 
+    } 
+ 
+    .number{ 
+        width:33px 
+    } 
+ 
+    .delete-input-button{ 
+        width:34px; 
+        height:45px; 
+        font-size:13px; 
+    } 
+ 
+    th{ 
+        padding:8px 2px; 
+        font-size:6.5px; 
+    } 
+ 
+    td{ 
+        padding:8px 2px; 
+        font-size:8px; 
+    } 
+ 
+    .numbers-cell{ 
+        font-size:7px; 
+    } 
+ 
+    .pcs-cell{ 
+        font-size:7px; 
+        padding:3px 3px; 
+    } 
+ 
+    .total-cell{ 
+        font-size:8px; 
+    } 
+ 
+    .color-input, 
+    .history-edit-input{ 
+        height:28px; 
+        font-size:7px; 
+        padding:2px 3px; 
+    } 
+ 
+    .edit-history-button, 
+    .save-history-button, 
+    .delete-history-button{ 
+        height:28px; 
+        font-size:6.5px; 
+        padding:3px 1px; 
+    } 
+ 
+    .delete-history-button{ 
+        margin-top:4px; 
+    } 
+ 
+    .export-excel-button{ 
+        height:50px; 
+        font-size:11px; 
+    } 
+} 
+ 
+.history table th, 
+.history table td{ 
+    text-align:center; 
+    vertical-align:middle; 
+} 
+ 
+.history table td .numbers-cell{ 
+    display:block; 
+    width:100%; 
+    text-align:justify; 
+    text-align-last:center; 
+} 
+ 
+.history table td .history-edit-input, 
+.history table td .color-input{ 
+    text-align:center; 
+} 
+ 
+@media print{ 
+ 
+    @page{ 
+        size:A4 landscape; 
+        margin:12mm 
+    } 
+ 
+    *{ 
+        -webkit-print-color-adjust:exact!important; 
+        print-color-adjust:exact!important 
+    } 
+ 
+    html, 
+    body{ 
+        width:100%; 
+        min-height:auto; 
+        margin:0; 
+        padding:0; 
+        background:#fff!important; 
+        color:#111!important; 
+        overflow:visible!important 
+    } 
+ 
+    body{ 
+        display:block; 
+        font-family:Arial,Helvetica,sans-serif; 
+        perspective:none 
+    } 
+ 
+    body::before{ 
+        display:none!important 
+    } 
+ 
+    .container{ 
+        width:100%!important; 
+        max-width:none!important; 
+        padding:0!important; 
+        margin:0!important; 
+        border:none!important; 
+        border-radius:0!important; 
+        background:#fff!important; 
+        box-shadow:none!important; 
+        transform:none!important; 
+        backdrop-filter:none!important 
+    } 
+ 
+    .container::before, 
+    .container::after{ 
+        display:none!important 
+    } 
+ 
+    .header{ 
+        margin-bottom:12px!important; 
+        padding-bottom:8px; 
+        border-bottom:2px solid #222 
+    } 
+ 
+    .icon{ 
+        width:42px!important; 
+        height:42px!important; 
+        border-radius:8px!important; 
+        color:#111!important; 
+        background:#eee!important; 
+        border:1px solid #aaa!important; 
+        box-shadow:none!important; 
+        transform:none!important 
+    } 
+ 
+    .title h1{ 
+        color:#111!important; 
+        font-size:18px!important 
+    } 
+ 
+    .title p{ 
+        color:#555!important 
+    } 
+ 
+    .data-counter{ 
+        display:none!important 
+    } 
+ 
+    .input-list, 
+    .button-area, 
+    .result, 
+    .footer, 
+    .clear-history, 
+    .action-cell, 
+    .print-history-area, 
+    .header .title p{ 
+        display:none!important 
+    } 
+ 
+    thead th:last-child{ 
+        display:none!important 
+    } 
+ 
+    .history{ 
+        margin-top:10px!important; 
+        padding-top:0!important; 
+        border-top:none!important 
+    } 
+ 
+    .history-header{ 
+        margin-bottom:8px!important 
+    } 
+ 
+    .history-title h2{ 
+        color:#111!important; 
+        font-size:16px!important 
+    } 
+ 
+    .history-title span{ 
+        color:#555!important 
+    } 
+ 
+    .table-wrapper{ 
+        width:100%!important; 
+        overflow:visible!important; 
+        border:1px solid #222!important; 
+        border-radius:0!important; 
+        background:#fff!important; 
+        box-shadow:none!important 
+    } 
+ 
+    table{ 
+        width:100%!important; 
+        min-width:0!important; 
+        table-layout:fixed!important; 
+        border-collapse:collapse!important; 
+        color:#111!important 
+    } 
+ 
+    thead{ 
+        display:table-header-group 
+    } 
+ 
+    th, 
+    td{ 
+        border:1px solid #444!important; 
+        color:#111!important; 
+        background:#fff!important; 
+        vertical-align:middle!important; 
+        padding:7px 8px!important; 
+        font-size:10px!important; 
+        line-height:1.35!important 
+    } 
+ 
+    th{ 
+        background:#e9e9e9!important; 
+        font-size:10px!important; 
+        font-weight:900!important; 
+        text-align:center!important 
+    } 
+ 
+    th:nth-child(1), 
+    td:nth-child(1){ 
+        width:7%; 
+        text-align:center 
+    } 
+ 
+    th:nth-child(2), 
+    td:nth-child(2){ 
+        width:48%; 
+        text-align:center!important 
+    } 
+ 
+    th:nth-child(3), 
+    td:nth-child(3){ 
+        width:12%; 
+        text-align:center 
+    } 
+ 
+    th:nth-child(4), 
+    td:nth-child(4){ 
+        width:15%; 
+        text-align:center 
+    } 
+ 
+    th:nth-child(5), 
+    td:nth-child(5){ 
+        width:18%; 
+        text-align:center 
+    } 
+ 
+    .history-number, 
+    .pcs-cell{ 
+        display:inline-flex; 
+        color:#111!important; 
+        background:#fff!important; 
+        border:none!important; 
+        box-shadow:none!important; 
+        padding:0!important; 
+        min-width:0!important; 
+        border-radius:0!important; 
+        font-size:10px!important 
+    } 
+ 
+    .numbers-cell{ 
+        display:block!important; 
+        width:100%!important; 
+        color:#111!important; 
+        font-family:Arial,Helvetica,sans-serif!important; 
+        font-size:10px!important; 
+        font-weight:700!important; 
+        text-align:justify!important; 
+        text-align-last:center!important; 
+        white-space:normal!important; 
+        overflow-wrap:anywhere!important; 
+        word-break:break-word!important; 
+        line-height:1.55!important; 
+        padding:0 8px!important 
+    } 
+ 
+    .total-cell{ 
+        color:#111!important; 
+        font-size:10px!important; 
+        font-weight:900!important 
+    } 
+ 
+    .color-cell{ 
+        min-width:0!important; 
+        text-align:center!important 
+    } 
+ 
+    .color-input{ 
+        display:block!important; 
+        width:100%!important; 
+        height:auto!important; 
+        padding:0!important; 
+        margin:0 auto!important; 
+        border:none!important; 
+        border-radius:0!important; 
+        background:transparent!important; 
+        box-shadow:none!important; 
+        color:#111!important; 
+        text-align:center!important; 
+        font-size:10px!important; 
+        font-family:Arial,Helvetica,sans-serif!important; 
+        font-weight:700!important; 
+        outline:none!important 
+    } 
+ 
+    .color-input::placeholder{ 
+        color:#111!important; 
+        opacity:1!important; 
+        text-align:center!important 
+    } 
+ 
+    .empty-history{ 
+        padding:15px!important; 
+        color:#555!important 
+    } 
+ 
+    tr{ 
+        page-break-inside:avoid; 
+        break-inside:avoid 
+    } 
+} 
+ 
+@media print{ 
+ 
+    .history table th, 
+    .history table td{ 
+        text-align:center!important; 
+        vertical-align:middle!important; 
+    } 
+ 
+    .history table td .numbers-cell{ 
+        text-align:justify!important; 
+        text-align-last:center!important; 
+    } 
+ 
+    .history table td .color-input, 
+    .history table td .history-edit-input{ 
+        text-align:center!important; 
+    } 
+} 
+ 
+</style> 
+</head> 
+ 
+<body> 
+ 
+<div class="container"> 
+ 
+    <div class="header"> 
+ 
+        <div class="title"> 
+ 
+            <div class="icon"> 
+                SNP 
+            </div> 
+ 
+            <div> 
+ 
+                <h1> 
+                    PT SION NIAGA PERKASA 
+                </h1> 
+ 
+                <p> 
+                    Silahkan input yard sesuai dengan yang diberikan mandor. 
+                </p> 
+ 
+            </div> 
+ 
+        </div> 
+ 
+        <div class="data-counter" id="dataCounter"> 
+ 
+            <span class="data-counter-label"> 
+                Data 
+            </span> 
+ 
+            <span class="data-counter-value" id="dataCount"> 
+                0 
+            </span> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+    <div class="input-list" id="inputList"></div> 
+ 
+    <div class="button-area"> 
+ 
+        <button 
+            type="button" 
+            class="reset-button" 
+            onclick="resetInputData()" 
+            disabled 
+        > 
+            Reset Data 
+        </button> 
+ 
+        <button 
+            type="button" 
+            class="save-button" 
+            onclick="saveHistory()" 
+            disabled 
+        > 
+            Simpan ke History 
+        </button> 
+ 
+    </div> 
+ 
+    <div class="footer"> 
+ 
+        <span class="enter-key"> 
+            Enter 
+        </span> 
+ 
+        <span> 
+            Tekan Enter untuk menambah kolom berikutnya 
+        </span> 
+ 
+    </div> 
+ 
+    <div class="result" id="result"> 
+ 
+        <div class="result-label"> 
+ 
+            <span> 
+                Total Yard 
+            </span> 
+ 
+            <small> 
+                Jumlah seluruh angka 
+            </small> 
+ 
+        </div> 
+ 
+        <strong id="total"> 
+            0 
+        </strong> 
+ 
+    </div> 
+ 
+    <div class="history"> 
+ 
+        <div class="history-header"> 
+ 
+            <div class="history-title"> 
+ 
+                <h2> 
+                    History 
+                </h2> 
+ 
+                <span> 
+                    Riwayat Input Yard 
+                </span> 
+ 
+            </div> 
+ 
+            <button 
+                type="button" 
+                class="clear-history" 
+                onclick="clearHistory()" 
+                disabled 
+            > 
+                Hapus History 
+            </button> 
+ 
+        </div> 
+ 
+        <div class="table-wrapper"> 
+ 
+            <table> 
+ 
+                <thead> 
+ 
+                    <tr> 
+ 
+                        <th>No</th> 
+ 
+                        <th class="yard-header"> 
+                            YARD 
+                        </th> 
+ 
+                        <th> 
+                            Total PCS 
+                        </th> 
+ 
+                        <th> 
+                            Total Yard 
+                        </th> 
+ 
+                        <th> 
+                            Warna 
+                        </th> 
+ 
+                        <th> 
+                            EDIT DATA 
+                        </th> 
+ 
+                    </tr> 
+ 
+                </thead> 
+ 
+                <tbody id="historyBody"> 
+ 
+                    <tr id="emptyHistory"> 
+ 
+                        <td 
+                            colspan="6" 
+                            class="empty-history" 
+                        > 
+                            Belum ada history 
+                        </td> 
+ 
+                    </tr> 
+ 
+                </tbody> 
+ 
+            </table> 
+ 
+        </div> 
+ 
+        <div class="print-history-area"> 
+ 
+            <button 
+                type="button" 
+                class="export-excel-button" 
+                id="exportExcelButton" 
+                onclick="exportHistoryToExcel()" 
+                disabled 
+            > 
+                &nbsp; EXPORT EXCEL 
+            </button> 
+ 
+            <button 
+                type="button" 
+                class="print-history-button" 
+                id="printHistoryButton" 
+                onclick="printHistory()" 
+                disabled 
+            > 
+                &nbsp; PRINT HISTORY 
+            </button> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+</div> 
+ 
+<script> 
+ 
+const inputList = 
+    document.getElementById("inputList"); 
+ 
+const result = 
+    document.getElementById("result"); 
+ 
+const total = 
+    document.getElementById("total"); 
+ 
+const historyBody = 
+    document.getElementById("historyBody"); 
+ 
+const dataCount = 
+    document.getElementById("dataCount"); 
+ 
+const dataCounter = 
+    document.getElementById("dataCounter"); 
+ 
+const exportExcelButton = 
+    document.getElementById("exportExcelButton"); 
+ 
+const printHistoryButton = 
+    document.getElementById("printHistoryButton"); 
+ 
+const resetButton = 
+    document.querySelector(".reset-button"); 
+ 
+const saveButton = 
+    document.querySelector(".save-button"); 
+ 
+const clearHistoryButton = 
+    document.querySelector(".clear-history"); 
+ 
+let number = 0; 
+ 
+ 
+/* ========================================================= 
+   CEK ANGKA VALID 
+   0 / 00 / 000 / 0000 TIDAK VALID 
+========================================================= */ 
+ 
+function isValidYardValue(value){ 
+ 
+    if( 
+        value === null || 
+        value === undefined 
+    ){ 
+ 
+        return false; 
+ 
+    } 
+ 
+    const text = 
+        String(value).trim(); 
+ 
+    if(text === ""){ 
+ 
+        return false; 
+ 
+    } 
+ 
+    const numberValue = 
+        Number(text); 
+ 
+    if( 
+        !Number.isFinite(numberValue) 
+    ){ 
+ 
+        return false; 
+ 
+    } 
+ 
+    /* 
+       Semua angka yang hasilnya 0 dianggap tidak valid. 
+       Jadi: 
+       0 
+       00 
+       000 
+       0000 
+       0.0 
+       0.00 
+       000.000 
+       tidak akan terbaca sebagai data. 
+    */ 
+ 
+    if( 
+        numberValue <= 0 
+    ){ 
+ 
+        return false; 
+ 
+    } 
+ 
+    return true; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE JUMLAH DATA 
+========================================================= */ 
+ 
+function updateDataCounter(){ 
+ 
+    const inputs = 
+        inputList.querySelectorAll("input"); 
+ 
+    let count = 0; 
+ 
+    inputs.forEach( 
+        input => { 
+ 
+            if( 
+                isValidYardValue(input.value) 
+            ){ 
+ 
+                count++; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+    dataCount.textContent = 
+        count; 
+ 
+    if(count > 0){ 
+ 
+        dataCounter.classList.add("active"); 
+ 
+    }else{ 
+ 
+        dataCounter.classList.remove("active"); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE STATUS PRINT 
+========================================================= */ 
+ 
+function updatePrintButton(){ 
+ 
+    if(!printHistoryButton){ 
+        return; 
+    } 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    const editingRow = 
+        historyBody.querySelector( 
+            "tr.editing" 
+        ); 
+ 
+    if( 
+        rows.length === 0 || 
+        editingRow 
+    ){ 
+ 
+        printHistoryButton.disabled = true; 
+ 
+    }else{ 
+ 
+        printHistoryButton.disabled = false; 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE STATUS EXPORT EXCEL 
+========================================================= */ 
+ 
+function updateExportButton(){ 
+ 
+    if(!exportExcelButton){ 
+        return; 
+    } 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    const editingRow = 
+        historyBody.querySelector( 
+            "tr.editing" 
+        ); 
+ 
+    if( 
+        rows.length === 0 || 
+        editingRow 
+    ){ 
+ 
+        exportExcelButton.disabled = true; 
+ 
+    }else{ 
+ 
+        exportExcelButton.disabled = false; 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE STATUS TOMBOL AKSI 
+========================================================= */ 
+ 
+function updateActionButtons(){ 
+ 
+    if(resetButton){ 
+ 
+        const inputs = 
+            inputList.querySelectorAll("input"); 
+ 
+        let hasInputData = false; 
+ 
+        inputs.forEach( 
+            input => { 
+ 
+                if( 
+                    isValidYardValue(input.value) 
+                ){ 
+ 
+                    hasInputData = true; 
+ 
+                } 
+ 
+            } 
+        ); 
+ 
+        resetButton.disabled = 
+            !hasInputData; 
+ 
+    } 
+ 
+    if(saveButton){ 
+ 
+        const inputs = 
+            inputList.querySelectorAll("input"); 
+ 
+        let hasInputData = false; 
+ 
+        inputs.forEach( 
+            input => { 
+ 
+                if( 
+                    isValidYardValue(input.value) 
+                ){ 
+ 
+                    hasInputData = true; 
+ 
+                } 
+ 
+            } 
+        ); 
+ 
+        saveButton.disabled = 
+            !hasInputData; 
+ 
+    } 
+ 
+    if(clearHistoryButton){ 
+ 
+        const rows = 
+            historyBody.querySelectorAll( 
+                "tr:not(#emptyHistory)" 
+            ); 
+ 
+        clearHistoryButton.disabled = 
+            rows.length === 0; 
+ 
+    } 
+ 
+} 
+ 
+ 
+function updateHistoryButtons(){ 
+ 
+    updateActionButtons(); 
+ 
+    updatePrintButton(); 
+ 
+    updateExportButton(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   VALIDASI INPUT YARD 
+========================================================= */ 
+ 
+function sanitizeYardInput(input){ 
+
+    let value = input.value; 
+
+    /* 
+       Desimal boleh menggunakan titik atau koma. 
+       Keduanya dinormalisasi menjadi titik agar 
+       perhitungan JavaScript tetap konsisten. 
+    */ 
+    value = 
+        value.replace(/,/g,"."); 
+
+    value = 
+        value.replace(/[^0-9.]/g,""); 
+
+    const firstDot = 
+        value.indexOf("."); 
+
+    if(firstDot !== -1){ 
+
+        value = 
+            value.substring( 
+                0, 
+                firstDot + 1 
+            ) + 
+            value 
+                .substring(firstDot + 1) 
+                .replace(/\./g,""); 
+
+    } 
+
+    input.value = 
+        value; 
+
+} 
+ 
+ 
+/* ========================================================= 
+   TAMBAH INPUT 
+========================================================= */ 
+ 
+function addInput(focusInput = true){ 
+ 
+    number++; 
+ 
+    const row = 
+        document.createElement("div"); 
+ 
+    row.className = 
+        "input-row"; 
+ 
+    row.innerHTML = ` 
+ 
+        <div class="number"> 
+            ${number} 
+        </div> 
+ 
+        <div class="input-wrapper"> 
+ 
+            <input 
+                type="text" 
+                inputmode="decimal" 
+                placeholder="Input Yard" 
+                autocomplete="off" 
+                onkeydown="return allowYardKey(event)" 
+                oninput="handleYardInput(this)" 
+            > 
+ 
+            <span class="check"> 
+                ✓ 
+            </span> 
+ 
+        </div> 
+ 
+        <button 
+            type="button" 
+            class="delete-input-button" 
+            onclick="removeInput(this)" 
+            title="Hapus kolom" 
+        > 
+            × 
+        </button> 
+ 
+    `; 
+ 
+    inputList.appendChild(row); 
+ 
+    updateInputNumbers(); 
+ 
+    const input = 
+        row.querySelector("input"); 
+ 
+ 
+    input.addEventListener( 
+        "keydown", 
+        function(event){ 
+ 
+            if( 
+                event.key === "e" || 
+                event.key === "E" || 
+                event.key === "+" || 
+                event.key === "-" 
+            ){ 
+ 
+                event.preventDefault(); 
+ 
+                return false; 
+ 
+            } 
+ 
+            if( 
+                event.key === "Enter" 
+            ){ 
+ 
+                event.preventDefault(); 
+ 
+                /* 
+                   Input 0, 00, 000 dan seterusnya 
+                   tidak dianggap sebagai data. 
+                */ 
+ 
+                if( 
+                    !isValidYardValue(this.value) 
+                ){ 
+ 
+                    return; 
+ 
+                } 
+ 
+                const inputs = 
+                    inputList.querySelectorAll( 
+                        "input" 
+                    ); 
+ 
+                const lastInput = 
+                    inputs[ 
+                        inputs.length - 1 
+                    ]; 
+ 
+                if( 
+                    this === lastInput 
+                ){ 
+ 
+                    addInput(true); 
+ 
+                }else{ 
+ 
+                    const index = 
+                        Array 
+                            .from(inputs) 
+                            .indexOf(this); 
+ 
+                    if( 
+                        inputs[index + 1] 
+                    ){ 
+ 
+                        inputs[ 
+                            index + 1 
+                        ].focus(); 
+ 
+                    } 
+ 
+                } 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+ 
+    input.addEventListener( 
+        "input", 
+        function(){ 
+ 
+            sanitizeYardInput(this); 
+ 
+            if( 
+                isValidYardValue(this.value) 
+            ){ 
+ 
+                this.classList.add("valid"); 
+ 
+            }else{ 
+ 
+                this.classList.remove("valid"); 
+ 
+            } 
+ 
+            calculateTotal(); 
+ 
+        } 
+    ); 
+ 
+ 
+    input.addEventListener( 
+        "paste", 
+        function(){ 
+ 
+            setTimeout( 
+                () => { 
+ 
+                    sanitizeYardInput(this); 
+ 
+                    if( 
+                        isValidYardValue(this.value) 
+                    ){ 
+ 
+                        this.classList.add("valid"); 
+ 
+                    }else{ 
+ 
+                        this.classList.remove("valid"); 
+ 
+                    } 
+ 
+                    calculateTotal(); 
+ 
+                }, 
+                0 
+            ); 
+ 
+        } 
+    ); 
+ 
+ 
+    if(focusInput){ 
+ 
+        setTimeout( 
+            () => input.focus(), 
+            50 
+        ); 
+ 
+    } 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   BLOKIR KEYBOARD NON ANGKA 
+========================================================= */ 
+ 
+function allowYardKey(event){ 
+ 
+    const allowedKeys = [ 
+ 
+        "Backspace", 
+        "Delete", 
+        "Tab", 
+        "Escape", 
+        "Enter", 
+        "ArrowLeft", 
+        "ArrowRight", 
+        "ArrowUp", 
+        "ArrowDown", 
+        "Home", 
+        "End" 
+ 
+    ]; 
+ 
+    if( 
+        allowedKeys.includes(event.key) 
+    ){ 
+ 
+        return true; 
+ 
+    } 
+ 
+    if( 
+        /^[0-9]$/.test(event.key) 
+    ){ 
+ 
+        return true; 
+ 
+    } 
+ 
+    if( 
+        event.key === "." || 
+        event.key === "," 
+    ){ 
+ 
+        if( 
+            event.target.value.includes(".") || 
+            event.target.value.includes(",") 
+        ){ 
+ 
+            event.preventDefault(); 
+ 
+            return false; 
+ 
+        } 
+ 
+        return true; 
+ 
+    } 
+ 
+    event.preventDefault(); 
+ 
+    return false; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HANDLE INPUT YARD 
+========================================================= */ 
+ 
+function handleYardInput(input){ 
+ 
+    sanitizeYardInput(input); 
+ 
+    if( 
+        isValidYardValue(input.value) 
+    ){ 
+ 
+        input.classList.add("valid"); 
+ 
+    }else{ 
+ 
+        input.classList.remove("valid"); 
+ 
+    } 
+ 
+    calculateTotal(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HAPUS INPUT 
+========================================================= */ 
+ 
+function removeInput(button){ 
+ 
+    const row = 
+        button.closest(".input-row"); 
+ 
+    if(!row){ 
+        return; 
+    } 
+ 
+    const rows = 
+        inputList.querySelectorAll( 
+            ".input-row" 
+        ); 
+ 
+    if( 
+        rows.length === 1 
+    ){ 
+ 
+        const input = 
+            row.querySelector("input"); 
+ 
+        if(input){ 
+ 
+            input.value = ""; 
+ 
+            input.classList.remove( 
+                "valid" 
+            ); 
+ 
+            input.focus(); 
+ 
+        } 
+ 
+        calculateTotal(); 
+ 
+        return; 
+ 
+    } 
+ 
+    row.remove(); 
+ 
+    updateInputNumbers(); 
+ 
+    calculateTotal(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE NOMOR INPUT 
+========================================================= */ 
+ 
+function updateInputNumbers(){ 
+ 
+    const rows = 
+        inputList.querySelectorAll( 
+            ".input-row" 
+        ); 
+ 
+    rows.forEach( 
+        (row,index) => { 
+ 
+            const numberElement = 
+                row.querySelector( 
+                    ".number" 
+                ); 
+ 
+            if(numberElement){ 
+ 
+                numberElement.textContent = 
+                    index + 1; 
+ 
+            } 
+ 
+            const deleteButton = 
+                row.querySelector( 
+                    ".delete-input-button" 
+                ); 
+ 
+            if(deleteButton){ 
+ 
+                deleteButton.disabled = 
+                    rows.length === 1; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HITUNG TOTAL 
+========================================================= */ 
+ 
+function calculateTotal(){ 
+ 
+    const inputs = 
+        inputList.querySelectorAll( 
+            "input" 
+        ); 
+ 
+    let sum = 0; 
+ 
+    let filled = 0; 
+ 
+    inputs.forEach( 
+        input => { 
+ 
+            const value = 
+                parseFloat( 
+                    input.value 
+                ); 
+ 
+            /* 
+               PENTING: 
+               0 tidak dihitung. 
+            */ 
+ 
+            if( 
+                Number.isFinite(value) && 
+                value > 0 
+            ){ 
+ 
+                sum += value; 
+ 
+                filled++; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+    total.textContent = 
+        formatNumber(sum); 
+ 
+    if( 
+        filled > 0 
+    ){ 
+ 
+        result.classList.add("show"); 
+ 
+    }else{ 
+ 
+        result.classList.remove("show"); 
+ 
+    } 
+ 
+    updateDataCounter(); 
+ 
+    updateActionButtons(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   SIMPAN HISTORY 
+========================================================= */ 
+ 
+function saveHistory(){ 
+ 
+    if(saveButton && saveButton.disabled){ 
+ 
+        return; 
+ 
+    } 
+ 
+    const inputs = 
+        inputList.querySelectorAll( 
+            "input" 
+        ); 
+ 
+    const values = []; 
+ 
+    inputs.forEach( 
+        input => { 
+ 
+            sanitizeYardInput(input); 
+ 
+            if( 
+                isValidYardValue(input.value) 
+            ){ 
+ 
+                const value = 
+                    parseFloat( 
+                        input.value 
+                    ); 
+ 
+                if( 
+                    Number.isFinite(value) && 
+                    value > 0 
+                ){ 
+ 
+                    values.push(value); 
+ 
+                } 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+    if( 
+        values.length === 0 
+    ){ 
+ 
+        alert( 
+            "Silakan masukkan angka yard lebih dari 0." 
+        ); 
+ 
+        return; 
+ 
+    } 
+ 
+    const totalYard = 
+        calculateYardTotal(values); 
+ 
+    const totalPCS = 
+        values.length; 
+ 
+    const empty = 
+        document.getElementById( 
+            "emptyHistory" 
+        ); 
+ 
+    if(empty){ 
+ 
+        empty.remove(); 
+ 
+    } 
+ 
+    const row = 
+        document.createElement("tr"); 
+ 
+    row.dataset.yards = 
+        JSON.stringify(values); 
+ 
+    row.innerHTML = ` 
+ 
+        <td> 
+ 
+            <span class="history-number"> 
+                0 
+            </span> 
+ 
+        </td> 
+ 
+        <td> 
+ 
+            <span class="numbers-cell"> 
+                ${formatYardDisplay(values)} 
+            </span> 
+ 
+        </td> 
+ 
+        <td> 
+ 
+            <span class="pcs-cell"> 
+                ${formatNumber(totalPCS)} 
+            </span> 
+ 
+        </td> 
+ 
+        <td> 
+ 
+            <span class="total-cell"> 
+                ${formatNumber(totalYard)} 
+            </span> 
+ 
+        </td> 
+ 
+        <td class="color-cell"> 
+ 
+            <input 
+                type="text" 
+                class="color-input" 
+                placeholder="Input warna" 
+                autocomplete="off" 
+            > 
+ 
+        </td> 
+ 
+        <td class="action-cell"> 
+ 
+            <button 
+                type="button" 
+                class="edit-history-button" 
+                onclick="editHistory(this)" 
+            > 
+                ✎ Edit 
+            </button> 
+ 
+            <button 
+                type="button" 
+                class="delete-history-button" 
+                onclick="deleteHistory(this)" 
+            > 
+                🗑 Hapus 
+            </button> 
+ 
+        </td> 
+ 
+    `; 
+ 
+    historyBody.appendChild(row); 
+ 
+    updateHistoryNumber(); 
+ 
+    updateHistoryButtons(); 
+ 
+    resetInput(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HITUNG TOTAL YARD 
+========================================================= */ 
+ 
+function calculateYardTotal(values){ 
+ 
+    let totalValue = 0; 
+ 
+    values.forEach( 
+        value => { 
+ 
+            const numberValue = 
+                Number(value); 
+ 
+            if( 
+                Number.isFinite(numberValue) && 
+                numberValue > 0 
+            ){ 
+ 
+                totalValue += 
+                    numberValue; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+    return totalValue; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   FORMAT YARD 
+========================================================= */ 
+ 
+function formatYardDisplay(values){ 
+ 
+    return "(" + 
+        values 
+            .map( 
+                value => 
+                    formatNumber(value) 
+            ) 
+            .join(", ") + 
+        ")"; 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   EDIT HISTORY 
+========================================================= */ 
+ 
+function editHistory(button){ 
+ 
+    const row = 
+        button.closest("tr"); 
+ 
+    if(!row){ 
+        return; 
+    } 
+ 
+    if( 
+        row.classList.contains("editing") 
+    ){ 
+        return; 
+    } 
+ 
+    row.classList.add("editing"); 
+ 
+    updateHistoryButtons(); 
+ 
+    let yards = []; 
+ 
+    try{ 
+ 
+        yards = 
+            JSON.parse( 
+                row.dataset.yards || "[]" 
+            ); 
+ 
+    }catch(error){ 
+ 
+        yards = []; 
+ 
+    } 
+ 
+    /* 
+       Bersihkan data lama yang bernilai 0 
+       jika ada data history dari versi sebelumnya. 
+    */ 
+ 
+    yards = 
+        yards.filter( 
+            value => 
+                Number.isFinite(Number(value)) && 
+                Number(value) > 0 
+        ); 
+ 
+ 
+    if( 
+        yards.length === 0 
+    ){ 
+ 
+        const yardElement = 
+            row.querySelector( 
+                ".numbers-cell" 
+            ); 
+ 
+        const yardText = 
+            yardElement 
+                ? yardElement.textContent 
+                    .replace(/^\(/, "") 
+                    .replace(/\)$/, "") 
+                    .trim() 
+                : ""; 
+ 
+        yards = 
+            parseYardText(yardText); 
+ 
+    } 
+ 
+ 
+    const yardCell = 
+        row.querySelector( 
+            ".numbers-cell" 
+        ); 
+ 
+    yardCell.innerHTML = ` 
+ 
+        <input 
+            type="text" 
+            class="history-edit-input yard-edit-input" 
+            value="${escapeHtmlAttribute( 
+                yards.join(" ") 
+            )}" 
+            autocomplete="off" 
+            spellcheck="false" 
+            inputmode="decimal" 
+        > 
+ 
+    `; 
+ 
+ 
+    const pcsCell = 
+        row.querySelector( 
+            ".pcs-cell" 
+        ); 
+ 
+    pcsCell.innerHTML = ` 
+ 
+        <input 
+            type="number" 
+            class="history-edit-input pcs-edit-input connected-field" 
+            value="${yards.length}" 
+            readonly 
+            title="Total PCS otomatis mengikuti jumlah YARD" 
+        > 
+ 
+    `; 
+ 
+ 
+    const totalCell = 
+        row.querySelector( 
+            ".total-cell" 
+        ); 
+ 
+    totalCell.innerHTML = ` 
+ 
+        <input 
+            type="number" 
+            step="any" 
+            class="history-edit-input total-yard-edit-input connected-field" 
+            value="${calculateYardTotal(yards)}" 
+            readonly 
+            title="Total Yard otomatis mengikuti jumlah YARD" 
+        > 
+ 
+    `; 
+ 
+ 
+    const yardInput = 
+        row.querySelector( 
+            ".yard-edit-input" 
+        ); 
+ 
+ 
+    yardInput.addEventListener( 
+        "keydown", 
+        function(event){ 
+ 
+            if( 
+                event.key === "Enter" 
+            ){ 
+ 
+                event.preventDefault(); 
+ 
+                saveEditedHistory( 
+                    row.querySelector( 
+                        ".save-history-button" 
+                    ) 
+                ); 
+ 
+                return; 
+ 
+            } 
+ 
+            const allowedKeys = [ 
+                "Backspace", 
+                "Delete", 
+                "Tab", 
+                "Escape", 
+                "ArrowLeft", 
+                "ArrowRight", 
+                "ArrowUp", 
+                "ArrowDown", 
+                "Home", 
+                "End", 
+                " " 
+            ]; 
+ 
+            if( 
+                allowedKeys.includes(event.key) 
+            ){ 
+ 
+                return; 
+ 
+            } 
+ 
+            if( 
+                /^[0-9]$/.test(event.key) 
+            ){ 
+ 
+                return; 
+ 
+            } 
+ 
+            if( 
+                event.key === "." || 
+                event.key === "," || 
+                event.key === ";" 
+            ){ 
+ 
+                return; 
+ 
+            } 
+ 
+            event.preventDefault(); 
+ 
+        } 
+    ); 
+ 
+ 
+    yardInput.addEventListener( 
+        "input", 
+        function(){ 
+ 
+            this.value = 
+                this.value 
+                    .replace(/,/g,".") 
+                    .replace(/[^0-9.;\s]/g,""); 
+ 
+            updateConnectedHistory(row); 
+ 
+        } 
+    ); 
+ 
+ 
+    yardInput.addEventListener( 
+        "paste", 
+        function(){ 
+ 
+            setTimeout( 
+                () => { 
+ 
+                    this.value = 
+                        this.value 
+                            .replace(/,/g,".") 
+                            .replace(/[^0-9.;\s]/g,""); 
+ 
+                    updateConnectedHistory(row); 
+ 
+                }, 
+                0 
+            ); 
+ 
+        } 
+    ); 
+ 
+ 
+    button.className = 
+        "save-history-button"; 
+ 
+    button.innerHTML = 
+        "✓ Save"; 
+ 
+    button.onclick = 
+        function(){ 
+ 
+            saveEditedHistory(this); 
+ 
+        }; 
+ 
+ 
+    setTimeout( 
+        () => { 
+ 
+            yardInput.focus(); 
+ 
+            yardInput.select(); 
+ 
+        }, 
+        50 
+    ); 
+ 
+    updateConnectedHistory(row); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   UPDATE FIELD TERHUBUNG 
+========================================================= */ 
+ 
+function updateConnectedHistory(row){ 
+ 
+    if(!row){ 
+        return; 
+    } 
+ 
+    const yardInput = 
+        row.querySelector( 
+            ".yard-edit-input" 
+        ); 
+ 
+    const pcsInput = 
+        row.querySelector( 
+            ".pcs-edit-input" 
+        ); 
+ 
+    const totalYardInput = 
+        row.querySelector( 
+            ".total-yard-edit-input" 
+        ); 
+ 
+    if( 
+        !yardInput || 
+        !pcsInput || 
+        !totalYardInput 
+    ){ 
+        return; 
+    } 
+ 
+    const values = 
+        parseYardText( 
+            yardInput.value 
+        ); 
+ 
+    const totalPCS = 
+        values.length; 
+ 
+    const totalYard = 
+        calculateYardTotal(values); 
+ 
+    pcsInput.value = 
+        String(totalPCS); 
+ 
+    totalYardInput.value = 
+        formatNumber(totalYard); 
+ 
+    pcsInput.setAttribute( 
+        "value", 
+        String(totalPCS) 
+    ); 
+ 
+    totalYardInput.setAttribute( 
+        "value", 
+        formatNumber(totalYard) 
+    ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   SAVE EDIT HISTORY 
+========================================================= */ 
+ 
+function saveEditedHistory(button){ 
+ 
+    const row = 
+        button.closest("tr"); 
+ 
+    if(!row){ 
+        return; 
+    } 
+ 
+    const yardInput = 
+        row.querySelector( 
+            ".yard-edit-input" 
+        ); 
+ 
+    if(!yardInput){ 
+        return; 
+    } 
+ 
+    const values = 
+        parseYardText( 
+            yardInput.value 
+        ); 
+ 
+    if( 
+        values.length === 0 
+    ){ 
+ 
+        alert( 
+            "Masukkan minimal satu angka yard lebih dari 0." 
+        ); 
+ 
+        yardInput.focus(); 
+ 
+        return; 
+ 
+    } 
+ 
+    const totalYard = 
+        calculateYardTotal(values); 
+ 
+    const totalPCS = 
+        values.length; 
+ 
+    row.dataset.yards = 
+        JSON.stringify(values); 
+ 
+    const yardCell = 
+        row.querySelector( 
+            ".numbers-cell" 
+        ); 
+ 
+    yardCell.innerHTML = 
+        formatYardDisplay(values); 
+ 
+    const pcsCell = 
+        row.querySelector( 
+            ".pcs-cell" 
+        ); 
+ 
+    pcsCell.innerHTML = 
+        formatNumber(totalPCS); 
+ 
+    const totalCell = 
+        row.querySelector( 
+            ".total-cell" 
+        ); 
+ 
+    totalCell.innerHTML = 
+        formatNumber(totalYard); 
+ 
+    row.classList.remove("editing"); 
+ 
+    const actionCell = 
+        row.querySelector( 
+            ".action-cell" 
+        ); 
+ 
+    actionCell.innerHTML = ` 
+ 
+        <button 
+            type="button" 
+            class="edit-history-button" 
+            onclick="editHistory(this)" 
+        > 
+            ✎ Edit 
+        </button> 
+ 
+        <button 
+            type="button" 
+            class="delete-history-button" 
+            onclick="deleteHistory(this)" 
+        > 
+            🗑 Hapus 
+        </button> 
+ 
+    `; 
+ 
+    updateHistoryNumber(); 
+ 
+    updateHistoryButtons(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   PARSE YARD EDIT 
+   NILAI 0 TIDAK DIBACA 
+========================================================= */ 
+ 
+function parseYardText(text){ 
+
+    if( 
+        text === null || 
+        text === undefined 
+    ){ 
+
+        return []; 
+
+    } 
+
+    const cleanText = 
+        String(text) 
+            .replace(/[()]/g,"") 
+            .trim(); 
+
+    if(!cleanText){ 
+
+        return []; 
+
+    } 
+
+    return cleanText 
+        .split(/[\s;]+/) 
+        .map( 
+            item => 
+                parseFloat( 
+                    item 
+                        .trim() 
+                        .replace(",", ".") 
+                ) 
+        ) 
+        .filter( 
+            value => 
+                Number.isFinite(value) && 
+                value > 0 
+        ); 
+
+} 
+
+
+/* ========================================================= 
+   ESCAPE ATTRIBUTE 
+========================================================= */ 
+ 
+function escapeHtmlAttribute(value){ 
+ 
+    return String(value) 
+        .replace(/&/g,"&amp;") 
+        .replace(/"/g,"&quot;") 
+        .replace(/'/g,"&#039;") 
+        .replace(/</g,"&lt;") 
+        .replace(/>/g,"&gt;"); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   FORMAT ANGKA 
+========================================================= */ 
+ 
+function formatNumber(number){ 
+ 
+    if( 
+        Number.isInteger(number) 
+    ){ 
+ 
+        return number.toLocaleString( 
+            "en-US" 
+        ); 
+ 
+    } 
+ 
+    return Number(number) 
+        .toLocaleString( 
+            "en-US", 
+            { 
+                maximumFractionDigits:10 
+            } 
+        ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   RESET INPUT 
+========================================================= */ 
+ 
+function resetInput(){ 
+ 
+    inputList.innerHTML = ""; 
+ 
+    number = 0; 
+ 
+    addInput(false); 
+ 
+    calculateTotal(); 
+ 
+    updateDataCounter(); 
+ 
+    updateActionButtons(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   RESET DATA 
+========================================================= */ 
+ 
+function resetInputData(){ 
+ 
+    if(resetButton && resetButton.disabled){ 
+ 
+        return; 
+ 
+    } 
+ 
+    const inputs = 
+        inputList.querySelectorAll( 
+            "input" 
+        ); 
+ 
+    let hasData = false; 
+ 
+    inputs.forEach( 
+        input => { 
+ 
+            if( 
+                isValidYardValue(input.value) 
+            ){ 
+ 
+                hasData = true; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+    if(!hasData){ 
+ 
+        resetInput(); 
+ 
+        return; 
+ 
+    } 
+ 
+    const confirmReset = 
+        confirm( 
+            "Apakah yakin ingin mereset semua data yang di input?" 
+        ); 
+ 
+    if(!confirmReset){ 
+ 
+        return; 
+ 
+    } 
+ 
+    resetInput(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   NOMOR HISTORY 
+========================================================= */ 
+ 
+function updateHistoryNumber(){ 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    rows.forEach( 
+        (row,index) => { 
+ 
+            const numberElement = 
+                row.querySelector( 
+                    ".history-number" 
+                ); 
+ 
+            if(numberElement){ 
+ 
+                numberElement.textContent = 
+                    index + 1; 
+ 
+            } 
+ 
+        } 
+    ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HAPUS HISTORY 
+========================================================= */ 
+ 
+function deleteHistory(button){ 
+ 
+    const row = 
+        button.closest("tr"); 
+ 
+    if(!row){ 
+        return; 
+    } 
+ 
+    const confirmDelete = 
+        confirm( 
+            "Apakah yakin ingin menghapus history ini?" 
+        ); 
+ 
+    if(!confirmDelete){ 
+        return; 
+    } 
+ 
+    row.remove(); 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    if( 
+        rows.length === 0 
+    ){ 
+ 
+        const empty = 
+            document.createElement("tr"); 
+ 
+        empty.id = 
+            "emptyHistory"; 
+ 
+        empty.innerHTML = ` 
+ 
+            <td 
+                colspan="6" 
+                class="empty-history" 
+            > 
+                Belum ada history 
+            </td> 
+ 
+        `; 
+ 
+        historyBody.appendChild(empty); 
+ 
+    } 
+ 
+    updateHistoryNumber(); 
+ 
+    updateHistoryButtons(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   HAPUS SEMUA HISTORY 
+========================================================= */ 
+ 
+function clearHistory(){ 
+ 
+    if(clearHistoryButton && clearHistoryButton.disabled){ 
+ 
+        return; 
+ 
+    } 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    if( 
+        rows.length === 0 
+    ){ 
+ 
+        return; 
+ 
+    } 
+ 
+    const confirmClear = 
+        confirm( 
+            "Apakah yakin ingin menghapus semua history?" 
+        ); 
+ 
+    if(!confirmClear){ 
+ 
+        return; 
+ 
+    } 
+ 
+    rows.forEach( 
+        row => 
+            row.remove() 
+    ); 
+ 
+    const empty = 
+        document.createElement("tr"); 
+ 
+    empty.id = 
+        "emptyHistory"; 
+ 
+    empty.innerHTML = ` 
+ 
+        <td 
+            colspan="6" 
+            class="empty-history" 
+        > 
+            Belum ada history 
+        </td> 
+ 
+    `; 
+ 
+    historyBody.appendChild(empty); 
+ 
+    updateHistoryButtons(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   PRINT HISTORY 
+========================================================= */ 
+ 
+function printHistory(){ 
+ 
+    const editingRow = 
+        historyBody.querySelector( 
+            "tr.editing" 
+        ); 
+ 
+    if(editingRow){ 
+ 
+        alert( 
+            "Selesaikan edit data terlebih dahulu" 
+        ); 
+ 
+        return; 
+ 
+    } 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    if(rows.length === 0){ 
+ 
+        return; 
+ 
+    } 
+ 
+    window.print(); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   EXPORT HISTORY KE EXCEL 
+========================================================= */ 
+ 
+function exportHistoryToExcel(){ 
+ 
+    const editingRow = 
+        historyBody.querySelector( 
+            "tr.editing" 
+        ); 
+ 
+    if(editingRow){ 
+ 
+        alert( 
+            "Selesaikan edit data terlebih dahulu sebelum export Excel." 
+        ); 
+ 
+        return; 
+ 
+    } 
+ 
+    const rows = 
+        historyBody.querySelectorAll( 
+            "tr:not(#emptyHistory)" 
+        ); 
+ 
+    if(rows.length === 0){ 
+ 
+        alert( 
+            "Belum ada data history untuk diekspor." 
+        ); 
+ 
+        return; 
+ 
+    } 
+ 
+ 
+    let excelRows = ""; 
+ 
+    rows.forEach( 
+        (row,index) => { 
+ 
+            const no = 
+                index + 1; 
+ 
+            const yardElement = 
+                row.querySelector( 
+                    ".numbers-cell" 
+                ); 
+ 
+            const pcsElement = 
+                row.querySelector( 
+                    ".pcs-cell" 
+                ); 
+ 
+            const totalElement = 
+                row.querySelector( 
+                    ".total-cell" 
+                ); 
+ 
+            const colorInput = 
+                row.querySelector( 
+                    ".color-input" 
+                ); 
+ 
+ 
+            const yard = 
+                yardElement 
+                    ? yardElement.textContent.trim() 
+                    : ""; 
+ 
+            const pcs = 
+                pcsElement 
+                    ? pcsElement.textContent.trim() 
+                    : ""; 
+ 
+            const totalYard = 
+                totalElement 
+                    ? totalElement.textContent.trim() 
+                    : ""; 
+ 
+            const warna = 
+                colorInput 
+                    ? colorInput.value.trim() 
+                    : ""; 
+ 
+ 
+            excelRows += ` 
+ 
+                <tr> 
+ 
+                    <td style="text-align:center;"> 
+                        ${escapeExcel(no)} 
+                    </td> 
+ 
+                    <td style="text-align:center;"> 
+                        ${escapeExcel(yard)} 
+                    </td> 
+ 
+                    <td style="text-align:center;"> 
+                        ${escapeExcel(pcs)} 
+                    </td> 
+ 
+                    <td style="text-align:center;"> 
+                        ${escapeExcel(totalYard)} 
+                    </td> 
+ 
+                    <td style="text-align:center;"> 
+                        ${escapeExcel(warna)} 
+                    </td> 
+ 
+                </tr> 
+ 
+            `; 
+ 
+        } 
+    ); 
+ 
+ 
+    const excelHTML = ` 
+ 
+        <html> 
+ 
+        <head> 
+ 
+            <meta charset="UTF-8"> 
+ 
+            <style> 
+ 
+                body{ 
+                    font-family:Arial,Helvetica,sans-serif; 
+                } 
+ 
+                h2{ 
+                    text-align:center; 
+                    font-size:18px; 
+                    margin-bottom:5px; 
+                } 
+ 
+                p{ 
+                    text-align:center; 
+                    font-size:11px; 
+                    color:#555; 
+                    margin-bottom:18px; 
+                } 
+ 
+                table{ 
+                    border-collapse:collapse; 
+                    width:100%; 
+                } 
+ 
+                th{ 
+                    background:#e9e9e9; 
+                    color:#111; 
+                    border:1px solid #444; 
+                    padding:8px; 
+                    text-align:center; 
+                    font-weight:bold; 
+                } 
+ 
+                td{ 
+                    border:1px solid #444; 
+                    padding:8px; 
+                    color:#111; 
+                    text-align:center; 
+                    vertical-align:middle; 
+                } 
+ 
+            </style> 
+ 
+        </head> 
+ 
+        <body> 
+ 
+            <h2> 
+                PT SION NIAGA PERKASA 
+            </h2> 
+ 
+            <p> 
+                RIWAYAT INPUT YARD 
+            </p> 
+ 
+            <table> 
+ 
+                <thead> 
+ 
+                    <tr> 
+ 
+                        <th> 
+                            No 
+                        </th> 
+ 
+                        <th> 
+                            YARD 
+                        </th> 
+ 
+                        <th> 
+                            Total PCS 
+                        </th> 
+ 
+                        <th> 
+                            Total Yard 
+                        </th> 
+ 
+                        <th> 
+                            Warna 
+                        </th> 
+ 
+                    </tr> 
+ 
+                </thead> 
+ 
+                <tbody> 
+ 
+                    ${excelRows} 
+ 
+                </tbody> 
+ 
+            </table> 
+ 
+        </body> 
+ 
+        </html> 
+ 
+    `; 
+ 
+ 
+    const blob = 
+        new Blob( 
+            [ 
+                "\ufeff", 
+                excelHTML 
+            ], 
+            { 
+                type: 
+                    "application/vnd.ms-excel;charset=utf-8;" 
+            } 
+        ); 
+ 
+ 
+    const url = 
+        URL.createObjectURL( 
+            blob 
+        ); 
+ 
+ 
+    const link = 
+        document.createElement("a"); 
+ 
+    link.href = 
+        url; 
+ 
+    const now = 
+        new Date(); 
+ 
+    const year = 
+        now.getFullYear(); 
+ 
+    const month = 
+        String( 
+            now.getMonth() + 1 
+        ).padStart(2,"0"); 
+ 
+    const day = 
+        String( 
+            now.getDate() 
+        ).padStart(2,"0"); 
+ 
+    const hours = 
+        String( 
+            now.getHours() 
+        ).padStart(2,"0"); 
+ 
+    const minutes = 
+        String( 
+            now.getMinutes() 
+        ).padStart(2,"0"); 
+ 
+    const seconds = 
+        String( 
+            now.getSeconds() 
+        ).padStart(2,"0"); 
+ 
+ 
+    link.download = 
+        `History_Yard_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.xls`; 
+ 
+ 
+    document.body.appendChild(link); 
+ 
+    link.click(); 
+ 
+    document.body.removeChild(link); 
+ 
+ 
+    setTimeout( 
+        () => { 
+ 
+            URL.revokeObjectURL( 
+                url 
+            ); 
+ 
+        }, 
+        1000 
+    ); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   ESCAPE DATA EXCEL 
+========================================================= */ 
+ 
+function escapeExcel(value){ 
+ 
+    return String(value ?? "") 
+        .replace(/&/g,"&amp;") 
+        .replace(/</g,"&lt;") 
+        .replace(/>/g,"&gt;") 
+        .replace(/"/g,"&quot;") 
+        .replace(/'/g,"&#039;"); 
+ 
+} 
+ 
+ 
+/* ========================================================= 
+   INIT 
+========================================================= */ 
+ 
+addInput(false); 
+ 
+updateDataCounter(); 
+ 
+updateActionButtons(); 
+ 
+updateHistoryButtons(); 
+ 
+</script> 
+ 
+</body> 
 </html>
