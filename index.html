@@ -423,6 +423,38 @@ button:active{
         0 17px 26px rgba(216,111,130,.28);
 }
 
+/* =========================================================
+   LOCK BUTTON
+========================================================= */
+
+.save-button:disabled,
+.reset-button:disabled,
+.clear-history:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none!important;
+    filter:grayscale(.35);
+}
+
+.save-button:disabled{
+    box-shadow:0 5px 0 #d39d2c!important;
+}
+
+.reset-button:disabled{
+    box-shadow:0 5px 0 #d86f82!important;
+}
+
+.clear-history:disabled{
+    box-shadow:0 4px 0 #e8a1af!important;
+}
+
+.save-button:disabled:hover,
+.reset-button:disabled:hover,
+.clear-history:disabled:hover{
+    transform:none!important;
+    filter:grayscale(.35);
+}
+
 .yard-header{
     font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif;
     font-weight:1000;
@@ -1585,7 +1617,6 @@ td:nth-child(6){
 
         </div>
 
-
         <div
             class="data-counter"
             id="dataCounter"
@@ -1619,6 +1650,7 @@ td:nth-child(6){
             type="button"
             class="reset-button"
             onclick="resetInputData()"
+            disabled
         >
             Reset Data
         </button>
@@ -1627,6 +1659,7 @@ td:nth-child(6){
             type="button"
             class="save-button"
             onclick="saveHistory()"
+            disabled
         >
             Simpan ke History
         </button>
@@ -1691,6 +1724,7 @@ td:nth-child(6){
                 type="button"
                 class="clear-history"
                 onclick="clearHistory()"
+                disabled
             >
                 Hapus History
             </button>
@@ -1810,6 +1844,15 @@ const exportExcelButton =
 const printHistoryButton =
     document.getElementById("printHistoryButton");
 
+const resetButton =
+    document.querySelector(".reset-button");
+
+const saveButton =
+    document.querySelector(".save-button");
+
+const clearHistoryButton =
+    document.querySelector(".clear-history");
+
 let number = 0;
 
 
@@ -1927,10 +1970,81 @@ function updateExportButton(){
 
 
 /* =========================================================
-   UPDATE STATUS TOMBOL HISTORY
+   UPDATE STATUS TOMBOL AKSI
 ========================================================= */
 
+function updateActionButtons(){
+
+    if(resetButton){
+
+        const inputs =
+            inputList.querySelectorAll("input");
+
+        let hasInputData = false;
+
+        inputs.forEach(
+            input => {
+
+                if(
+                    input.value.trim() !== ""
+                ){
+
+                    hasInputData = true;
+
+                }
+
+            }
+        );
+
+        resetButton.disabled =
+            !hasInputData;
+
+    }
+
+    if(saveButton){
+
+        const inputs =
+            inputList.querySelectorAll("input");
+
+        let hasInputData = false;
+
+        inputs.forEach(
+            input => {
+
+                if(
+                    input.value.trim() !== ""
+                ){
+
+                    hasInputData = true;
+
+                }
+
+            }
+        );
+
+        saveButton.disabled =
+            !hasInputData;
+
+    }
+
+    if(clearHistoryButton){
+
+        const rows =
+            historyBody.querySelectorAll(
+                "tr:not(#emptyHistory)"
+            );
+
+        clearHistoryButton.disabled =
+            rows.length === 0;
+
+    }
+
+}
+
+
 function updateHistoryButtons(){
+
+    updateActionButtons();
 
     updatePrintButton();
 
@@ -2408,6 +2522,8 @@ function calculateTotal(){
 
     updateDataCounter();
 
+    updateActionButtons();
+
 }
 
 
@@ -2416,6 +2532,12 @@ function calculateTotal(){
 ========================================================= */
 
 function saveHistory(){
+
+    if(saveButton && saveButton.disabled){
+
+        return;
+
+    }
 
     const inputs =
         inputList.querySelectorAll(
@@ -2525,7 +2647,7 @@ function saveHistory(){
             <input
                 type="text"
                 class="color-input"
-                placeholder="Input Warna"
+                placeholder="Input warna"
                 autocomplete="off"
             >
 
@@ -3136,6 +3258,8 @@ function resetInput(){
 
     updateDataCounter();
 
+    updateActionButtons();
+
 }
 
 
@@ -3144,6 +3268,12 @@ function resetInput(){
 ========================================================= */
 
 function resetInputData(){
+
+    if(resetButton && resetButton.disabled){
+
+        return;
+
+    }
 
     const inputs =
         inputList.querySelectorAll(
@@ -3288,6 +3418,12 @@ function deleteHistory(button){
 ========================================================= */
 
 function clearHistory(){
+
+    if(clearHistoryButton && clearHistoryButton.disabled){
+
+        return;
+
+    }
 
     const rows =
         historyBody.querySelectorAll(
@@ -3712,6 +3848,8 @@ function escapeExcel(value){
 addInput(false);
 
 updateDataCounter();
+
+updateActionButtons();
 
 updateHistoryButtons();
 
