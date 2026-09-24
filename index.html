@@ -112,7 +112,10 @@ body::before{
     box-shadow:
         0 7px 0 var(--orange-dark),
         0 12px 20px rgba(255,136,72,.25);
-    transform:rotate(-5deg);
+
+    /* LOGO SNP SEKARANG RATA */
+    transform:none;
+
     position:relative;
 }
 
@@ -132,7 +135,7 @@ body::before{
 
 
 /* =========================================================
-   DATA COUNTER - TEMA BARU
+   DATA COUNTER
 ========================================================= */
 
 .data-counter{
@@ -774,9 +777,17 @@ td:nth-child(6){
     box-shadow:0 0 0 3px rgba(255,200,87,.12)
 }
 
+
+/* =========================================================
+   PRINT
+========================================================= */
+
 .print-history-area{
     margin-top:19px;
-    width:100%
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
 }
 
 .print-history-button{
@@ -811,6 +822,42 @@ td:nth-child(6){
     transform:none!important;
     filter:grayscale(.35);
     box-shadow:0 5px 0 #000000!important;
+}
+
+
+/* =========================================================
+   EXPORT EXCEL
+========================================================= */
+
+.export-excel-button{
+    width:100%;
+    height:55px;
+    border-radius:17px;
+    color:#ffffff;
+    background:linear-gradient(
+        145deg,
+        #49c77a,
+        #249b58
+    );
+    box-shadow:
+        0 7px 0 #197541,
+        0 12px 20px rgba(36,155,88,.22);
+    font-size:13px;
+    font-weight:1000;
+}
+
+.export-excel-button:hover{
+    box-shadow:
+        0 10px 0 #197541,
+        0 16px 24px rgba(36,155,88,.28);
+}
+
+.export-excel-button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none!important;
+    filter:grayscale(.35);
+    box-shadow:0 5px 0 #197541!important;
 }
 
 .empty-history{
@@ -963,6 +1010,10 @@ td:nth-child(6){
 
     .print-history-button{
         height:56px
+    }
+
+    .export-excel-button{
+        height:53px;
     }
 
     .result{
@@ -1195,6 +1246,34 @@ td:nth-child(6){
     .delete-history-button{
         margin-top:4px;
     }
+
+    .export-excel-button{
+        height:50px;
+        font-size:11px;
+    }
+}
+
+
+/* =========================================================
+   HISTORY ALIGNMENT
+========================================================= */
+
+.history table th,
+.history table td{
+    text-align:center;
+    vertical-align:middle;
+}
+
+.history table td .numbers-cell{
+    display:block;
+    width:100%;
+    text-align:justify;
+    text-align-last:center;
+}
+
+.history table td .history-edit-input,
+.history table td .color-input{
+    text-align:center;
 }
 
 
@@ -1289,6 +1368,7 @@ td:nth-child(6){
     .footer,
     .clear-history,
     .action-cell,
+    .print-history-area,
     .header .title p{
         display:none!important
     }
@@ -1449,10 +1529,6 @@ td:nth-child(6){
         text-align:center!important
     }
 
-    .print-history-area{
-        display:none!important
-    }
-
     .empty-history{
         padding:15px!important;
         color:#555!important
@@ -1462,24 +1538,6 @@ td:nth-child(6){
         page-break-inside:avoid;
         break-inside:avoid
     }
-}
-
-.history table th,
-.history table td{
-    text-align:center;
-    vertical-align:middle;
-}
-
-.history table td .numbers-cell{
-    display:block;
-    width:100%;
-    text-align:justify;
-    text-align-last:center;
-}
-
-.history table td .history-edit-input,
-.history table td .color-input{
-    text-align:center;
 }
 
 @media print{
@@ -1530,8 +1588,6 @@ td:nth-child(6){
 
         </div>
 
-
-        <!-- DATA COUNTER -->
 
         <div
             class="data-counter"
@@ -1709,7 +1765,16 @@ td:nth-child(6){
                 class="print-history-button"
                 onclick="printHistory()"
             >
-                🖨 &nbsp; PRINT HISTORY
+                &nbsp; PRINT HISTORY
+            </button>
+
+            <button
+                type="button"
+                class="export-excel-button"
+                id="exportExcelButton"
+                onclick="exportHistoryToExcel()"
+            >
+                &nbsp; EXPORT EXCEL
             </button>
 
         </div>
@@ -1738,6 +1803,9 @@ const dataCount =
 
 const dataCounter =
     document.getElementById("dataCounter");
+
+const exportExcelButton =
+    document.getElementById("exportExcelButton");
 
 let number = 0;
 
@@ -1777,6 +1845,42 @@ function updateDataCounter(){
     }else{
 
         dataCounter.classList.remove("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE STATUS EXPORT EXCEL
+========================================================= */
+
+function updateExportButton(){
+
+    if(!exportExcelButton){
+        return;
+    }
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    const editingRow =
+        historyBody.querySelector(
+            "tr.editing"
+        );
+
+    if(
+        rows.length === 0 ||
+        editingRow
+    ){
+
+        exportExcelButton.disabled = true;
+
+    }else{
+
+        exportExcelButton.disabled = false;
 
     }
 
@@ -2401,6 +2505,8 @@ function saveHistory(){
 
     updateHistoryNumber();
 
+    updateExportButton();
+
     resetInput();
 
 }
@@ -2486,6 +2592,8 @@ function editHistory(button){
         printButton.disabled = true;
 
     }
+
+    updateExportButton();
 
     let yards = [];
 
@@ -2892,6 +3000,8 @@ function saveEditedHistory(button){
 
     updateHistoryNumber();
 
+    updateExportButton();
+
 }
 
 
@@ -3154,6 +3264,8 @@ function deleteHistory(button){
 
     }
 
+    updateExportButton();
+
 }
 
 
@@ -3211,6 +3323,8 @@ function clearHistory(){
 
     historyBody.appendChild(empty);
 
+    updateExportButton();
+
 }
 
 
@@ -3235,7 +3349,362 @@ function printHistory(){
 
     }
 
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    if(rows.length === 0){
+
+        alert(
+            "Belum ada data history untuk dicetak."
+        );
+
+        return;
+
+    }
+
     window.print();
+
+}
+
+
+/* =========================================================
+   EXPORT HISTORY KE EXCEL
+   DATA YANG DIEKSPOR SAMA DENGAN DATA PRINT
+========================================================= */
+
+function exportHistoryToExcel(){
+
+    const editingRow =
+        historyBody.querySelector(
+            "tr.editing"
+        );
+
+    if(editingRow){
+
+        alert(
+            "Selesaikan edit data terlebih dahulu sebelum export Excel."
+        );
+
+        return;
+
+    }
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    if(rows.length === 0){
+
+        alert(
+            "Belum ada data history untuk diekspor."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        Membuat file Excel-compatible .xls.
+
+        Kolom yang digunakan:
+        1. No
+        2. YARD
+        3. Total PCS
+        4. Total Yard
+        5. Warna
+
+        Kolom EDIT DATA sengaja tidak dimasukkan
+        karena tidak tampil pada hasil print.
+    */
+
+    let excelRows = "";
+
+    rows.forEach(
+        (row,index) => {
+
+            const no =
+                index + 1;
+
+            const yardElement =
+                row.querySelector(
+                    ".numbers-cell"
+                );
+
+            const pcsElement =
+                row.querySelector(
+                    ".pcs-cell"
+                );
+
+            const totalElement =
+                row.querySelector(
+                    ".total-cell"
+                );
+
+            const colorInput =
+                row.querySelector(
+                    ".color-input"
+                );
+
+
+            const yard =
+                yardElement
+                    ? yardElement.textContent.trim()
+                    : "";
+
+            const pcs =
+                pcsElement
+                    ? pcsElement.textContent.trim()
+                    : "";
+
+            const totalYard =
+                totalElement
+                    ? totalElement.textContent.trim()
+                    : "";
+
+            const warna =
+                colorInput
+                    ? colorInput.value.trim()
+                    : "";
+
+
+            excelRows += `
+
+                <tr>
+
+                    <td style="text-align:center;">
+                        ${escapeExcel(no)}
+                    </td>
+
+                    <td style="text-align:center;">
+                        ${escapeExcel(yard)}
+                    </td>
+
+                    <td style="text-align:center;">
+                        ${escapeExcel(pcs)}
+                    </td>
+
+                    <td style="text-align:center;">
+                        ${escapeExcel(totalYard)}
+                    </td>
+
+                    <td style="text-align:center;">
+                        ${escapeExcel(warna)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    const excelHTML = `
+
+        <html>
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <style>
+
+                body{
+                    font-family:Arial,Helvetica,sans-serif;
+                }
+
+                h2{
+                    text-align:center;
+                    font-size:18px;
+                    margin-bottom:5px;
+                }
+
+                p{
+                    text-align:center;
+                    font-size:11px;
+                    color:#555;
+                    margin-bottom:18px;
+                }
+
+                table{
+                    border-collapse:collapse;
+                    width:100%;
+                }
+
+                th{
+                    background:#e9e9e9;
+                    color:#111;
+                    border:1px solid #444;
+                    padding:8px;
+                    text-align:center;
+                    font-weight:bold;
+                }
+
+                td{
+                    border:1px solid #444;
+                    padding:8px;
+                    color:#111;
+                    text-align:center;
+                    vertical-align:middle;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h2>
+                PT SION NIAGA PERKASA
+            </h2>
+
+            <p>
+                RIWAYAT INPUT YARD
+            </p>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            YARD
+                        </th>
+
+                        <th>
+                            Total PCS
+                        </th>
+
+                        <th>
+                            Total Yard
+                        </th>
+
+                        <th>
+                            Warna
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${excelRows}
+
+                </tbody>
+
+            </table>
+
+        </body>
+
+        </html>
+
+    `;
+
+
+    const blob =
+        new Blob(
+            [
+                "\ufeff",
+                excelHTML
+            ],
+            {
+                type:
+                    "application/vnd.ms-excel;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    const now =
+        new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(2,"0");
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(2,"0");
+
+    const hours =
+        String(
+            now.getHours()
+        ).padStart(2,"0");
+
+    const minutes =
+        String(
+            now.getMinutes()
+        ).padStart(2,"0");
+
+    const seconds =
+        String(
+            now.getSeconds()
+        ).padStart(2,"0");
+
+
+    link.download =
+        `History_Yard_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.xls`;
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+
+    setTimeout(
+        () => {
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE DATA EXCEL
+========================================================= */
+
+function escapeExcel(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
@@ -3247,6 +3716,8 @@ function printHistory(){
 addInput(false);
 
 updateDataCounter();
+
+updateExportButton();
 
 </script>
 
