@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PT SION NIAGA PERKASA</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -146,7 +148,6 @@ body::before{
     position:relative;
 }
 
-/* TITIK PUTIH PADA LOGO SNP DIHILANGKAN */
 .icon::after{
     display:none;
 }
@@ -344,6 +345,11 @@ body::before{
     transform:translateY(-50%) scale(1) rotate(0)
 }
 
+/* =========================================================
+   TOMBOL RESET DAN SIMPAN
+   RESET DI KIRI - SIMPAN DI KANAN
+========================================================= */
+
 .button-area{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -373,20 +379,6 @@ button:active{
     transform:translateY(2px) scale(.98)
 }
 
-.add-button{
-    color:#fff;
-    background:linear-gradient(145deg,#6ecdf5,#4297d0);
-    box-shadow:
-        0 7px 0 #2e6e9c,
-        0 11px 19px rgba(61,145,203,.22);
-}
-
-.add-button:hover{
-    box-shadow:
-        0 10px 0 #2e6e9c,
-        0 17px 26px rgba(61,145,203,.28)
-}
-
 .save-button{
     color:#704c00;
     background:linear-gradient(145deg,#ffed93,#ffc857);
@@ -399,6 +391,27 @@ button:active{
     box-shadow:
         0 10px 0 #d39d2c,
         0 17px 26px rgba(255,200,87,.3)
+}
+
+.reset-button{
+    color:#7b4d00;
+    background:linear-gradient(145deg,#ffd6d6,#ff9fb0);
+    box-shadow:
+        0 7px 0 #d86f82,
+        0 11px 19px rgba(216,111,130,.22);
+}
+
+.reset-button:hover{
+    box-shadow:
+        0 10px 0 #d86f82,
+        0 17px 26px rgba(216,111,130,.28);
+}
+
+.yard-header{
+    font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif;
+    font-weight:1000;
+    letter-spacing:1.2px;
+    font-size:10px;
 }
 
 .result{
@@ -542,7 +555,6 @@ td{
     word-break:break-word;
 }
 
-/* Lebar kolom agar seluruh history selalu terlihat */
 th:nth-child(1),
 td:nth-child(1){
     width:7%;
@@ -914,8 +926,9 @@ td:nth-child(6){
         font-size:15px;
     }
 
+    /* Tetap 2 tombol: Reset kiri, Simpan kanan */
     .button-area{
-        grid-template-columns:1fr;
+        grid-template-columns:1fr 1fr;
         gap:10px
     }
 
@@ -949,7 +962,6 @@ td:nth-child(6){
         padding:7px 9px
     }
 
-    /* HISTORY MOBILE - TETAP FULL TANPA SCROLL */
     .table-wrapper{
         overflow-x:hidden;
         width:100%;
@@ -1109,7 +1121,6 @@ td:nth-child(6){
         font-size:13px;
     }
 
-    /* EXTRA COMPACT HISTORY */
     th{
         padding:8px 2px;
         font-size:6.5px;
@@ -1248,8 +1259,6 @@ td:nth-child(6){
         display:none!important
     }
 
-    /* Kolom AKSI tetap tampil di aplikasi,
-       tetapi tidak ikut saat PRINT HISTORY */
     thead th:last-child{
         display:none!important
     }
@@ -1421,9 +1430,6 @@ td:nth-child(6){
     }
 }
 
-/* =========================================================
-   HISTORY - SEMUA DATA DI TENGAH + YARD JUSTIFY
-========================================================= */
 .history table th,
 .history table td{
     text-align:center;
@@ -1459,6 +1465,7 @@ td:nth-child(6){
         text-align:center!important;
     }
 }
+
 </style>
 </head>
 
@@ -1496,13 +1503,15 @@ td:nth-child(6){
 
     <div class="input-list" id="inputList"></div>
 
+    <!-- RESET DI KIRI, SIMPAN DI KANAN -->
     <div class="button-area">
 
         <button
-            class="add-button"
-            onclick="addInput(true)"
+            type="button"
+            class="reset-button"
+            onclick="resetInputData()"
         >
-            Tambah Kolom
+            Reset Data
         </button>
 
         <button
@@ -1583,7 +1592,7 @@ td:nth-child(6){
                             No
                         </th>
 
-                        <th>
+                        <th class="yard-header">
                             YARD
                         </th>
 
@@ -1640,7 +1649,6 @@ td:nth-child(6){
 
     </div>
 
-
 </div>
 
 <script>
@@ -1674,6 +1682,7 @@ let number = 0;
 
 /* =========================================================
    ADD INPUT
+   INPUT BARU TETAP DITAMBAHKAN DENGAN ENTER
 ========================================================= */
 
 function addInput(focusInput = true) {
@@ -1685,7 +1694,6 @@ function addInput(focusInput = true) {
 
     row.className =
         "input-row";
-
 
     row.innerHTML = `
 
@@ -1719,15 +1727,12 @@ function addInput(focusInput = true) {
 
     `;
 
-
     inputList.appendChild(row);
 
     updateInputNumbers();
 
-
     const input =
         row.querySelector("input");
-
 
     input.addEventListener(
         "input",
@@ -1750,7 +1755,6 @@ function addInput(focusInput = true) {
         }
     );
 
-
     input.addEventListener(
         "keydown",
         function (event) {
@@ -1763,25 +1767,21 @@ function addInput(focusInput = true) {
 
             event.preventDefault();
 
-
             if (
                 this.value.trim() === ""
             ) {
                 return;
             }
 
-
             const inputs =
                 inputList.querySelectorAll(
                     "input"
                 );
 
-
             const lastInput =
                 inputs[
                     inputs.length - 1
                 ];
-
 
             if (
                 this === lastInput
@@ -1795,7 +1795,6 @@ function addInput(focusInput = true) {
                     Array
                         .from(inputs)
                         .indexOf(this);
-
 
                 if (
                     inputs[index + 1]
@@ -1812,7 +1811,6 @@ function addInput(focusInput = true) {
         }
     );
 
-
     if (focusInput) {
 
         setTimeout(
@@ -1821,7 +1819,6 @@ function addInput(focusInput = true) {
         );
 
     }
-
 
     updateCounter();
 
@@ -1844,12 +1841,6 @@ function removeInput(button) {
     const rows =
         inputList.querySelectorAll(".input-row");
 
-    /*
-        Jika hanya tersisa satu kolom,
-        kolom tidak benar-benar dihapus.
-        Isinya dikosongkan agar sistem
-        tetap memiliki minimal satu input.
-    */
     if (rows.length === 1) {
 
         const input =
@@ -1873,7 +1864,6 @@ function removeInput(button) {
         return;
     }
 
-
     row.remove();
 
     updateInputNumbers();
@@ -1894,7 +1884,6 @@ function updateInputNumbers() {
             ".input-row"
         );
 
-
     rows.forEach(
         (row, index) => {
 
@@ -1903,7 +1892,6 @@ function updateInputNumbers() {
                     ".number"
                 );
 
-
             if (numberElement) {
 
                 numberElement.textContent =
@@ -1911,12 +1899,10 @@ function updateInputNumbers() {
 
             }
 
-
             const deleteButton =
                 row.querySelector(
                     ".delete-input-button"
                 );
-
 
             if (deleteButton) {
 
@@ -1942,11 +1928,9 @@ function calculateTotal() {
             "input"
         );
 
-
     let sum = 0;
 
     let filled = 0;
-
 
     inputs.forEach(
         input => {
@@ -1955,7 +1939,6 @@ function calculateTotal() {
                 parseFloat(
                     input.value
                 );
-
 
             if (
                 !isNaN(value)
@@ -1970,10 +1953,8 @@ function calculateTotal() {
         }
     );
 
-
     total.textContent =
         formatNumber(sum);
-
 
     if (
         filled > 0
@@ -2001,7 +1982,6 @@ function updateCounter() {
             "input"
         );
 
-
     counter.textContent =
         `${inputs.length} Data`;
 
@@ -2019,9 +1999,7 @@ function saveHistory() {
             "input"
         );
 
-
     const values = [];
-
 
     inputs.forEach(
         input => {
@@ -2041,7 +2019,6 @@ function saveHistory() {
         }
     );
 
-
     if (
         values.length === 0
     ) {
@@ -2054,33 +2031,26 @@ function saveHistory() {
 
     }
 
-
     const totalYard =
         calculateYardTotal(values);
 
-
     const totalPCS =
         values.length;
-
 
     const empty =
         document.getElementById(
             "emptyHistory"
         );
 
-
     if (empty) {
         empty.remove();
     }
 
-
     const row =
         document.createElement("tr");
 
-
     row.dataset.yards =
         JSON.stringify(values);
-
 
     row.innerHTML = `
 
@@ -2092,7 +2062,6 @@ function saveHistory() {
 
         </td>
 
-
         <td>
 
             <span class="numbers-cell">
@@ -2100,7 +2069,6 @@ function saveHistory() {
             </span>
 
         </td>
-
 
         <td>
 
@@ -2110,7 +2078,6 @@ function saveHistory() {
 
         </td>
 
-
         <td>
 
             <span class="total-cell">
@@ -2118,7 +2085,6 @@ function saveHistory() {
             </span>
 
         </td>
-
 
         <td class="color-cell">
 
@@ -2130,7 +2096,6 @@ function saveHistory() {
             >
 
         </td>
-
 
         <td class="action-cell">
 
@@ -2154,9 +2119,7 @@ function saveHistory() {
 
     `;
 
-
     historyBody.appendChild(row);
-
 
     updateHistoryNumber();
 
@@ -2173,13 +2136,11 @@ function calculateYardTotal(values) {
 
     let totalValue = 0;
 
-
     values.forEach(
         value => {
 
             const numberValue =
                 Number(value);
-
 
             if (
                 !isNaN(numberValue)
@@ -2192,7 +2153,6 @@ function calculateYardTotal(values) {
 
         }
     );
-
 
     return totalValue;
 
@@ -2226,18 +2186,15 @@ function editHistory(button) {
     const row =
         button.closest("tr");
 
-
     if (!row) {
         return;
     }
-
 
     if (
         row.classList.contains("editing")
     ) {
         return;
     }
-
 
     row.classList.add("editing");
 
@@ -2248,9 +2205,7 @@ function editHistory(button) {
         printButton.disabled = true;
     }
 
-
     let yards = [];
-
 
     try {
 
@@ -2265,7 +2220,6 @@ function editHistory(button) {
 
     }
 
-
     if (
         yards.length === 0
     ) {
@@ -2278,18 +2232,15 @@ function editHistory(button) {
                 .replace(/\)$/, "")
                 .trim();
 
-
         yards =
             parseYardText(yardText);
 
     }
 
-
     const yardCell =
         row.querySelector(
             ".numbers-cell"
         );
-
 
     yardCell.innerHTML = `
 
@@ -2305,12 +2256,10 @@ function editHistory(button) {
 
     `;
 
-
     const pcsCell =
         row.querySelector(
             ".pcs-cell"
         );
-
 
     pcsCell.innerHTML = `
 
@@ -2324,12 +2273,10 @@ function editHistory(button) {
 
     `;
 
-
     const totalCell =
         row.querySelector(
             ".total-cell"
         );
-
 
     totalCell.innerHTML = `
 
@@ -2344,12 +2291,10 @@ function editHistory(button) {
 
     `;
 
-
     const yardInput =
         row.querySelector(
             ".yard-edit-input"
         );
-
 
     yardInput.addEventListener(
         "input",
@@ -2359,7 +2304,6 @@ function editHistory(button) {
 
         }
     );
-
 
     yardInput.addEventListener(
         "keydown",
@@ -2382,14 +2326,11 @@ function editHistory(button) {
         }
     );
 
-
     button.className =
         "save-history-button";
 
-
     button.innerHTML =
         "✓ Save";
-
 
     button.onclick =
         function () {
@@ -2397,7 +2338,6 @@ function editHistory(button) {
             saveEditedHistory(this);
 
         };
-
 
     setTimeout(
         () => {
@@ -2409,7 +2349,6 @@ function editHistory(button) {
         },
         50
     );
-
 
     updateConnectedHistory(row);
 
@@ -2426,24 +2365,20 @@ function updateConnectedHistory(row) {
         return;
     }
 
-
     const yardInput =
         row.querySelector(
             ".yard-edit-input"
         );
-
 
     const pcsInput =
         row.querySelector(
             ".pcs-edit-input"
         );
 
-
     const totalYardInput =
         row.querySelector(
             ".total-yard-edit-input"
         );
-
 
     if (
         !yardInput ||
@@ -2453,106 +2388,28 @@ function updateConnectedHistory(row) {
         return;
     }
 
-
     const values =
         parseYardText(
             yardInput.value
         );
 
-
     const totalPCS =
         values.length;
 
-
     const totalYard =
         calculateYardTotal(values);
-
 
     pcsInput.value =
         totalPCS;
 
     totalYardInput.value =
-        removeTrailingZeros(totalYard);
+        formatNumber(totalYard);
 
 }
 
 
 /* =========================================================
-   PARSE YARD TEXT
-========================================================= */
-
-function parseYardText(text) {
-
-    if (
-        text === null ||
-        text === undefined
-    ) {
-        return [];
-    }
-
-
-    let cleanText =
-        String(text)
-            .replace(/[()]/g, "")
-            .trim();
-
-
-    if (
-        cleanText === ""
-    ) {
-        return [];
-    }
-
-
-    const parts =
-        cleanText.split(
-            /[\s,;]+/
-        );
-
-
-    const values = [];
-
-
-    parts.forEach(
-        part => {
-
-            if (
-                part === ""
-            ) {
-                return;
-            }
-
-
-            const normalized =
-                part.replace(
-                    ",",
-                    "."
-                );
-
-
-            const value =
-                Number(normalized);
-
-
-            if (
-                !isNaN(value)
-            ) {
-
-                values.push(value);
-
-            }
-
-        }
-    );
-
-
-    return values;
-
-}
-
-
-/* =========================================================
-   SAVE EDIT HISTORY
+   SAVE EDITED HISTORY
 ========================================================= */
 
 function saveEditedHistory(button) {
@@ -2560,35 +2417,30 @@ function saveEditedHistory(button) {
     const row =
         button.closest("tr");
 
-
     if (!row) {
         return;
     }
-
 
     const yardInput =
         row.querySelector(
             ".yard-edit-input"
         );
 
-
     if (!yardInput) {
         return;
     }
-
 
     const values =
         parseYardText(
             yardInput.value
         );
 
-
     if (
         values.length === 0
     ) {
 
         alert(
-            "YARD tidak boleh kosong."
+            "Masukkan minimal satu angka yard."
         );
 
         yardInput.focus();
@@ -2597,56 +2449,46 @@ function saveEditedHistory(button) {
 
     }
 
+    const totalYard =
+        calculateYardTotal(values);
 
     const totalPCS =
         values.length;
 
-
-    const totalYard =
-        calculateYardTotal(values);
-
-
     row.dataset.yards =
         JSON.stringify(values);
-
 
     const yardCell =
         row.querySelector(
             ".numbers-cell"
         );
 
-
-    yardCell.textContent =
+    yardCell.innerHTML =
         formatYardDisplay(values);
-
 
     const pcsCell =
         row.querySelector(
             ".pcs-cell"
         );
 
-
-    pcsCell.textContent =
+    pcsCell.innerHTML =
         formatNumber(totalPCS);
-
 
     const totalCell =
         row.querySelector(
             ".total-cell"
         );
 
-
-    totalCell.textContent =
+    totalCell.innerHTML =
         formatNumber(totalYard);
 
+    row.classList.remove("editing");
 
     button.className =
         "edit-history-button";
 
-
     button.innerHTML =
         "✎ Edit";
-
 
     button.onclick =
         function () {
@@ -2655,18 +2497,12 @@ function saveEditedHistory(button) {
 
         };
 
-
-    row.classList.remove(
-        "editing"
-    );
-
     const printButton =
-        document.querySelector(".print-history-button");
+        document.querySelector(
+            ".print-history-button"
+        );
 
-    if (
-        printButton &&
-        !historyBody.querySelector("tr.editing")
-    ) {
+    if (printButton) {
         printButton.disabled = false;
     }
 
@@ -2674,48 +2510,54 @@ function saveEditedHistory(button) {
 
 
 /* =========================================================
-   FORMAT NUMBER
-   Contoh:
-   1111       -> 1.111
-   2500       -> 2.500
-   10000      -> 10.000
-   1234567    -> 1.234.567
-   1250.5     -> 1.250,5
+   PARSE YARD
 ========================================================= */
 
-function formatNumber(value) {
+function parseYardText(text) {
 
-    if (
-        value === null ||
-        value === undefined ||
-        isNaN(value)
-    ) {
-        return "0";
+    if (!text) {
+        return [];
     }
 
-
-    const numberValue =
-        Number(value);
-
-
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            maximumFractionDigits:20,
-            useGrouping:true
-        }
-    ).format(numberValue);
+    return text
+        .replace(/[()]/g, "")
+        .split(/[,\s]+/)
+        .map(
+            value =>
+                parseFloat(
+                    value.trim()
+                )
+        )
+        .filter(
+            value =>
+                !isNaN(value)
+        );
 
 }
 
 
 /* =========================================================
-   REMOVE TRAILING ZERO
+   FORMAT NUMBER
 ========================================================= */
 
-function removeTrailingZeros(value) {
+function formatNumber(value) {
 
-    return formatNumber(value);
+    const numberValue =
+        Number(value);
+
+    if (
+        !isFinite(numberValue)
+    ) {
+        return "0";
+    }
+
+    return numberValue
+        .toLocaleString(
+            "id-ID",
+            {
+                maximumFractionDigits:10
+            }
+        );
 
 }
 
@@ -2727,11 +2569,10 @@ function removeTrailingZeros(value) {
 function escapeHtmlAttribute(value) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
 
 }
 
@@ -2746,17 +2587,66 @@ function resetInput() {
 
     number = 0;
 
-    result.classList.remove("show");
+    addInput(false);
 
-    total.textContent = "0";
+    calculateTotal();
 
-    addInput(true);
+    updateCounter();
 
 }
 
 
 /* =========================================================
-   UPDATE HISTORY NUMBER
+   RESET INPUT DATA
+========================================================= */
+
+function resetInputData() {
+
+    const inputs =
+        inputList.querySelectorAll(
+            "input"
+        );
+
+    let hasData = false;
+
+    inputs.forEach(
+        input => {
+
+            if (
+                input.value.trim() !== ""
+            ) {
+
+                hasData = true;
+
+            }
+
+        }
+    );
+
+    if (!hasData) {
+
+        resetInput();
+
+        return;
+
+    }
+
+    const confirmReset =
+        confirm(
+            "Apakah yakin ingin mereset semua input?"
+        );
+
+    if (!confirmReset) {
+        return;
+    }
+
+    resetInput();
+
+}
+
+
+/* =========================================================
+   UPDATE NOMOR HISTORY
 ========================================================= */
 
 function updateHistoryNumber() {
@@ -2766,7 +2656,6 @@ function updateHistoryNumber() {
             "tr:not(#emptyHistory)"
         );
 
-
     rows.forEach(
         (row, index) => {
 
@@ -2774,7 +2663,6 @@ function updateHistoryNumber() {
                 row.querySelector(
                     ".history-number"
                 );
-
 
             if (numberElement) {
 
@@ -2798,41 +2686,33 @@ function deleteHistory(button) {
     const row =
         button.closest("tr");
 
-
     if (!row) {
         return;
     }
-
 
     const confirmDelete =
         confirm(
             "Apakah yakin ingin menghapus history ini?"
         );
 
-
     if (!confirmDelete) {
         return;
     }
 
-
     row.remove();
-
 
     const rows =
         historyBody.querySelectorAll(
             "tr:not(#emptyHistory)"
         );
 
-
     if (rows.length === 0) {
 
         const empty =
             document.createElement("tr");
 
-
         empty.id =
             "emptyHistory";
-
 
         empty.innerHTML = `
 
@@ -2845,20 +2725,22 @@ function deleteHistory(button) {
 
         `;
 
-
         historyBody.appendChild(empty);
 
     }
 
-
     updateHistoryNumber();
 
     const printButton =
-        document.querySelector(".print-history-button");
+        document.querySelector(
+            ".print-history-button"
+        );
 
     if (
         printButton &&
-        !historyBody.querySelector("tr.editing")
+        !historyBody.querySelector(
+            "tr.editing"
+        )
     ) {
         printButton.disabled = false;
     }
@@ -2877,7 +2759,6 @@ function clearHistory() {
             "tr:not(#emptyHistory)"
         );
 
-
     if (
         rows.length === 0
     ) {
@@ -2886,30 +2767,24 @@ function clearHistory() {
 
     }
 
-
     const confirmClear =
         confirm(
             "Apakah yakin ingin menghapus semua history?"
         );
 
-
     if (!confirmClear) {
         return;
     }
-
 
     rows.forEach(
         row => row.remove()
     );
 
-
     const empty =
         document.createElement("tr");
 
-
     empty.id =
         "emptyHistory";
-
 
     empty.innerHTML = `
 
@@ -2921,7 +2796,6 @@ function clearHistory() {
         </td>
 
     `;
-
 
     historyBody.appendChild(empty);
 
@@ -2935,7 +2809,9 @@ function clearHistory() {
 function printHistory() {
 
     const editingRow =
-        historyBody.querySelector("tr.editing");
+        historyBody.querySelector(
+            "tr.editing"
+        );
 
     if (editingRow) {
 
@@ -2966,10 +2842,8 @@ document.addEventListener(
             return;
         }
 
-
         const active =
             document.activeElement;
-
 
         if (
             !active ||
