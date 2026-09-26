@@ -1013,6 +1013,10 @@ td:nth-child(6){
     display:flex; 
     flex-direction:column; 
     gap:11px; 
+}
+
+.print-grand-total{
+    display:none;
 } 
  
 .print-history-button{ 
@@ -2211,6 +2215,44 @@ body.dark-theme .theme-switcher{
         text-align:center!important 
     } 
  
+    .print-grand-total{
+        display:flex!important;
+        width:100%!important;
+        margin-top:12px!important;
+        gap:12px!important;
+        page-break-inside:avoid!important;
+        break-inside:avoid!important;
+    }
+
+    .print-grand-total-item{
+        flex:1 1 0!important;
+        display:flex!important;
+        align-items:center!important;
+        justify-content:space-between!important;
+        gap:15px!important;
+        min-height:42px!important;
+        padding:8px 12px!important;
+        border:1px solid #444!important;
+        background:#f3f3f3!important;
+        color:#111!important;
+        box-sizing:border-box!important;
+    }
+
+    .print-grand-total-label{
+        font-size:11px!important;
+        font-weight:900!important;
+        letter-spacing:.3px!important;
+        color:#111!important;
+    }
+
+    .print-grand-total-item strong{
+        font-size:13px!important;
+        font-weight:900!important;
+        color:#111!important;
+        text-align:right!important;
+        white-space:nowrap!important;
+    }
+
     .empty-history{ 
         padding:15px!important; 
         color:#555!important; 
@@ -2503,6 +2545,17 @@ body.dark-theme .theme-switcher{
  
         </div> 
  
+        <div class="print-grand-total" id="printGrandTotal">
+            <div class="print-grand-total-item">
+                <span class="print-grand-total-label">GRAND TOTAL PCS</span>
+                <strong id="printGrandTotalPCS">0</strong>
+            </div>
+            <div class="print-grand-total-item">
+                <span class="print-grand-total-label">GRAND TOTAL YARD</span>
+                <strong id="printGrandTotalYard">0</strong>
+            </div>
+        </div>
+
         <div class="print-history-area"> 
  
             <button 
@@ -2552,7 +2605,13 @@ const total =
     document.getElementById("total"); 
  
 const historyBody = 
-    document.getElementById("historyBody"); 
+    document.getElementById("historyBody");
+
+const printGrandTotalPCS =
+    document.getElementById("printGrandTotalPCS");
+
+const printGrandTotalYard =
+    document.getElementById("printGrandTotalYard"); 
  
 const dataCount = 
     document.getElementById("dataCount"); 
@@ -4724,6 +4783,91 @@ function clearHistory(){
     updateHistoryButtons(); 
 } 
  
+function updatePrintGrandTotals(){
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    let totalPCSValue = 0;
+    let totalYardValue = "0";
+
+    rows.forEach(
+        row => {
+
+            const yardEditInput =
+                row.querySelector(
+                    ".yard-edit-input"
+                );
+
+            let values = [];
+
+            if(yardEditInput){
+
+                values =
+                    parseYardText(
+                        yardEditInput.value
+                    );
+
+            }else{
+
+                try{
+
+                    values =
+                        JSON.parse(
+                            row.dataset.yards || "[]"
+                        );
+
+                }catch(error){
+
+                    values = [];
+
+                }
+
+            }
+
+            values =
+                values.filter(
+                    value =>
+                        Number.isFinite(
+                            Number(value)
+                        ) &&
+                        Number(value) > 0
+                );
+
+            totalPCSValue +=
+                values.length;
+
+            totalYardValue =
+                addDecimalStrings(
+                    totalYardValue,
+                    calculateYardTotal(values)
+                );
+
+        }
+    );
+
+    if(printGrandTotalPCS){
+
+        printGrandTotalPCS.textContent =
+            formatNumber(
+                totalPCSValue
+            );
+
+    }
+
+    if(printGrandTotalYard){
+
+        printGrandTotalYard.textContent =
+            formatNumber(
+                totalYardValue
+            );
+
+    }
+}
+
+
 function printHistory(){ 
  
     const editingRow = 
@@ -4749,6 +4893,8 @@ function printHistory(){
         return; 
     } 
  
+    updatePrintGrandTotals();
+
     window.print(); 
 } 
  
