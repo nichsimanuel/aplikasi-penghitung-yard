@@ -2036,6 +2036,325 @@ body.dark-theme .theme-switcher{
     }
 }
 
+
+/* =========================================================
+   RESPONSIVE WINDOWS + ANDROID
+   Hanya mengatur tampilan berdasarkan ukuran layar.
+   Tidak mengubah struktur HTML, urutan tombol, atau logika JS.
+========================================================= */
+
+/* WINDOWS / DESKTOP */
+@media (min-width:701px){
+
+    html,
+    body{
+        width:100%;
+        min-width:0;
+    }
+
+    body{
+        min-height:100vh;
+        padding:24px;
+        align-items:center;
+        justify-content:center;
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
+
+    .container{
+        width:780px;
+        max-width:calc(100vw - 48px);
+        margin:0 auto;
+    }
+
+    /* Posisi dan susunan tombol tetap 2 kolom seperti versi asli */
+    .button-area{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .history-dashboard{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .table-wrapper{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+
+    table{
+        width:100%;
+        max-width:100%;
+        table-layout:fixed;
+    }
+
+    th,
+    td{
+        text-align:center!important;
+        vertical-align:middle!important;
+    }
+
+    .print-history-area{
+        width:100%;
+    }
+
+    button,
+    input{
+        -webkit-tap-highlight-color:transparent;
+    }
+}
+
+/* ANDROID / HANDPHONE */
+@media (max-width:700px){
+
+    html{
+        width:100%;
+        min-width:0;
+        overflow-x:hidden;
+    }
+
+    body{
+        width:100%;
+        min-width:0;
+        min-height:100vh;
+        padding:12px;
+        padding-top:18px;
+        align-items:flex-start;
+        justify-content:center;
+        overflow-x:hidden;
+        overflow-y:auto;
+        -webkit-text-size-adjust:100%;
+        text-size-adjust:100%;
+        overscroll-behavior-x:none;
+    }
+
+    .container{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        margin:0 auto;
+    }
+
+    .header{
+        width:100%;
+        min-width:0;
+    }
+
+    .title{
+        min-width:0;
+    }
+
+    .title h1,
+    .title p{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .data-counter{
+        flex-shrink:0;
+    }
+
+    .input-list{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .input-row{
+        width:100%;
+        min-width:0;
+    }
+
+    .input-wrapper{
+        min-width:0;
+    }
+
+    .input-wrapper input{
+        min-width:0;
+        -webkit-appearance:none;
+        appearance:none;
+    }
+
+    /* Tetap 2 kolom — hanya ukurannya yang menyesuaikan layar */
+    .button-area{
+        width:100%;
+        grid-template-columns:1fr 1fr;
+    }
+
+    button{
+        -webkit-tap-highlight-color:transparent;
+        touch-action:manipulation;
+    }
+
+    .result{
+        width:100%;
+        min-width:0;
+    }
+
+    .history{
+        width:100%;
+        min-width:0;
+    }
+
+    .history-header{
+        min-width:0;
+    }
+
+    .history-title{
+        min-width:0;
+    }
+
+    .history-dashboard{
+        width:100%;
+        grid-template-columns:repeat(3,1fr);
+        min-width:0;
+    }
+
+    .dashboard-card{
+        min-width:0;
+    }
+
+    .table-wrapper{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        overflow-x:hidden;
+        overflow-y:visible;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    table{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        table-layout:fixed;
+    }
+
+    th,
+    td{
+        text-align:center!important;
+        vertical-align:middle!important;
+    }
+
+    .numbers-cell{
+        width:100%;
+        max-width:100%;
+        justify-content:center!important;
+        text-align:center!important;
+        overflow-wrap:anywhere;
+        word-break:normal;
+    }
+
+    .yard-value,
+    .pcs-cell,
+    .total-cell,
+    .history-edit-input,
+    .color-input,
+    .action-cell{
+        max-width:100%;
+        min-width:0;
+    }
+
+    .action-cell{
+        overflow:hidden;
+    }
+
+    .edit-history-button,
+    .save-history-button,
+    .delete-history-button{
+        max-width:100%;
+        white-space:normal;
+        overflow:hidden;
+    }
+
+    .print-history-area{
+        width:100%;
+        max-width:100%;
+    }
+
+    .print-history-button,
+    .export-excel-button{
+        width:100%;
+        max-width:100%;
+        touch-action:manipulation;
+    }
+
+    .footer{
+        width:100%;
+        max-width:100%;
+    }
+
+    /* Android keyboard / input behavior */
+    input,
+    button{
+        font-family:inherit;
+    }
+}
+
+/* ANDROID SMALL SCREEN */
+@media (max-width:380px){
+
+    body{
+        padding:8px;
+        padding-top:12px;
+    }
+
+    .container{
+        width:100%;
+        max-width:100%;
+    }
+
+    .header{
+        gap:7px;
+    }
+
+    .title{
+        min-width:0;
+    }
+
+    .data-counter{
+        flex-shrink:0;
+    }
+
+    .button-area{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .history-dashboard{
+        grid-template-columns:repeat(3,1fr);
+        gap:5px;
+    }
+
+    .table-wrapper{
+        overflow-x:hidden;
+    }
+
+    th,
+    td{
+        text-align:center!important;
+    }
+}
+
+/* ANDROID LANDSCAPE */
+@media (max-width:700px) and (orientation:landscape){
+
+    body{
+        align-items:flex-start;
+        padding-top:10px;
+    }
+
+    .container{
+        margin-top:0;
+    }
+
+    .input-list{
+        max-height:260px;
+    }
+}
+
 /* =========================================================
    PRINT
 ========================================================= */
