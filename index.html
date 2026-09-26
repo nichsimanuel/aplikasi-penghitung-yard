@@ -47,11 +47,45 @@ body{
     color:var(--ink);
     overflow-x:hidden;
     position:relative;
+
+    /* =====================================================
+       BACKGROUND BARU
+    ===================================================== */
+
     background:
-        radial-gradient(circle at 7% 12%,#fff 0 34px,transparent 35px),
-        radial-gradient(circle at 92% 13%,#fff7bd 0 27px,transparent 28px),
-        radial-gradient(circle at 9% 88%,#d9f8e7 0 42px,transparent 43px),
-        linear-gradient(135deg,#8edbff 0%,#e9faff 47%,#fff0bb 100%);
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(255,255,255,.95) 0 38px,
+            transparent 39px
+        ),
+        radial-gradient(
+            circle at 91% 14%,
+            rgba(255,231,150,.75) 0 48px,
+            transparent 49px
+        ),
+        radial-gradient(
+            circle at 7% 84%,
+            rgba(168,239,210,.72) 0 55px,
+            transparent 56px
+        ),
+        radial-gradient(
+            circle at 94% 83%,
+            rgba(194,181,255,.45) 0 65px,
+            transparent 66px
+        ),
+        radial-gradient(
+            circle at 48% 48%,
+            rgba(255,255,255,.55) 0 150px,
+            transparent 151px
+        ),
+        linear-gradient(
+            135deg,
+            #74c9f2 0%,
+            #c9f0ff 34%,
+            #f6fbff 58%,
+            #fff1c7 78%,
+            #dff7ec 100%
+        );
 }
 
 body::before{
@@ -59,11 +93,58 @@ body::before{
     position:fixed;
     inset:0;
     pointer-events:none;
+
     background:
-        radial-gradient(circle at 18% 20%,rgba(255,255,255,.7) 0 4px,transparent 5px),
-        radial-gradient(circle at 82% 35%,rgba(255,255,255,.65) 0 5px,transparent 6px),
-        radial-gradient(circle at 15% 70%,rgba(255,255,255,.6) 0 3px,transparent 4px),
-        radial-gradient(circle at 88% 78%,rgba(255,255,255,.7) 0 4px,transparent 5px);
+        radial-gradient(
+            circle at 18% 20%,
+            rgba(255,255,255,.8) 0 5px,
+            transparent 6px
+        ),
+        radial-gradient(
+            circle at 82% 35%,
+            rgba(255,255,255,.75) 0 6px,
+            transparent 7px
+        ),
+        radial-gradient(
+            circle at 15% 70%,
+            rgba(255,255,255,.72) 0 4px,
+            transparent 5px
+        ),
+        radial-gradient(
+            circle at 88% 78%,
+            rgba(255,255,255,.8) 0 5px,
+            transparent 6px
+        ),
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(255,255,255,.45) 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 55% 92%,
+            rgba(255,255,255,.5) 0 4px,
+            transparent 5px
+        );
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:-100px;
+    pointer-events:none;
+    z-index:-1;
+    background:
+        radial-gradient(
+            ellipse at 20% 35%,
+            rgba(88,185,238,.16),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 80% 65%,
+            rgba(169,150,255,.14),
+            transparent 42%
+        );
+    filter:blur(20px);
 }
 
 .container{
@@ -612,11 +693,6 @@ td:nth-child(6){
     width:13%;
     text-align:center!important;
 }
-
-
-/* =========================================================
-   YARD HISTORY - SEMUA ISI KE TENGAH
-========================================================= */
 
 .numbers-cell{
     display:flex;
@@ -1287,11 +1363,6 @@ td:nth-child(6){
     }
 }
 
-
-/* =========================================================
-   HISTORY SEMUA BENAR-BENAR CENTER
-========================================================= */
-
 .history table th,
 .history table td{
     text-align:center!important;
@@ -1360,7 +1431,8 @@ td:nth-child(6){
         perspective:none
     }
 
-    body::before{
+    body::before,
+    body::after{
         display:none!important
     }
 
@@ -1710,8 +1782,6 @@ td:nth-child(6){
 
     </div>
 
-
-
     <div class="result" id="result">
 
         <div class="result-label">
@@ -1876,6 +1946,123 @@ const clearHistoryButton =
     document.querySelector(".clear-history");
 
 let number = 0;
+
+
+/* =========================================================
+   SUARA BUTTON
+   Tidak menggunakan file/audio eksternal.
+   Suara dibuat langsung menggunakan Web Audio API.
+========================================================= */
+
+let audioContext = null;
+
+function playButtonSound(){
+
+    try{
+
+        if(!audioContext){
+
+            const AudioContext =
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+            if(!AudioContext){
+                return;
+            }
+
+            audioContext =
+                new AudioContext();
+
+        }
+
+        if(
+            audioContext.state === "suspended"
+        ){
+
+            audioContext.resume();
+
+        }
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gainNode =
+            audioContext.createGain();
+
+        oscillator.type =
+            "sine";
+
+        oscillator.frequency.setValueAtTime(
+            620,
+            audioContext.currentTime
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            420,
+            audioContext.currentTime + 0.075
+        );
+
+        gainNode.gain.setValueAtTime(
+            0.0001,
+            audioContext.currentTime
+        );
+
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.055,
+            audioContext.currentTime + 0.008
+        );
+
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioContext.currentTime + 0.085
+        );
+
+        oscillator.connect(
+            gainNode
+        );
+
+        gainNode.connect(
+            audioContext.destination
+        );
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + 0.09
+        );
+
+    }catch(error){
+
+        /* Audio tidak mengganggu sistem utama */
+
+    }
+
+}
+
+
+/* =========================================================
+   SUARA SETIAP BUTTON
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const button =
+            event.target.closest("button");
+
+        if(!button){
+            return;
+        }
+
+        if(button.disabled){
+            return;
+        }
+
+        playButtonSound();
+
+    }
+);
 
 
 /* =========================================================
