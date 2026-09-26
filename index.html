@@ -48,10 +48,6 @@ body{
     overflow-x:hidden;
     position:relative;
 
-    /* =====================================================
-       BACKGROUND BARU
-    ===================================================== */
-
     background:
         radial-gradient(
             circle at 8% 12%,
@@ -133,6 +129,7 @@ body::after{
     inset:-100px;
     pointer-events:none;
     z-index:-1;
+
     background:
         radial-gradient(
             ellipse at 20% 35%,
@@ -144,6 +141,7 @@ body::after{
             rgba(169,150,255,.14),
             transparent 42%
         );
+
     filter:blur(20px);
 }
 
@@ -155,12 +153,18 @@ body::after{
     border-radius:36px;
     background:rgba(255,255,255,.95);
     border:4px solid #fff;
+
     box-shadow:
         0 11px 0 #78a9c0,
         0 28px 55px var(--shadow),
         inset 0 0 0 3px #d7f2fb;
+
     backdrop-filter:blur(10px);
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
     display:flex;
@@ -188,13 +192,18 @@ body::after{
     font-size:15px;
     font-weight:1000;
     letter-spacing:.5px;
-    background:linear-gradient(145deg,#ffbd61,#ff8848);
+
+    background:linear-gradient(
+        145deg,
+        #ffbd61,
+        #ff8848
+    );
+
     border:4px solid #fff;
+
     box-shadow:
         0 7px 0 var(--orange-dark),
         0 12px 20px rgba(255,136,72,.25);
-    transform:none;
-    position:relative;
 }
 
 .title h1{
@@ -217,13 +226,20 @@ body::after{
     min-width:100px;
     padding:10px 14px;
     border-radius:18px;
-    background:linear-gradient(145deg,#ffffff,#eef8fc);
+    background:linear-gradient(
+        145deg,
+        #ffffff,
+        #eef8fc
+    );
     border:3px solid #d9eef7;
+
     box-shadow:
         0 5px 0 #9fc9da,
         0 9px 18px rgba(49,135,189,.14);
+
     text-align:center;
     overflow:hidden;
+
     transition:
         transform .2s,
         box-shadow .2s,
@@ -238,12 +254,14 @@ body::after{
     left:0;
     right:0;
     height:4px;
-    background:linear-gradient(
-        90deg,
-        #58b9ee,
-        #72d79b,
-        #ffd75a
-    );
+
+    background:
+        linear-gradient(
+            90deg,
+            #58b9ee,
+            #72d79b,
+            #ffd75a
+        );
 }
 
 .data-counter-label{
@@ -267,11 +285,19 @@ body::after{
 }
 
 .data-counter.active{
-    background:linear-gradient(145deg,#f0fff7,#dcf7e8);
+    background:
+        linear-gradient(
+            145deg,
+            #f0fff7,
+            #dcf7e8
+        );
+
     border-color:#bfe8cf;
+
     box-shadow:
         0 5px 0 #83bd9d,
         0 10px 20px rgba(74,168,111,.17);
+
     transform:translateY(-1px);
 }
 
@@ -282,6 +308,10 @@ body::after{
 .data-counter.active .data-counter-value{
     color:#3fa36b;
 }
+
+/* =========================================================
+   INPUT
+========================================================= */
 
 .input-list{
     max-height:325px;
@@ -365,6 +395,7 @@ body::after{
 .input-wrapper input:focus{
     border-color:#ffc857;
     background:#fffdf1;
+
     box-shadow:
         0 5px 0 #d8a943,
         0 0 0 5px rgba(255,200,87,.16);
@@ -380,10 +411,18 @@ body::after{
     flex-shrink:0;
     border-radius:15px;
     color:#fff;
-    background:linear-gradient(145deg,#ff8fa7,#e96582);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff8fa7,
+            #e96582
+        );
+
     box-shadow:
         0 5px 0 #c94e69,
         0 8px 15px rgba(233,101,130,.18);
+
     font-size:16px;
     font-weight:1000;
 }
@@ -405,12 +444,17 @@ body::after{
     position:absolute;
     right:15px;
     top:50%;
-    transform:translateY(-50%) scale(.5) rotate(-15deg);
+    transform:
+        translateY(-50%)
+        scale(.5)
+        rotate(-15deg);
+
     width:25px;
     height:25px;
     display:flex;
     align-items:center;
     justify-content:center;
+
     border-radius:50%;
     background:var(--green);
     border:3px solid #fff;
@@ -418,14 +462,25 @@ body::after{
     font-size:12px;
     font-weight:1000;
     opacity:0;
+
     transition:.22s;
-    box-shadow:0 3px 0 var(--green-dark);
+
+    box-shadow:
+        0 3px 0 var(--green-dark);
 }
 
 .input-wrapper input.valid + .check{
     opacity:1;
-    transform:translateY(-50%) scale(1) rotate(0)
+
+    transform:
+        translateY(-50%)
+        scale(1)
+        rotate(0)
 }
+
+/* =========================================================
+   BUTTON AREA
+========================================================= */
 
 .button-area{
     display:grid;
@@ -441,6 +496,7 @@ button{
     cursor:pointer;
     font-size:12px;
     font-weight:1000;
+
     transition:
         transform .18s,
         box-shadow .18s,
@@ -458,7 +514,14 @@ button:active{
 
 .save-button{
     color:#704c00;
-    background:linear-gradient(145deg,#ffed93,#ffc857);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffed93,
+            #ffc857
+        );
+
     box-shadow:
         0 7px 0 #d39d2c,
         0 11px 19px rgba(255,200,87,.25);
@@ -472,7 +535,14 @@ button:active{
 
 .reset-button{
     color:#7b4d00;
-    background:linear-gradient(145deg,#ffd6d6,#ff9fb0);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd6d6,
+            #ff9fb0
+        );
+
     box-shadow:
         0 7px 0 #d86f82,
         0 11px 19px rgba(216,111,130,.22);
@@ -513,11 +583,20 @@ button:active{
 }
 
 .yard-header{
-    font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif;
+    font-family:
+        "Arial Rounded MT Bold",
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
     font-weight:1000;
     letter-spacing:1.2px;
     font-size:10px;
 }
+
+/* =========================================================
+   RESULT
+========================================================= */
 
 .result{
     display:none;
@@ -526,6 +605,7 @@ button:active{
     border-radius:21px;
     background:#f2fcff;
     border:3px solid #bce8f8;
+
     box-shadow:
         0 7px 0 #9cc8dc,
         0 13px 23px rgba(37,50,74,.1);
@@ -562,6 +642,10 @@ button:active{
     font-weight:1000;
     text-shadow:0 2px 0 #ffe0a1
 }
+
+/* =========================================================
+   HISTORY
+========================================================= */
 
 .history{
     margin-top:30px;
@@ -608,6 +692,132 @@ button:active{
     box-shadow:0 6px 0 #e8a1af
 }
 
+/* =========================================================
+   DASHBOARD HISTORY
+========================================================= */
+
+.history-dashboard{
+    width:100%;
+    margin-bottom:17px;
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:10px;
+}
+
+.dashboard-card{
+    position:relative;
+    min-width:0;
+    padding:13px 11px 12px;
+    border-radius:17px;
+    border:2px solid #dceff7;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f4fbfe
+        );
+
+    box-shadow:
+        0 5px 0 #c4dfe9,
+        0 9px 17px rgba(38,52,77,.08);
+
+    overflow:hidden;
+    transition:
+        transform .18s,
+        box-shadow .18s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 8px 0 #c4dfe9,
+        0 13px 20px rgba(38,52,77,.1);
+}
+
+.dashboard-card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:5px;
+    border-radius:17px 0 0 17px;
+}
+
+.dashboard-card.blue::before{
+    background:#58b9ee;
+}
+
+.dashboard-card.green::before{
+    background:#72d79b;
+}
+
+.dashboard-card.orange::before{
+    background:#ff9b4a;
+}
+
+.dashboard-card-label{
+    display:block;
+    margin-left:4px;
+    color:#8096a6;
+    font-size:8px;
+    font-weight:1000;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.dashboard-card-value{
+    display:block;
+    margin-top:6px;
+    margin-left:4px;
+    color:var(--ink);
+    font-size:18px;
+    line-height:1;
+    font-weight:1000;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.dashboard-card-sub{
+    display:block;
+    margin-top:5px;
+    margin-left:4px;
+    color:#9aabb7;
+    font-size:7.5px;
+    font-weight:800;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.dashboard-empty{
+    display:none;
+    width:100%;
+    margin-bottom:17px;
+    padding:12px 14px;
+    border-radius:15px;
+    border:2px dashed #d6eaf3;
+    background:#f8fdff;
+    color:#8da0ad;
+    font-size:9px;
+    font-weight:800;
+    text-align:center;
+}
+
+.dashboard-empty.show{
+    display:block;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
 .table-wrapper{
     width:100%;
     max-width:100%;
@@ -616,6 +826,7 @@ button:active{
     border-radius:21px;
     border:3px solid #cceaf6;
     background:#fff;
+
     box-shadow:
         0 7px 0 #9fc9da,
         0 13px 23px rgba(37,50,74,.12);
@@ -630,7 +841,12 @@ table{
 }
 
 thead{
-    background:linear-gradient(145deg,#e3f7ff,#c6ebfa)
+    background:
+        linear-gradient(
+            145deg,
+            #e3f7ff,
+            #c6ebfa
+        )
 }
 
 th{
@@ -724,17 +940,15 @@ td:nth-child(6){
     background:#f2faff;
     border:2px solid #c8e9f7;
     color:#47738e;
+
     box-shadow:
         0 2px 0 #b7d8e5;
+
     white-space:nowrap;
     line-height:1.2;
     font-family:"Consolas","Courier New",monospace;
     font-size:10px;
     font-weight:900;
-}
-
-.numbers-cell .yard-value:first-child{
-    margin-left:0;
 }
 
 .pcs-cell{
@@ -777,12 +991,16 @@ td:nth-child(6){
     font-family:"Consolas","Courier New",monospace;
     font-weight:800;
     text-align:center!important;
-    box-shadow:0 0 0 3px rgba(105,184,229,.1);
+
+    box-shadow:
+        0 0 0 3px rgba(105,184,229,.1);
 }
 
 .history-edit-input:focus{
     border-color:#ffc857;
-    box-shadow:0 0 0 3px rgba(255,200,87,.16)
+
+    box-shadow:
+        0 0 0 3px rgba(255,200,87,.16)
 }
 
 .connected-field{
@@ -876,7 +1094,9 @@ td:nth-child(6){
 
 .color-input:focus{
     border-color:#ffc857;
-    box-shadow:0 0 0 3px rgba(255,200,87,.12)
+
+    box-shadow:
+        0 0 0 3px rgba(255,200,87,.12)
 }
 
 .print-history-area{
@@ -893,9 +1113,11 @@ td:nth-child(6){
     border-radius:17px;
     color:#ffffff;
     background:#111111;
+
     box-shadow:
         0 7px 0 #000000,
         0 12px 20px rgba(0,0,0,.22);
+
     position:relative;
     font-size:13px;
     font-weight:1000;
@@ -920,14 +1142,18 @@ td:nth-child(6){
     height:55px;
     border-radius:17px;
     color:#ffffff;
-    background:linear-gradient(
-        145deg,
-        #49c77a,
-        #249b58
-    );
+
+    background:
+        linear-gradient(
+            145deg,
+            #49c77a,
+            #249b58
+        );
+
     box-shadow:
         0 7px 0 #197541,
         0 12px 20px rgba(36,155,88,.22);
+
     font-size:13px;
     font-weight:1000;
 }
@@ -963,11 +1189,20 @@ td:nth-child(6){
     padding:10px 14px;
     border:2px dashed #cfe8f3;
     border-radius:14px;
-    background:linear-gradient(145deg,#f5fcff,#edf9fd);
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5fcff,
+            #edf9fd
+        );
+
     color:#71889a;
     font-size:10px;
     font-weight:800;
-    box-shadow:0 3px 0 #d5e9f1;
+
+    box-shadow:
+        0 3px 0 #d5e9f1;
 }
 
 .enter-key{
@@ -979,12 +1214,57 @@ td:nth-child(6){
     margin:0 4px;
     border-radius:7px;
     background:#eaf7fc;
-    box-shadow:0 3px 0 #b8d9e5;
+
+    box-shadow:
+        0 3px 0 #b8d9e5;
+
     color:#56748a;
     font-family:"Consolas",monospace;
     font-size:9px;
     font-weight:1000;
 }
+
+/* =========================================================
+   CENTER TABLE
+========================================================= */
+
+.history table th,
+.history table td{
+    text-align:center!important;
+    vertical-align:middle!important;
+}
+
+.history table td > *{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.history table td .numbers-cell{
+    display:flex!important;
+    width:100%!important;
+    justify-content:center!important;
+    align-items:center!important;
+    text-align:center!important;
+}
+
+.history table td .color-input,
+.history table td .history-edit-input{
+    text-align:center!important;
+}
+
+.history table td .action-cell{
+    text-align:center!important;
+}
+
+.history-number,
+.pcs-cell,
+.total-cell{
+    text-align:center!important;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:700px){
 
@@ -1117,6 +1397,32 @@ td:nth-child(6){
 
     .clear-history{
         padding:7px 9px
+    }
+
+    /* Dashboard mobile */
+    .history-dashboard{
+        grid-template-columns:
+            repeat(3,1fr);
+        gap:8px;
+        margin-bottom:14px;
+    }
+
+    .dashboard-card{
+        padding:11px 9px;
+        border-radius:14px;
+    }
+
+    .dashboard-card-label{
+        font-size:7px;
+    }
+
+    .dashboard-card-value{
+        font-size:16px;
+        margin-top:5px;
+    }
+
+    .dashboard-card-sub{
+        font-size:6.5px;
     }
 
     .table-wrapper{
@@ -1303,6 +1609,28 @@ td:nth-child(6){
         font-size:13px;
     }
 
+    .history-dashboard{
+        gap:6px;
+    }
+
+    .dashboard-card{
+        padding:9px 7px;
+        border-radius:12px;
+    }
+
+    .dashboard-card-label{
+        font-size:6px;
+        letter-spacing:.4px;
+    }
+
+    .dashboard-card-value{
+        font-size:14px;
+    }
+
+    .dashboard-card-sub{
+        font-size:5.8px;
+    }
+
     th{
         padding:8px 2px;
         font-size:6.5px;
@@ -1362,41 +1690,6 @@ td:nth-child(6){
         font-size:11px;
     }
 }
-
-.history table th,
-.history table td{
-    text-align:center!important;
-    vertical-align:middle!important;
-}
-
-.history table td > *{
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.history table td .numbers-cell{
-    display:flex!important;
-    width:100%!important;
-    justify-content:center!important;
-    align-items:center!important;
-    text-align:center!important;
-}
-
-.history table td .color-input,
-.history table td .history-edit-input{
-    text-align:center!important;
-}
-
-.history table td .action-cell{
-    text-align:center!important;
-}
-
-.history-number,
-.pcs-cell,
-.total-cell{
-    text-align:center!important;
-}
-
 
 /* =========================================================
    PRINT
@@ -1491,6 +1784,8 @@ td:nth-child(6){
     .clear-history,
     .action-cell,
     .print-history-area,
+    .history-dashboard,
+    .dashboard-empty,
     .header .title p{
         display:none!important
     }
@@ -1683,9 +1978,6 @@ td:nth-child(6){
         page-break-inside:avoid;
         break-inside:avoid
     }
-}
-
-@media print{
 
     .history table th,
     .history table td{
@@ -1829,6 +2121,82 @@ td:nth-child(6){
 
         </div>
 
+        <!-- =================================================
+             DASHBOARD HISTORY
+        ================================================== -->
+
+        <div
+            class="dashboard-empty show"
+            id="dashboardEmpty"
+        >
+            Dashboard akan menampilkan ringkasan history setelah
+            data disimpan.
+        </div>
+
+        <div
+            class="history-dashboard"
+            id="historyDashboard"
+        >
+
+            <div class="dashboard-card blue">
+
+                <span class="dashboard-card-label">
+                    Grand Total Data
+                </span>
+
+                <span
+                    class="dashboard-card-value"
+                    id="dashboardData"
+                >
+                    0
+                </span>
+
+                <span class="dashboard-card-sub">
+                    Total seluruh DATA
+                </span>
+
+            </div>
+
+            <div class="dashboard-card green">
+
+                <span class="dashboard-card-label">
+                    Grand Total PCS
+                </span>
+
+                <span
+                    class="dashboard-card-value"
+                    id="dashboardPCS"
+                >
+                    0
+                </span>
+
+                <span class="dashboard-card-sub">
+                    Total seluruh PCS
+                </span>
+
+            </div>
+
+            <div class="dashboard-card orange">
+
+                <span class="dashboard-card-label">
+                    Grand Total Yard
+                </span>
+
+                <span
+                    class="dashboard-card-value"
+                    id="dashboardYard"
+                >
+                    0
+                </span>
+
+                <span class="dashboard-card-sub">
+                    Total seluruh YARD
+                </span>
+
+            </div>
+
+        </div>
+
         <div class="table-wrapper">
 
             <table>
@@ -1837,7 +2205,9 @@ td:nth-child(6){
 
                     <tr>
 
-                        <th>No</th>
+                        <th>
+                            No
+                        </th>
 
                         <th class="yard-header">
                             YARD
@@ -1912,6 +2282,10 @@ td:nth-child(6){
 
 <script>
 
+/* =========================================================
+   ELEMENT
+========================================================= */
+
 const inputList =
     document.getElementById("inputList");
 
@@ -1945,13 +2319,42 @@ const saveButton =
 const clearHistoryButton =
     document.querySelector(".clear-history");
 
+
+/* =========================================================
+   DASHBOARD ELEMENT
+========================================================= */
+
+const dashboard =
+    document.getElementById(
+        "historyDashboard"
+    );
+
+const dashboardEmpty =
+    document.getElementById(
+        "dashboardEmpty"
+    );
+
+const dashboardData =
+    document.getElementById(
+        "dashboardData"
+    );
+
+const dashboardPCS =
+    document.getElementById(
+        "dashboardPCS"
+    );
+
+const dashboardYard =
+    document.getElementById(
+        "dashboardYard"
+    );
+
+
 let number = 0;
 
 
 /* =========================================================
    SUARA BUTTON
-   Tidak menggunakan file/audio eksternal.
-   Suara dibuat langsung menggunakan Web Audio API.
 ========================================================= */
 
 let audioContext = null;
@@ -2033,15 +2436,13 @@ function playButtonSound(){
 
     }catch(error){
 
-        /* Audio tidak mengganggu sistem utama */
-
     }
 
 }
 
 
 /* =========================================================
-   SUARA SETIAP BUTTON
+   SUARA BUTTON
 ========================================================= */
 
 document.addEventListener(
@@ -2066,7 +2467,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   CEK ANGKA VALID
+   CEK VALID
 ========================================================= */
 
 function isValidYardValue(value){
@@ -2099,7 +2500,7 @@ function isValidYardValue(value){
 
 
 /* =========================================================
-   PARSE SATU ANGKA YARD
+   PARSE YARD
 ========================================================= */
 
 function parseYardNumber(value){
@@ -2220,7 +2621,7 @@ function parseYardNumber(value){
 
 
 /* =========================================================
-   FORMAT ANGKA INDONESIA
+   FORMAT NUMBER
 ========================================================= */
 
 function formatNumber(number){
@@ -2246,7 +2647,7 @@ function formatNumber(number){
 
 
 /* =========================================================
-   FORMAT INPUT YARD
+   FORMAT INPUT
 ========================================================= */
 
 function formatInputYard(input){
@@ -2278,7 +2679,7 @@ function formatInputYard(input){
 
 
 /* =========================================================
-   UPDATE JUMLAH DATA
+   UPDATE COUNTER
 ========================================================= */
 
 function updateDataCounter(){
@@ -2319,7 +2720,7 @@ function updateDataCounter(){
 
 
 /* =========================================================
-   UPDATE STATUS PRINT
+   UPDATE PRINT
 ========================================================= */
 
 function updatePrintButton(){
@@ -2355,7 +2756,7 @@ function updatePrintButton(){
 
 
 /* =========================================================
-   UPDATE STATUS EXPORT EXCEL
+   UPDATE EXPORT
 ========================================================= */
 
 function updateExportButton(){
@@ -2391,7 +2792,7 @@ function updateExportButton(){
 
 
 /* =========================================================
-   UPDATE STATUS TOMBOL AKSI
+   UPDATE ACTION
 ========================================================= */
 
 function updateActionButtons(){
@@ -2463,6 +2864,10 @@ function updateActionButtons(){
 }
 
 
+/* =========================================================
+   UPDATE SEMUA HISTORY
+========================================================= */
+
 function updateHistoryButtons(){
 
     updateActionButtons();
@@ -2471,11 +2876,131 @@ function updateHistoryButtons(){
 
     updateExportButton();
 
+    updateHistoryDashboard();
+
 }
 
 
 /* =========================================================
-   SANITIZE INPUT YARD
+   DASHBOARD HISTORY
+========================================================= */
+
+function updateHistoryDashboard(){
+
+    if(
+        !dashboard ||
+        !dashboardEmpty
+    ){
+
+        return;
+
+    }
+
+    const rows =
+        historyBody.querySelectorAll(
+            "tr:not(#emptyHistory)"
+        );
+
+    if(rows.length === 0){
+
+        dashboardEmpty.classList.add(
+            "show"
+        );
+
+        dashboard.style.display =
+            "none";
+
+        if(dashboardData){
+            dashboardData.textContent = "0";
+        }
+
+        if(dashboardPCS){
+            dashboardPCS.textContent = "0";
+        }
+
+        if(dashboardYard){
+            dashboardYard.textContent = "0";
+        }
+
+        return;
+
+    }
+
+    dashboardEmpty.classList.remove(
+        "show"
+    );
+
+    dashboard.style.display =
+        "grid";
+
+    let totalPCSValue = 0;
+
+    let totalYardValue = 0;
+
+    rows.forEach(
+        row => {
+
+            const pcsCell =
+                row.querySelector(
+                    ".pcs-cell"
+                );
+
+            const totalCell =
+                row.querySelector(
+                    ".total-cell"
+                );
+
+            if(pcsCell){
+
+                const pcs =
+                    parseYardNumber(
+                        pcsCell.textContent
+                    );
+
+                if(
+                    Number.isFinite(pcs)
+                ){
+
+                    totalPCSValue += pcs;
+
+                }
+
+            }
+
+            if(totalCell){
+
+                const yard =
+                    parseYardNumber(
+                        totalCell.textContent
+                    );
+
+                if(
+                    Number.isFinite(yard)
+                ){
+
+                    totalYardValue += yard;
+
+                }
+
+            }
+
+        }
+    );
+
+    dashboardData.textContent =
+        formatNumber(rows.length);
+
+    dashboardPCS.textContent =
+        formatNumber(totalPCSValue);
+
+    dashboardYard.textContent =
+        formatNumber(totalYardValue);
+
+}
+
+
+/* =========================================================
+   SANITIZE
 ========================================================= */
 
 function sanitizeYardInput(input){
@@ -2540,7 +3065,7 @@ function sanitizeYardInput(input){
 
 
 /* =========================================================
-   HANDLE INPUT YARD
+   HANDLE INPUT
 ========================================================= */
 
 function handleYardInput(input){
@@ -2565,11 +3090,12 @@ function handleYardInput(input){
 
     calculateTotal();
 
+
 }
 
 
 /* =========================================================
-   FORMAT INPUT SAAT BLUR
+   BLUR
 ========================================================= */
 
 function formatInputOnBlur(input){
@@ -2736,7 +3262,6 @@ function addInput(focusInput = true){
         }
     );
 
-
     input.addEventListener(
         "input",
         function(){
@@ -2745,7 +3270,6 @@ function addInput(focusInput = true){
 
         }
     );
-
 
     input.addEventListener(
         "paste",
@@ -2783,7 +3307,6 @@ function addInput(focusInput = true){
         }
     );
 
-
     if(focusInput){
 
         setTimeout(
@@ -2797,7 +3320,7 @@ function addInput(focusInput = true){
 
 
 /* =========================================================
-   BLOKIR KEYBOARD NON ANGKA
+   ALLOW KEY
 ========================================================= */
 
 function allowYardKey(event){
@@ -2939,7 +3462,7 @@ function removeInput(button){
 
 
 /* =========================================================
-   UPDATE NOMOR INPUT
+   UPDATE NOMOR
 ========================================================= */
 
 function updateInputNumbers(){
@@ -3204,7 +3727,7 @@ function saveHistory(){
 
 
 /* =========================================================
-   HITUNG TOTAL YARD
+   TOTAL YARD
 ========================================================= */
 
 function calculateYardTotal(values){
@@ -3236,7 +3759,7 @@ function calculateYardTotal(values){
 
 
 /* =========================================================
-   FORMAT YARD HISTORY
+   FORMAT HISTORY
 ========================================================= */
 
 function formatYardDisplay(values){
@@ -3298,7 +3821,6 @@ function editHistory(button){
                 Number(value) > 0
         );
 
-
     if(
         yards.length === 0
     ){
@@ -3317,7 +3839,6 @@ function editHistory(button){
             parseYardText(yardText);
 
     }
-
 
     const yardCell =
         row.querySelector(
@@ -3339,7 +3860,6 @@ function editHistory(button){
 
     `;
 
-
     const pcsCell =
         row.querySelector(
             ".pcs-cell"
@@ -3356,7 +3876,6 @@ function editHistory(button){
         >
 
     `;
-
 
     const totalCell =
         row.querySelector(
@@ -3377,12 +3896,10 @@ function editHistory(button){
 
     `;
 
-
     const yardInput =
         row.querySelector(
             ".yard-edit-input"
         );
-
 
     yardInput.addEventListener(
         "keydown",
@@ -3444,7 +3961,6 @@ function editHistory(button){
         }
     );
 
-
     yardInput.addEventListener(
         "input",
         function(){
@@ -3457,7 +3973,6 @@ function editHistory(button){
 
         }
     );
-
 
     yardInput.addEventListener(
         "paste",
@@ -3479,7 +3994,6 @@ function editHistory(button){
         }
     );
 
-
     button.className =
         "save-history-button";
 
@@ -3492,7 +4006,6 @@ function editHistory(button){
             saveEditedHistory(this);
 
         };
-
 
     setTimeout(
         () => {
@@ -3511,7 +4024,7 @@ function editHistory(button){
 
 
 /* =========================================================
-   FORMAT NILAI UNTUK INPUT EDIT
+   FORMAT EDIT
 ========================================================= */
 
 function formatYardEditValue(values){
@@ -3527,7 +4040,7 @@ function formatYardEditValue(values){
 
 
 /* =========================================================
-   UPDATE FIELD TERHUBUNG
+   UPDATE CONNECTED
 ========================================================= */
 
 function updateConnectedHistory(row){
@@ -3592,7 +4105,7 @@ function updateConnectedHistory(row){
 
 
 /* =========================================================
-   SAVE EDIT HISTORY
+   SAVE EDIT
 ========================================================= */
 
 function saveEditedHistory(button){
@@ -3700,7 +4213,7 @@ function saveEditedHistory(button){
 
 
 /* =========================================================
-   PARSE YARD EDIT
+   PARSE YARD TEXT
 ========================================================= */
 
 function parseYardText(text){
@@ -3901,7 +4414,6 @@ function deleteHistory(button){
 
     if(!row){
         return;
-
     }
 
     const confirmDelete =
@@ -3955,7 +4467,7 @@ function deleteHistory(button){
 
 
 /* =========================================================
-   HAPUS SEMUA HISTORY
+   CLEAR HISTORY
 ========================================================= */
 
 function clearHistory(){
@@ -4062,7 +4574,7 @@ function printHistory(){
 
 
 /* =========================================================
-   EXPORT HISTORY KE EXCEL
+   EXPORT EXCEL
 ========================================================= */
 
 function exportHistoryToExcel(){
@@ -4099,7 +4611,6 @@ function exportHistoryToExcel(){
 
     }
 
-
     let excelRows = "";
 
     rows.forEach(
@@ -4128,7 +4639,6 @@ function exportHistoryToExcel(){
                     ".color-input"
                 );
 
-
             const yard =
                 yardElement
                     ? yardElement.textContent.trim()
@@ -4148,7 +4658,6 @@ function exportHistoryToExcel(){
                 colorInput
                     ? colorInput.value.trim()
                     : "";
-
 
             excelRows += `
 
@@ -4180,7 +4689,6 @@ function exportHistoryToExcel(){
 
         }
     );
-
 
     const excelHTML = `
 
@@ -4289,7 +4797,6 @@ function exportHistoryToExcel(){
 
     `;
 
-
     const blob =
         new Blob(
             [
@@ -4302,12 +4809,10 @@ function exportHistoryToExcel(){
             }
         );
 
-
     const url =
         URL.createObjectURL(
             blob
         );
-
 
     const link =
         document.createElement("a");
@@ -4346,17 +4851,14 @@ function exportHistoryToExcel(){
             now.getSeconds()
         ).padStart(2,"0");
 
-
     link.download =
         `History_Yard_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.xls`;
-
 
     document.body.appendChild(link);
 
     link.click();
 
     document.body.removeChild(link);
-
 
     setTimeout(
         () => {
@@ -4373,7 +4875,7 @@ function exportHistoryToExcel(){
 
 
 /* =========================================================
-   ESCAPE DATA EXCEL
+   ESCAPE EXCEL
 ========================================================= */
 
 function escapeExcel(value){
