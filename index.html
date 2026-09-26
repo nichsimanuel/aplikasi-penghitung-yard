@@ -5011,6 +5011,49 @@ function exportHistoryToExcel(){
         } 
     ); 
  
+    /*
+     * GRAND TOTAL harus mengikuti perhitungan PRINT secara persis.
+     * PRINT menggunakan row.dataset.yards saat baris tidak sedang diedit,
+     * lalu menjumlahkannya dengan addDecimalStrings() + calculateYardTotal().
+     * Export Excel menggunakan logika yang sama agar hasilnya identik.
+     */
+    let grandTotalPCS = 0;
+    let grandTotalYard = "0";
+
+    rows.forEach(row => {
+
+        let values = [];
+
+        try{
+            values = JSON.parse(
+                row.dataset.yards || "[]"
+            );
+        }catch(error){
+            values = [];
+        }
+
+        values = values.filter(
+            value =>
+                Number.isFinite(Number(value)) &&
+                Number(value) > 0
+        );
+
+        grandTotalPCS += values.length;
+
+        grandTotalYard = addDecimalStrings(
+            grandTotalYard,
+            calculateYardTotal(values)
+        );
+    });
+
+    /*
+     * formatNumber() adalah formatter yang sama dengan PRINT.
+     * Jadi angka desimal otomatis menjadi superscript Unicode.
+     * Contoh: 1250.5 -> 1.250⁵
+     */
+    const grandTotalYardExcelDisplay =
+        formatNumber(grandTotalYard);
+
     const excelHTML = ` 
  
         <html> 
@@ -5058,7 +5101,25 @@ function exportHistoryToExcel(){
                     color:#111; 
                     text-align:center; 
                     vertical-align:middle; 
-                } 
+                }
+
+                .grand-total-row td{
+                    font-weight:bold;
+                    text-align:center;
+                    background:#f3f3f3;
+                }
+
+                .grand-total-label{
+                    text-align:center!important;
+                    font-weight:bold;
+                    vertical-align:middle;
+                }
+
+                .grand-total-value{
+                    text-align:center!important;
+                    font-weight:bold;
+                    vertical-align:middle;
+                }
  
             </style> 
  
@@ -5106,7 +5167,25 @@ function exportHistoryToExcel(){
  
                 <tbody> 
  
-                    ${excelRows} 
+                    ${excelRows}
+
+                    <tr class="grand-total-row">
+                        <td colspan="3" class="grand-total-label" align="center" style="text-align:center!important;vertical-align:middle!important;">
+                            GRAND TOTAL PCS
+                        </td>
+                        <td colspan="2" class="grand-total-value" align="center" style="text-align:center!important;vertical-align:middle!important;">
+                            ${escapeExcel(formatNumber(grandTotalPCS))}
+                        </td>
+                    </tr>
+
+                    <tr class="grand-total-row">
+                        <td colspan="3" class="grand-total-label" align="center" style="text-align:center!important;vertical-align:middle!important;">
+                            GRAND TOTAL YARD
+                        </td>
+                        <td colspan="2" class="grand-total-value" align="center" style="text-align:center!important;vertical-align:middle!important;">
+                            ${escapeExcel(grandTotalYardExcelDisplay || "0")}
+                        </td>
+                    </tr>
  
                 </tbody> 
  
