@@ -2668,10 +2668,178 @@ body.dark-theme .theme-switcher{
     }
 }
 
+
+/* =========================================================
+   MODE WINDOWS / ANDROID
+   Hanya mengubah tampilan. Tidak mengubah urutan tombol
+   maupun cara kerja fitur utama.
+========================================================= */
+
+.mode-switcher{
+    position:fixed;
+    top:18px;
+    left:18px;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 9px;
+    border-radius:18px;
+    background:var(--theme-panel);
+    border:2px solid var(--theme-panel-border);
+    box-shadow:0 5px 0 rgba(38,52,77,.18),0 9px 20px rgba(38,52,77,.12);
+    color:var(--theme-text);
+    transition:
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease,
+        color .3s ease;
+}
+
+.mode-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-width:46px;
+    font-size:8px;
+    font-weight:1000;
+    letter-spacing:.4px;
+    user-select:none;
+}
+
+.mode-toggle{
+    position:relative;
+    display:block;
+    width:42px;
+    height:22px;
+    flex-shrink:0;
+    cursor:pointer;
+}
+
+.mode-toggle input{
+    position:absolute;
+    width:1px;
+    height:1px;
+    opacity:0;
+    pointer-events:none;
+}
+
+.mode-slider{
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:var(--theme-track);
+    border:2px solid #c7eaf8;
+    box-shadow:inset 0 2px 4px rgba(38,52,77,.12);
+    transition:
+        background .3s ease,
+        border-color .3s ease;
+}
+
+.mode-slider::before{
+    content:"";
+    position:absolute;
+    top:2px;
+    left:2px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--theme-knob);
+    box-shadow:0 2px 4px rgba(38,52,77,.25);
+    transition:
+        transform .3s cubic-bezier(.2,.8,.2,1),
+        background .3s ease;
+}
+
+.mode-toggle input:checked + .mode-slider::before{
+    transform:translateX(20px);
+}
+
+.mode-toggle input:focus-visible + .mode-slider{
+    box-shadow:0 0 0 3px rgba(255,200,87,.25);
+}
+
+/* Mode Windows */
+body.windows-mode .mode-label.android{
+    opacity:.48;
+}
+
+body.windows-mode .mode-label.windows{
+    opacity:1;
+}
+
+/* Mode Android */
+body.android-mode .mode-label.windows{
+    opacity:.48;
+}
+
+body.android-mode .mode-label.android{
+    opacity:1;
+}
+
+body.android-mode .mode-slider{
+    border-color:#8bd1a9;
+    background:#e5f8ed;
+}
+
+body.dark-theme.android-mode .mode-slider{
+    border-color:#397255;
+    background:#1b3b2b;
+}
+
+@media(max-width:600px){
+    .mode-switcher{
+        top:10px;
+        left:10px;
+        transform:scale(.88);
+        transform-origin:top left;
+    }
+}
+
+@media print{
+    .mode-switcher{
+        display:none!important;
+    }
+}
+
+/* Android-specific visual adjustments only.
+   Button grid/order remains exactly 2 columns. */
+@media(max-width:700px){
+    body.android-mode .container{
+        width:100%;
+        max-width:100%;
+    }
+
+    body.android-mode .input-wrapper input{
+        -webkit-user-select:text;
+        user-select:text;
+        -webkit-tap-highlight-color:transparent;
+    }
+
+    body.android-mode .button-area{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
 </style>
 </head>
 
-<body>
+<body class="windows-mode">
+
+<!-- =========================================================
+     MODE WINDOWS / ANDROID
+     Fixed di luar container agar layout dan posisi tombol
+     utama tidak berubah.
+========================================================= -->
+<div class="mode-switcher" id="modeSwitcher" aria-label="Pilih tampilan Windows atau Android">
+    <span class="mode-label windows">WINDOWS</span>
+    <label class="mode-toggle">
+        <input type="checkbox" id="modeToggle" aria-label="Aktifkan tampilan Android">
+        <span class="mode-slider"></span>
+    </label>
+    <span class="mode-label android">ANDROID</span>
+</div>
+
 
 <!-- =========================================================
      THEME SIANG / MALAM
@@ -3110,6 +3278,170 @@ if(themeToggle){
     );
 
 }
+
+
+
+/* =========================================================
+   MODE WINDOWS / ANDROID
+========================================================= */
+
+const modeToggle =
+    document.getElementById("modeToggle");
+
+function applyDeviceMode(mode){
+
+    const isAndroid =
+        mode === "android";
+
+    document.body.classList.toggle(
+        "android-mode",
+        isAndroid
+    );
+
+    document.body.classList.toggle(
+        "windows-mode",
+        !isAndroid
+    );
+
+    if(modeToggle){
+        modeToggle.checked = isAndroid;
+    }
+
+    try{
+        localStorage.setItem(
+            "nicholasDeviceMode",
+            isAndroid ? "android" : "windows"
+        );
+    }catch(error){
+    }
+
+}
+
+(function initDeviceMode(){
+
+    let savedMode = "windows";
+
+    try{
+
+        const stored =
+            localStorage.getItem(
+                "nicholasDeviceMode"
+            );
+
+        if(
+            stored === "android" ||
+            stored === "windows"
+        ){
+
+            savedMode = stored;
+
+        }
+
+    }catch(error){
+    }
+
+    applyDeviceMode(savedMode);
+
+})();
+
+if(modeToggle){
+
+    modeToggle.addEventListener(
+        "change",
+        function(){
+
+            applyDeviceMode(
+                this.checked
+                    ? "android"
+                    : "windows"
+            );
+
+        }
+    );
+
+}
+
+/* =========================================================
+   ENTER KHUSUS MODE ANDROID
+   Memastikan setelah satu history disimpan, input berikutnya
+   tetap dapat diproses dengan tombol Enter.
+========================================================= */
+
+function handleAndroidYardEnter(event){
+
+    if(
+        document.body.classList.contains("android-mode") === false
+    ){
+        return;
+    }
+
+    if(
+        event.key !== "Enter"
+    ){
+        return;
+    }
+
+    const input =
+        event.target;
+
+    if(
+        !input ||
+        !input.matches(".input-wrapper input")
+    ){
+        return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if(
+        !isValidYardValue(input.value)
+    ){
+        return;
+    }
+
+    formatInputOnBlur(input);
+
+    const inputs =
+        Array.from(
+            inputList.querySelectorAll(
+                ".input-wrapper input"
+            )
+        );
+
+    const currentIndex =
+        inputs.indexOf(input);
+
+    if(currentIndex === -1){
+        return;
+    }
+
+    const nextInput =
+        inputs[currentIndex + 1];
+
+    if(nextInput){
+
+        nextInput.focus();
+
+        try{
+            nextInput.select();
+        }catch(error){
+        }
+
+        return;
+    }
+
+    /* Jika input terakhir, buat kolom baru.
+       addInput(true) akan langsung memfokuskan input baru. */
+    addInput(true);
+
+}
+
+document.addEventListener(
+    "keydown",
+    handleAndroidYardEnter,
+    false
+);
 
 
 let number = 0;
@@ -5068,7 +5400,9 @@ function resetInput(){
 
     number = 0;
 
-    addInput(false);
+    addInput(
+        document.body.classList.contains("android-mode")
+    );
 
     calculateTotal();
 
