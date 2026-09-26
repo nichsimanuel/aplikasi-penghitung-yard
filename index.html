@@ -2721,7 +2721,9 @@ body.dark-theme .theme-switcher{
     width:1px;
     height:1px;
     opacity:0;
-    pointer-events:none;
+    pointer-events:auto;
+    cursor:pointer;
+    z-index:2;
 }
 
 .mode-slider{
@@ -2799,6 +2801,41 @@ body.dark-theme.android-mode .mode-slider{
 @media print{
     .mode-switcher{
         display:none!important;
+    }
+}
+
+/* DEVICE MODE VISUALS
+   Mode Windows = tampilan desktop.
+   Mode Android = simulasi tampilan handphone, dapat dipilih
+   walaupun file dibuka dari komputer. Tombol utama tetap 2 kolom. */
+@media(min-width:701px){
+    body.android-mode{
+        align-items:flex-start;
+        justify-content:center;
+        padding:18px;
+    }
+
+    body.android-mode .container{
+        width:430px;
+        max-width:calc(100vw - 36px);
+        padding:18px;
+        border-radius:26px;
+    }
+
+    body.android-mode .header{
+        margin-bottom:18px;
+    }
+
+    body.android-mode .button-area{
+        grid-template-columns:1fr 1fr;
+    }
+
+    body.android-mode .history-dashboard{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    body.android-mode .table-wrapper{
+        overflow-x:auto;
     }
 }
 
@@ -3349,13 +3386,20 @@ if(modeToggle){
     modeToggle.addEventListener(
         "change",
         function(){
-
             applyDeviceMode(
-                this.checked
-                    ? "android"
-                    : "windows"
+                this.checked ? "android" : "windows"
             );
+        }
+    );
 
+    modeToggle.addEventListener(
+        "click",
+        function(){
+            requestAnimationFrame(() => {
+                applyDeviceMode(
+                    this.checked ? "android" : "windows"
+                );
+            });
         }
     );
 
