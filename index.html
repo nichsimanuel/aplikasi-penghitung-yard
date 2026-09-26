@@ -2893,7 +2893,6 @@ function updateHistoryDashboard(){
     ){
 
         return;
-
     }
 
     const rows =
@@ -2940,49 +2939,56 @@ function updateHistoryDashboard(){
     rows.forEach(
         row => {
 
-            const pcsCell =
+            /*
+             * Dashboard membaca data dari row history yang sama.
+             * Saat row sedang diedit, dashboard menggunakan
+             * nilai YARD terbaru dari input edit.
+             */
+            const yardEditInput =
                 row.querySelector(
-                    ".pcs-cell"
+                    ".yard-edit-input"
                 );
 
-            const totalCell =
-                row.querySelector(
-                    ".total-cell"
-                );
+            let values = [];
 
-            if(pcsCell){
+            if(yardEditInput){
 
-                const pcs =
-                    parseYardNumber(
-                        pcsCell.textContent
+                values =
+                    parseYardText(
+                        yardEditInput.value
                     );
 
-                if(
-                    Number.isFinite(pcs)
-                ){
+            }else{
 
-                    totalPCSValue += pcs;
+                try{
+
+                    values =
+                        JSON.parse(
+                            row.dataset.yards || "[]"
+                        );
+
+                }catch(error){
+
+                    values = [];
 
                 }
 
             }
 
-            if(totalCell){
+            values =
+                values.filter(
+                    value =>
+                        Number.isFinite(
+                            Number(value)
+                        ) &&
+                        Number(value) > 0
+                );
 
-                const yard =
-                    parseYardNumber(
-                        totalCell.textContent
-                    );
+            totalPCSValue +=
+                values.length;
 
-                if(
-                    Number.isFinite(yard)
-                ){
-
-                    totalYardValue += yard;
-
-                }
-
-            }
+            totalYardValue +=
+                calculateYardTotal(values);
 
         }
     );
@@ -4100,6 +4106,8 @@ function updateConnectedHistory(row){
         "value",
         formatNumber(totalYard)
     );
+
+    updateHistoryDashboard();
 
 }
 
