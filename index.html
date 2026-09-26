@@ -841,25 +841,22 @@ td:nth-child(6){
 }
 
 .yard-value{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:42px;
+    display:inline;
     max-width:100%;
-    padding:5px 8px;
-    border-radius:9px;
-    background:#f2faff;
-    border:2px solid #c8e9f7;
+    padding:0;
+    margin:0 3px;
+    border:none;
+    border-radius:0;
+    background:transparent;
     color:#47738e;
-
-    box-shadow:
-        0 2px 0 #b7d8e5;
+    box-shadow:none;
 
     white-space:nowrap;
     line-height:1.2;
-    font-family:"Consolas","Courier New",monospace;
-    font-size:10px;
-    font-weight:900;
+
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    font-weight:700;
 }
 
 .pcs-cell{
@@ -880,7 +877,7 @@ td:nth-child(6){
 .total-cell{
     color:#e89a25;
     font-weight:1000;
-    font-size:12px;
+    font-size:16px;
     overflow-wrap:anywhere;
     word-break:break-word;
     text-align:center!important;
@@ -1720,18 +1717,22 @@ body.dark-theme .theme-switcher{
     }
 
     .yard-value{
-        min-width:0;
-        padding:4px 5px;
-        border-radius:7px;
-        font-size:7.5px;
-        border-width:1.5px;
-        box-shadow:0 2px 0 #b7d8e5;
+    	min-width:0;
+    	padding:0;
+    	margin:0 2px;
+    	border:none;
+    	border-radius:0;
+    	background:transparent;
+    	box-shadow:none;
+    	font-family:Arial,Helvetica,sans-serif;
+    	font-size:10px;
+    	font-weight:700;
     }
 
     .history-number{
         min-width:22px;
         padding:4px 5px;
-        font-size:8px;
+        font-size:10px;
         border-radius:7px;
         text-align:center!important;
     }
@@ -1739,13 +1740,13 @@ body.dark-theme .theme-switcher{
     .pcs-cell{
         min-width:22px;
         padding:4px 4px;
-        font-size:8px;
+        font-size:15px;
         border-radius:7px;
         text-align:center!important;
     }
 
     .total-cell{
-        font-size:9px;
+        font-size:12px;
         text-align:center!important;
     }
 
@@ -1882,9 +1883,13 @@ body.dark-theme .theme-switcher{
     }
 
     .yard-value{
-        padding:3px 4px;
-        font-size:6.5px;
-        border-radius:6px;
+    	padding:0;
+    	margin:0 2px;
+    	font-size:6.5px;
+    	border:none;
+    	border-radius:0;
+    	background:transparent;
+    	box-shadow:none;
     }
 
     .pcs-cell{
