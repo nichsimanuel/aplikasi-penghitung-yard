@@ -31,7 +31,42 @@
     --green:#72d79b;
     --green-dark:#4aa86f;
     --purple:#a996ff;
-    --shadow:rgba(38,52,77,.20)
+    --shadow:rgba(38,52,77,.20);
+
+    /* =====================================================
+       THEME SIANG / MALAM
+       Tidak mengubah struktur maupun posisi elemen sistem.
+    ===================================================== */
+    --body-bg:
+        radial-gradient(circle at 8% 12%,rgba(255,255,255,.95) 0 38px,transparent 39px),
+        radial-gradient(circle at 91% 14%,rgba(255,231,150,.75) 0 48px,transparent 49px),
+        radial-gradient(circle at 7% 84%,rgba(168,239,210,.72) 0 55px,transparent 56px),
+        radial-gradient(circle at 94% 83%,rgba(194,181,255,.45) 0 65px,transparent 66px),
+        radial-gradient(circle at 48% 48%,rgba(255,255,255,.55) 0 150px,transparent 151px),
+        linear-gradient(135deg,#74c9f2 0%,#c9f0ff 34%,#f6fbff 58%,#fff1c7 78%,#dff7ec 100%);
+
+    --container-bg:rgba(255,255,255,.95);
+    --container-border:#fff;
+    --container-inset:#d7f2fb;
+    --container-shadow:#78a9c0;
+
+    --input-bg:#fff;
+    --input-border:#c7eaf8;
+    --input-shadow:#b7d5e1;
+    --result-bg:#f2fcff;
+    --result-border:#bce8f8;
+    --table-bg:#fff;
+    --table-border:#cceaf6;
+    --card-bg-start:#fff;
+    --card-bg-end:#f4fbfe;
+    --card-border:#dceff7;
+    --text-soft:#71839a;
+
+    --theme-panel:#ffffff;
+    --theme-panel-border:#d9eef7;
+    --theme-track:#e8f8ff;
+    --theme-knob:#ffffff;
+    --theme-text:#47728d;
 }
 
 html{
@@ -48,40 +83,8 @@ body{
     overflow-x:hidden;
     position:relative;
 
-    background:
-        radial-gradient(
-            circle at 8% 12%,
-            rgba(255,255,255,.95) 0 38px,
-            transparent 39px
-        ),
-        radial-gradient(
-            circle at 91% 14%,
-            rgba(255,231,150,.75) 0 48px,
-            transparent 49px
-        ),
-        radial-gradient(
-            circle at 7% 84%,
-            rgba(168,239,210,.72) 0 55px,
-            transparent 56px
-        ),
-        radial-gradient(
-            circle at 94% 83%,
-            rgba(194,181,255,.45) 0 65px,
-            transparent 66px
-        ),
-        radial-gradient(
-            circle at 48% 48%,
-            rgba(255,255,255,.55) 0 150px,
-            transparent 151px
-        ),
-        linear-gradient(
-            135deg,
-            #74c9f2 0%,
-            #c9f0ff 34%,
-            #f6fbff 58%,
-            #fff1c7 78%,
-            #dff7ec 100%
-        );
+    background:var(--body-bg);
+    transition:background .35s ease,color .35s ease;
 }
 
 body::before{
@@ -151,13 +154,13 @@ body::after{
     position:relative;
     padding:29px;
     border-radius:36px;
-    background:rgba(255,255,255,.95);
-    border:4px solid #fff;
+    background:var(--container-bg);
+    border:4px solid var(--container-border);
 
     box-shadow:
-        0 11px 0 #78a9c0,
+        0 11px 0 var(--container-shadow),
         0 28px 55px var(--shadow),
-        inset 0 0 0 3px #d7f2fb;
+        inset 0 0 0 3px var(--container-inset);
 
     backdrop-filter:blur(10px);
 }
@@ -376,9 +379,9 @@ body::after{
 .input-wrapper input{
     width:100%;
     height:53px;
-    border:3px solid #c7eaf8;
+    border:3px solid var(--input-border);
     border-radius:18px;
-    background:#fff;
+    background:var(--input-bg);
     color:var(--ink);
     padding:0 52px 0 18px;
     font-size:16px;
@@ -603,8 +606,8 @@ button:active{
     margin-top:18px;
     padding:20px 22px;
     border-radius:21px;
-    background:#f2fcff;
-    border:3px solid #bce8f8;
+    background:var(--result-bg);
+    border:3px solid var(--result-border);
 
     box-shadow:
         0 7px 0 #9cc8dc,
@@ -710,12 +713,12 @@ button:active{
     min-width:0;
     padding:13px 11px 12px;
     border-radius:17px;
-    border:2px solid #dceff7;
+    border:2px solid var(--card-border);
     background:
         linear-gradient(
             145deg,
-            #ffffff,
-            #f4fbfe
+            var(--card-bg-start),
+            var(--card-bg-end)
         );
 
     box-shadow:
@@ -825,7 +828,7 @@ button:active{
     overflow-y:visible;
     border-radius:21px;
     border:3px solid #cceaf6;
-    background:#fff;
+    background:var(--table-bg);
 
     box-shadow:
         0 7px 0 #9fc9da,
@@ -1260,6 +1263,348 @@ td:nth-child(6){
 .pcs-cell,
 .total-cell{
     text-align:center!important;
+}
+
+/* =========================================================
+   THEME SWITCHER — SIANG / MALAM
+   Posisi fixed, tidak menggeser layout sistem utama.
+========================================================= */
+
+.theme-switcher{
+    position:fixed;
+    top:18px;
+    right:18px;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 9px;
+    border-radius:18px;
+    background:var(--theme-panel);
+    border:2px solid var(--theme-panel-border);
+    box-shadow:0 5px 0 rgba(38,52,77,.18),0 9px 20px rgba(38,52,77,.12);
+    color:var(--theme-text);
+    transition:
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease,
+        color .3s ease;
+}
+
+.theme-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:18px;
+    height:18px;
+    font-size:13px;
+    line-height:1;
+    font-weight:1000;
+    user-select:none;
+}
+
+.theme-icon.moon{
+    font-size:16px;
+}
+
+.theme-toggle{
+    position:relative;
+    display:block;
+    width:42px;
+    height:22px;
+    flex-shrink:0;
+    cursor:pointer;
+}
+
+.theme-toggle input{
+    position:absolute;
+    width:1px;
+    height:1px;
+    opacity:0;
+    pointer-events:none;
+}
+
+.theme-slider{
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:var(--theme-track);
+    border:2px solid #c7eaf8;
+    box-shadow:inset 0 2px 4px rgba(38,52,77,.12);
+    transition:
+        background .3s ease,
+        border-color .3s ease;
+}
+
+.theme-slider::before{
+    content:"";
+    position:absolute;
+    top:2px;
+    left:2px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--theme-knob);
+    box-shadow:0 2px 4px rgba(38,52,77,.25);
+    transition:
+        transform .3s cubic-bezier(.2,.8,.2,1),
+        background .3s ease;
+}
+
+.theme-toggle input:checked + .theme-slider::before{
+    transform:translateX(20px);
+}
+
+.theme-toggle input:focus-visible + .theme-slider{
+    box-shadow:0 0 0 3px rgba(255,200,87,.25);
+}
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+body.dark-theme{
+    --ink:#edf5ff;
+    --muted:#aabbd0;
+    --white:#182231;
+    --blue:#55b8ee;
+    --blue-dark:#3b8fc1;
+    --sky:#172b3a;
+    --shadow:rgba(0,0,0,.38);
+
+    --body-bg:
+        radial-gradient(circle at 8% 12%,rgba(86,145,177,.20) 0 38px,transparent 39px),
+        radial-gradient(circle at 91% 14%,rgba(189,147,56,.18) 0 48px,transparent 49px),
+        radial-gradient(circle at 7% 84%,rgba(66,145,105,.18) 0 55px,transparent 56px),
+        radial-gradient(circle at 94% 83%,rgba(112,93,176,.18) 0 65px,transparent 66px),
+        radial-gradient(circle at 48% 48%,rgba(255,255,255,.035) 0 150px,transparent 151px),
+        linear-gradient(135deg,#091522 0%,#102536 34%,#17212f 58%,#292619 78%,#142a24 100%);
+
+    --container-bg:rgba(20,30,43,.96);
+    --container-border:#26384c;
+    --container-inset:#29465a;
+    --container-shadow:#0b1825;
+
+    --input-bg:#172535;
+    --input-border:#35566c;
+    --input-shadow:#0b1825;
+    --result-bg:#142b39;
+    --result-border:#35647a;
+    --table-bg:#152332;
+    --table-border:#35576b;
+    --card-bg-start:#1c2d3e;
+    --card-bg-end:#142333;
+    --card-border:#36556a;
+    --text-soft:#a9bacb;
+
+    --theme-panel:#172536;
+    --theme-panel-border:#3a566b;
+    --theme-track:#263d51;
+    --theme-knob:#f7d36a;
+    --theme-text:#d9e7f4;
+}
+
+body.dark-theme::before{
+    background:
+        radial-gradient(circle at 18% 20%,rgba(255,255,255,.16) 0 5px,transparent 6px),
+        radial-gradient(circle at 82% 35%,rgba(255,255,255,.12) 0 6px,transparent 7px),
+        radial-gradient(circle at 15% 70%,rgba(255,255,255,.10) 0 4px,transparent 5px),
+        radial-gradient(circle at 88% 78%,rgba(255,255,255,.13) 0 5px,transparent 6px),
+        radial-gradient(circle at 50% 10%,rgba(255,255,255,.08) 0 3px,transparent 4px),
+        radial-gradient(circle at 55% 92%,rgba(255,255,255,.08) 0 4px,transparent 5px);
+}
+
+body.dark-theme::after{
+    background:
+        radial-gradient(ellipse at 20% 35%,rgba(88,185,238,.10),transparent 42%),
+        radial-gradient(ellipse at 80% 65%,rgba(169,150,255,.09),transparent 42%);
+}
+
+body.dark-theme .title h1,
+body.dark-theme .history-title h2{
+    color:#edf5ff;
+}
+
+body.dark-theme .title p,
+body.dark-theme .history-title span,
+body.dark-theme .dashboard-card-label,
+body.dark-theme .dashboard-card-sub,
+body.dark-theme .data-counter-label,
+body.dark-theme .result-label span,
+body.dark-theme .result-label small{
+    color:#9db2c5;
+}
+
+body.dark-theme .data-counter{
+    background:linear-gradient(145deg,#203345,#182938);
+    border-color:#3b596d;
+    box-shadow:0 5px 0 #0c1b29,0 9px 18px rgba(0,0,0,.24);
+}
+
+body.dark-theme .data-counter-value{
+    color:#83c9ed;
+}
+
+body.dark-theme .data-counter.active{
+    background:linear-gradient(145deg,#1d3b30,#183127);
+    border-color:#397255;
+    box-shadow:0 5px 0 #183d2b,0 10px 20px rgba(0,0,0,.24);
+}
+
+body.dark-theme .data-counter.active .data-counter-label{
+    color:#9ed0b1;
+}
+
+body.dark-theme .data-counter.active .data-counter-value{
+    color:#76d39b;
+}
+
+body.dark-theme .number{
+    background:#203b4c;
+    border-color:#304e62;
+    color:#a9d5ed;
+    box-shadow:0 5px 0 #0b1b28;
+}
+
+body.dark-theme .input-wrapper input{
+    color:#edf5ff;
+}
+
+body.dark-theme .input-wrapper input::placeholder{
+    color:#7f95a8;
+}
+
+body.dark-theme .input-wrapper input:focus{
+    background:#2d2a1d;
+}
+
+body.dark-theme .footer{
+    background:linear-gradient(145deg,#1b2c3c,#152635);
+    border-color:#36556a;
+    color:#a9bacb;
+    box-shadow:0 3px 0 #0d1b27;
+}
+
+body.dark-theme .enter-key{
+    background:#22394c;
+    color:#b6c9d8;
+    box-shadow:0 3px 0 #0e1d2b;
+}
+
+body.dark-theme .result{
+    box-shadow:0 7px 0 #0d1e2b,0 13px 23px rgba(0,0,0,.25);
+}
+
+body.dark-theme .result strong{
+    color:#ffc45a;
+    text-shadow:0 2px 0 #654b1c;
+}
+
+body.dark-theme .history{
+    border-top-color:#304b5f;
+}
+
+body.dark-theme .clear-history{
+    background:#3a2029;
+    border-color:#724250;
+    color:#f2aabb;
+    box-shadow:0 4px 0 #4a2731;
+}
+
+body.dark-theme .dashboard-card{
+    box-shadow:0 5px 0 #0c1b28,0 9px 17px rgba(0,0,0,.25);
+}
+
+body.dark-theme .dashboard-card:hover{
+    box-shadow:0 8px 0 #0c1b28,0 13px 20px rgba(0,0,0,.30);
+}
+
+body.dark-theme .dashboard-card-value{
+    color:#edf5ff;
+}
+
+body.dark-theme .dashboard-empty{
+    background:#172938;
+    border-color:#355268;
+    color:#91a7ba;
+}
+
+body.dark-theme .table-wrapper{
+    background:#152332;
+    box-shadow:0 7px 0 #0d1c29,0 13px 23px rgba(0,0,0,.28);
+}
+
+body.dark-theme thead{
+    background:linear-gradient(145deg,#203c50,#1c3345);
+}
+
+body.dark-theme th{
+    color:#b7d8ea;
+}
+
+body.dark-theme td{
+    border-top-color:#304b5e;
+    color:#b5c7d7;
+}
+
+body.dark-theme .numbers-cell{
+    color:#c6d8e7;
+}
+
+body.dark-theme .yard-value{
+    background:#1d3546;
+    border-color:#365c72;
+    color:#b9dbed;
+    box-shadow:0 2px 0 #102331;
+}
+
+body.dark-theme .pcs-cell{
+    background:#1b3b2b;
+    color:#85d6a5;
+    border-color:#397355;
+}
+
+body.dark-theme .total-cell{
+    color:#ffc05a;
+}
+
+body.dark-theme .history-edit-input{
+    background:#172a39;
+    color:#edf5ff;
+    border-color:#4386ad;
+}
+
+body.dark-theme .color-input{
+    background:#172a39;
+    color:#edf5ff;
+    border-color:#38586b;
+}
+
+body.dark-theme .color-input::placeholder{
+    color:#8097aa;
+}
+
+body.dark-theme .empty-history{
+    color:#91a7b9;
+}
+
+body.dark-theme .theme-switcher{
+    box-shadow:0 5px 0 rgba(0,0,0,.35),0 9px 20px rgba(0,0,0,.28);
+}
+
+@media(max-width:600px){
+    .theme-switcher{
+        top:10px;
+        right:10px;
+        transform:scale(.9);
+        transform-origin:top right;
+    }
+}
+
+@media print{
+    .theme-switcher{
+        display:none!important;
+    }
 }
 
 /* =========================================================
@@ -1995,10 +2340,33 @@ td:nth-child(6){
     }
 }
 
+
+/* Final print safety: tema aplikasi tidak memengaruhi hasil cetak. */
+@media print{
+    body.dark-theme{
+        --ink:#111;
+        --shadow:rgba(0,0,0,0);
+    }
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- =========================================================
+     THEME SIANG / MALAM
+     Fixed di luar container agar tata letak sistem utama
+     dan posisi seluruh tombol asli tidak berubah.
+========================================================= -->
+<div class="theme-switcher" id="themeSwitcher" aria-label="Pengaturan tema">
+    <span class="theme-icon" aria-hidden="true">☀</span>
+    <label class="theme-toggle">
+        <input type="checkbox" id="themeToggle" aria-label="Aktifkan tema malam">
+        <span class="theme-slider"></span>
+    </label>
+    <span class="theme-icon moon" aria-hidden="true">☾</span>
+</div>
 
 <div class="container">
 
@@ -2348,6 +2716,85 @@ const dashboardYard =
     document.getElementById(
         "dashboardYard"
     );
+
+
+/* =========================================================
+   TEMA SIANG / MALAM
+   Tidak menyentuh fungsi input, history, export, print, dll.
+========================================================= */
+
+const themeToggle =
+    document.getElementById("themeToggle");
+
+function applyTheme(theme){
+
+    const isDark =
+        theme === "dark";
+
+    document.body.classList.toggle(
+        "dark-theme",
+        isDark
+    );
+
+    if(themeToggle){
+        themeToggle.checked = isDark;
+    }
+
+    try{
+        localStorage.setItem(
+            "nicholasTheme",
+            isDark ? "dark" : "light"
+        );
+    }catch(error){
+
+    }
+
+}
+
+(function initTheme(){
+
+    let savedTheme = "light";
+
+    try{
+
+        const stored =
+            localStorage.getItem(
+                "nicholasTheme"
+            );
+
+        if(
+            stored === "dark" ||
+            stored === "light"
+        ){
+
+            savedTheme = stored;
+
+        }
+
+    }catch(error){
+
+    }
+
+    applyTheme(savedTheme);
+
+})();
+
+if(themeToggle){
+
+    themeToggle.addEventListener(
+        "change",
+        function(){
+
+            applyTheme(
+                this.checked
+                    ? "dark"
+                    : "light"
+            );
+
+        }
+    );
+
+}
 
 
 let number = 0;
