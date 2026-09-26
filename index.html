@@ -2963,6 +2963,61 @@ function parseYardNumber(value){
         return NaN;
     }
 
+    /*
+     * Jika angka sudah tampil dalam bentuk superscript,
+     * ambil bagian bilangan bulat sebelum superscript sebagai
+     * angka ribuan, lalu jadikan superscript sebagai desimal.
+     *
+     * Contoh:
+     * 25⁶    -> 25.6
+     * 1.000⁸ -> 1000.8
+     *
+     * Setelah itu proses perhitungan lama tetap digunakan.
+     */
+    const superscriptDigits = {
+        "⁰":"0",
+        "¹":"1",
+        "²":"2",
+        "³":"3",
+        "⁴":"4",
+        "⁵":"5",
+        "⁶":"6",
+        "⁷":"7",
+        "⁸":"8",
+        "⁹":"9"
+    };
+
+    const superscriptMatch =
+        text.match(
+            /[⁰¹²³⁴⁵⁶⁷⁸⁹]+/
+        );
+
+    if(superscriptMatch){
+
+        const superscriptIndex =
+            superscriptMatch.index;
+
+        const integerPart =
+            text
+                .substring(
+                    0,
+                    superscriptIndex
+                )
+                .replace(/[.,]/g,"");
+
+        const decimalPart =
+            superscriptMatch[0].replace(
+                /[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,
+                digit => superscriptDigits[digit]
+            );
+
+        text =
+            integerPart +
+            "." +
+            decimalPart;
+
+    }
+
     text =
         text.replace(/\s/g,"");
 
@@ -3069,22 +3124,50 @@ function parseYardNumber(value){
 
 function formatNumber(number){
 
-    const numericValue =
-        Number(number);
+    /* FORMAT TANPA PEMBULATAN */
+    let rawNumber = String(number).trim();
 
-    if(
-        !Number.isFinite(numericValue)
-    ){
-        return "0";
+    if(!rawNumber){ return "0"; }
+
+    rawNumber = rawNumber.replace(/,/g,"");
+
+    if(!/^-?(?:\d+(?:\.\d*)?|\.\d+)$/.test(rawNumber)){
+        const numericValue = Number(number);
+        if(!Number.isFinite(numericValue)){ return "0"; }
+        rawNumber = String(numericValue);
     }
 
-    return numericValue.toLocaleString(
-        "id-ID",
-        {
-            maximumFractionDigits:10,
-            useGrouping:true
-        }
+    let sign = "";
+    if(rawNumber.startsWith("-")){
+        sign = "-";
+        rawNumber = rawNumber.substring(1);
+    }
+
+    if(rawNumber.startsWith(".")){ rawNumber = "0" + rawNumber; }
+
+    const parts = rawNumber.split(".");
+    let integerPart = parts[0] || "0";
+    const decimalPart = parts.length > 1 ? parts.slice(1).join(".") : "";
+
+    integerPart = integerPart.replace(/^0+(?=\d)/,"");
+
+    const groupedInteger = integerPart.replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        "."
     );
+
+    if(!decimalPart){ return sign + groupedInteger; }
+
+    const superscriptDigits = {
+        "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
+        "5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"
+    };
+
+    const superscriptDecimal = decimalPart.split("").map(
+        digit => superscriptDigits[digit] || digit
+    ).join("");
+
+    return sign + groupedInteger + superscriptDecimal;
 
 }
 
@@ -3377,7 +3460,7 @@ function updateHistoryDashboard(){
 
     let totalPCSValue = 0;
 
-    let totalYardValue = 0;
+    let totalYardValue = "0";
 
     rows.forEach(
         row => {
@@ -3430,8 +3513,11 @@ function updateHistoryDashboard(){
             totalPCSValue +=
                 values.length;
 
-            totalYardValue +=
-                calculateYardTotal(values);
+            totalYardValue =
+                addDecimalStrings(
+                    totalYardValue,
+                    calculateYardTotal(values)
+                );
 
         }
     );
@@ -3462,7 +3548,7 @@ function sanitizeYardInput(input){
         input.value;
 
     value =
-        value.replace(/[^0-9.,]/g,"");
+        value.replace(/[^0-9.,⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
 
     const commaIndex =
         value.indexOf(",");
@@ -4181,28 +4267,219 @@ function saveHistory(){
 
 function calculateYardTotal(values){
 
-    let totalValue = 0;
+    /*
+     * PENJUMLAHAN DESIMAL TANPA PEMBULATAN INTEGER
+     *
+     * Nilai input tetap dihitung sebagai desimal.
+     * Penjumlahan dilakukan menggunakan representasi desimal
+     * agar hasil seperti 25.6 + 25.6 tetap 51.2.
+     *
+     * Fungsi ini hanya mengubah cara PENJUMLAHAN total.
+     * Struktur, layout, tombol, input, history, dan alur sistem
+     * lainnya tetap sama.
+     */
+
+    if(!Array.isArray(values)){
+        return 0;
+    }
+
+    let result = "0";
 
     values.forEach(
         value => {
 
-            const numberValue =
+            const numericValue =
                 Number(value);
 
             if(
-                Number.isFinite(numberValue) &&
-                numberValue > 0
+                Number.isFinite(numericValue) &&
+                numericValue > 0
             ){
 
-                totalValue +=
-                    numberValue;
+                result =
+                    addDecimalStrings(
+                        result,
+                        String(value)
+                    );
 
             }
 
         }
     );
 
-    return totalValue;
+    return result;
+
+}
+
+
+/* =========================================================
+   TAMBAH DESIMAL SECARA AKURAT
+========================================================= */
+
+function addDecimalStrings(a,b){
+
+    let left =
+        String(a)
+            .trim();
+
+    let right =
+        String(b)
+            .trim();
+
+    if(!left){
+        left = "0";
+    }
+
+    if(!right){
+        right = "0";
+    }
+
+    const leftParts =
+        left.split(".");
+
+    const rightParts =
+        right.split(".");
+
+    const leftInteger =
+        leftParts[0] || "0";
+
+    const rightInteger =
+        rightParts[0] || "0";
+
+    const leftDecimal =
+        leftParts[1] || "";
+
+    const rightDecimal =
+        rightParts[1] || "";
+
+    const decimalLength =
+        Math.max(
+            leftDecimal.length,
+            rightDecimal.length
+        );
+
+    const paddedLeft =
+        leftDecimal.padEnd(
+            decimalLength,
+            "0"
+        );
+
+    const paddedRight =
+        rightDecimal.padEnd(
+            decimalLength,
+            "0"
+        );
+
+    const leftWhole =
+        leftInteger +
+        paddedLeft;
+
+    const rightWhole =
+        rightInteger +
+        paddedRight;
+
+    let carry = 0;
+    let sum = "";
+
+    const maxLength =
+        Math.max(
+            leftWhole.length,
+            rightWhole.length
+        );
+
+    const normalizedLeft =
+        leftWhole.padStart(
+            maxLength,
+            "0"
+        );
+
+    const normalizedRight =
+        rightWhole.padStart(
+            maxLength,
+            "0"
+        );
+
+    for(
+        let i = maxLength - 1;
+        i >= 0;
+        i--
+    ){
+
+        const digitSum =
+            Number(normalizedLeft[i]) +
+            Number(normalizedRight[i]) +
+            carry;
+
+        sum =
+            String(
+                digitSum % 10
+            ) +
+            sum;
+
+        carry =
+            Math.floor(
+                digitSum / 10
+            );
+
+    }
+
+    if(carry > 0){
+
+        sum =
+            String(carry) +
+            sum;
+
+    }
+
+    if(decimalLength === 0){
+
+        return (
+            sum.replace(/^0+(?=\d)/,"") ||
+            "0"
+        );
+
+    }
+
+    const integerLength =
+        sum.length -
+        decimalLength;
+
+    let integerPart =
+        sum.substring(
+            0,
+            integerLength
+        );
+
+    let decimalPart =
+        sum.substring(
+            integerLength
+        );
+
+    integerPart =
+        integerPart.replace(
+            /^0+(?=\d)/,
+            ""
+        );
+
+    decimalPart =
+        decimalPart.replace(
+            /0+$/,
+            ""
+        );
+
+    if(!integerPart){
+        integerPart = "0";
+    }
+
+    if(!decimalPart){
+        return integerPart;
+    }
+
+    return (
+        integerPart +
+        "." +
+        decimalPart
+    );
 
 }
 
@@ -4416,7 +4693,7 @@ function editHistory(button){
 
             this.value =
                 this.value
-                    .replace(/[^0-9.,;\s]/g,"");
+                    .replace(/[^0-9.,;\s⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
 
             updateConnectedHistory(row);
 
@@ -4432,7 +4709,7 @@ function editHistory(button){
 
                     this.value =
                         this.value
-                            .replace(/[^0-9.,;\s]/g,"");
+                            .replace(/[^0-9.,;\s⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
 
                     updateConnectedHistory(row);
 
